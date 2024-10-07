@@ -5,6 +5,7 @@ import { baseGlob, projectGlob } from "./constants";
 import { createContext } from "./context";
 import { fileHandlers } from "./handlers";
 import { Rockide } from "./rockide";
+import { legend, molangSemantics } from "./semantics";
 
 const selector: vscode.DocumentSelector = [
   { scheme: "file", language: "json" },
@@ -104,6 +105,27 @@ export async function activate(context: vscode.ExtensionContext) {
         }
       }
     }),
+    vscode.languages.registerDocumentSemanticTokensProvider(
+      selector,
+      {
+        provideDocumentSemanticTokens(document) {
+          const text = document.getText();
+          const tokens = new vscode.SemanticTokensBuilder(legend);
+          for (const { pattern, type, modifiers } of molangSemantics) {
+            let match;
+            while ((match = pattern.exec(text))) {
+              const start = match.index;
+              const length = match[0].length;
+              const position = document.positionAt(start);
+              const range = new vscode.Range(position, position.translate(0, length));
+              tokens.push(range, type, modifiers);
+            }
+          }
+          return tokens.build();
+        },
+      },
+      legend,
+    ),
   );
 }
 

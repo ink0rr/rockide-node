@@ -57,6 +57,24 @@
         "title": "Reload Workspace",
         "category": "Rockide"
       }
+    ],
+    "semanticTokenScopes": [
+      {
+        "language": "json",
+        "scopes": {
+          "regexp": [
+            "string.regexp"
+          ]
+        }
+      },
+      {
+        "language": "jsonc",
+        "scopes": {
+          "regexp": [
+            "string.regexp"
+          ]
+        }
+      }
     ]
   }
 }
