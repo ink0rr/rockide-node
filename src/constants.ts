@@ -1,4 +1,5 @@
 import * as JSONC from "jsonc-parser";
+import * as vscode from "vscode";
 
 export const baseGlob = "**/!(build|dist|tmp)";
 
@@ -13,3 +14,8 @@ export const NullNode: JSONC.Node = {
   length: 4,
   offset: 0,
 };
+
+export const jsonSelector: vscode.DocumentSelector = [
+  { scheme: "file", language: "json" },
+  { scheme: "file", language: "jsonc" },
+];
