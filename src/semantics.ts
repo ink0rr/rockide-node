@@ -16,7 +16,7 @@ export const molangSemantics: SemanticToken[] = [
     type: "function",
   },
   {
-    pattern: /\bthis\b/g,
+    pattern: /\bthis\b/gi,
     type: "macro",
   },
   {
@@ -24,7 +24,7 @@ export const molangSemantics: SemanticToken[] = [
     type: "number",
   },
   {
-    pattern: /[+\-*/=<>!&|%^,;:?]+/g,
+    pattern: /[=<>!&|,;?]+/g,
     type: "operator",
   },
   {
