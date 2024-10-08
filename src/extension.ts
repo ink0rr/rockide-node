@@ -27,10 +27,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
     vscode.languages.registerCompletionItemProvider(selector, jsonProvider, "."),
     vscode.languages.registerDefinitionProvider(selector, jsonProvider),
-    vscode.workspace.onDidChangeTextDocument(jsonProvider.onDidChangeTextDocument),
-    vscode.workspace.onDidCreateFiles(jsonProvider.onDidCreateFiles),
-    vscode.workspace.onDidRenameFiles(jsonProvider.onDidRenameFiles),
-    vscode.workspace.onDidDeleteFiles(jsonProvider.onDidDeleteFiles),
+    vscode.workspace.onDidChangeTextDocument((e) => jsonProvider.onDidChangeTextDocument(e)),
+    vscode.workspace.onDidCreateFiles((e) => jsonProvider.onDidCreateFiles(e)),
+    vscode.workspace.onDidRenameFiles((e) => jsonProvider.onDidRenameFiles(e)),
+    vscode.workspace.onDidDeleteFiles((e) => jsonProvider.onDidDeleteFiles(e)),
 
     vscode.languages.registerDocumentSemanticTokensProvider(selector, molangProvider, legend),
   );
