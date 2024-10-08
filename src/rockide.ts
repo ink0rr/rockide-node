@@ -21,6 +21,7 @@ export class Rockide {
   jsonFiles = new Map<string, JSONC.Node>();
   assets: AssetData[] = [];
   jsonAssets: AssetData[] = [];
+  mcfunctions = new Map<string, string>(); // path, content
 
   async checkWorkspace() {
     for (const path of await vscode.workspace.findFiles("**/manifest.json")) {
@@ -78,6 +79,11 @@ export class Rockide {
       }
       break;
     }
+  }
+
+  async indexMcfunction(uri: vscode.Uri) {
+    const document = await vscode.workspace.openTextDocument(uri);
+    this.mcfunctions.set(uri.fsPath, document.getText());
   }
 
   indexAsset(uri: vscode.Uri) {

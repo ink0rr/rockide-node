@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
-import { jsonSelector } from "./constants";
-import { JsonProvider } from "./core/json_provider";
-import { MolangProvider } from "./core/molang_provider";
+import { commandSelector, jsonSelector } from "./constants";
+import { CommandProvider } from "./providers/command";
+import { JsonProvider } from "./providers/json";
+import { MolangProvider } from "./providers/molang";
 import { Rockide } from "./rockide";
 import { legend } from "./semantics";
 
@@ -17,6 +18,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   const jsonProvider = new JsonProvider(rockide);
   const molangProvider = new MolangProvider();
+  const commandProvider = new CommandProvider(rockide);
 
   context.subscriptions.push(
     vscode.commands.registerCommand("rockide.reloadWorkspace", () => rockide.indexWorkspace()),
@@ -35,7 +37,14 @@ export async function activate(context: vscode.ExtensionContext) {
 
     // molang
     vscode.languages.registerDocumentSemanticTokensProvider(jsonSelector, molangProvider, legend),
-    vscode.languages.registerSignatureHelpProvider(jsonSelector, molangProvider, "(", ",", " "),
+    // mcfunction
+    vscode.languages.registerCompletionItemProvider(commandSelector, commandProvider),
+    vscode.workspace.onDidChangeTextDocument((e) => commandProvider.onDidChangeTextDocument(e)),
+    vscode.workspace.onDidCreateFiles((e) => commandProvider.onDidCreateFiles(e)),
+    vscode.workspace.onDidRenameFiles((e) => commandProvider.onDidRenameFiles(e)),
+    vscode.workspace.onDidDeleteFiles((e) => commandProvider.onDidDeleteFiles(e)),
+    vscode.languages.registerDocumentSemanticTokensProvider(commandSelector, commandProvider, legend),
+    vscode.languages.registerSignatureHelpProvider(commandSelector, commandProvider, " ", ""),
   );
 }
 
