@@ -44,21 +44,18 @@ export class Rockide {
     const workspace = vscode.workspace.workspaceFolders[0];
     this.files.clear();
     this.assets = [];
-    vscode.window.withProgress(
-      { title: "Indexing", location: vscode.ProgressLocation.Notification },
-      async (progress) => {
-        const fileList = await vscode.workspace.findFiles(`**/${projectGlob}/**/*.json`, "{.*,build}/**");
-        const increment = 100 / fileList.length;
-        for (const uri of fileList) {
-          progress.report({ message: relative(workspace.uri.fsPath, uri.fsPath), increment });
-          await this.indexFile(uri);
-        }
-        const assetList = await vscode.workspace.findFiles(`**/${rpGlob}/**/*.{png,tga,fsb,ogg,wav}`, "{.*,build}/**");
-        for (const uri of assetList) {
-          this.indexAsset(uri);
-        }
-      },
-    );
+    vscode.window.withProgress({ title: "Indexing", location: vscode.ProgressLocation.Window }, async (progress) => {
+      const fileList = await vscode.workspace.findFiles(`**/${projectGlob}/**/*.json`, "{.*,build}/**");
+      const increment = 100 / fileList.length;
+      for (const uri of fileList) {
+        progress.report({ message: relative(workspace.uri.fsPath, uri.fsPath), increment });
+        await this.indexFile(uri);
+      }
+      const assetList = await vscode.workspace.findFiles(`**/${rpGlob}/**/*.{png,tga,fsb,ogg,wav}`, "{.*,build}/**");
+      for (const uri of assetList) {
+        this.indexAsset(uri);
+      }
+    });
   }
 
   async indexFile(uri: vscode.Uri) {
