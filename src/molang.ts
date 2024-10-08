@@ -1,3 +1,5 @@
+export const molangNamespaces = ["context", "math", "query", "temp", "variable"];
+
 export const molangMath = [
   "math.abs",
   "math.acos",
