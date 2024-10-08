@@ -33,6 +33,12 @@ const molangSemantics: SemanticToken[] = [
 ];
 
 export class MolangProvider implements vscode.DocumentSemanticTokensProvider {
+  get selector(): vscode.DocumentSelector {
+    return [
+      { scheme: "file", language: "json" },
+      { scheme: "file", language: "jsonc" },
+    ];
+  }
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
     const text = document.getText();
     const tokens = new vscode.SemanticTokensBuilder(legend);

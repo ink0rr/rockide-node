@@ -8,6 +8,12 @@ import { Rockide } from "../rockide";
 
 export class JsonProvider implements vscode.CompletionItemProvider, vscode.DefinitionProvider {
   constructor(private rockide: Rockide) {}
+  get selector(): vscode.DocumentSelector {
+    return [
+      { scheme: "file", language: "json" },
+      { scheme: "file", language: "jsonc" },
+    ];
+  }
   provideCompletionItems(
     document: vscode.TextDocument,
     position: vscode.Position,
