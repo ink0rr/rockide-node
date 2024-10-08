@@ -17,6 +17,10 @@
     "Minecraft",
     "Bedrock"
   ],
+  "repository": {
+    "url": "https://github.com/ink0rr/rockide",
+    "type": "git"
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
