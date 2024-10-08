@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { jsonSelector } from "../constants";
 import { legend, SemanticToken } from "../semantics";
 
 const molangSemantics: SemanticToken[] = [
@@ -34,10 +35,7 @@ const molangSemantics: SemanticToken[] = [
 
 export class MolangProvider implements vscode.DocumentSemanticTokensProvider {
   get selector(): vscode.DocumentSelector {
-    return [
-      { scheme: "file", language: "json" },
-      { scheme: "file", language: "jsonc" },
-    ];
+    return jsonSelector;
   }
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
     const text = document.getText();

@@ -1,7 +1,7 @@
 import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
-import { baseGlob, projectGlob } from "../constants";
+import { baseGlob, jsonSelector, projectGlob } from "../constants";
 import { createContext } from "../context";
 import { fileHandlers } from "../handlers";
 import { Rockide } from "../rockide";
@@ -9,10 +9,7 @@ import { Rockide } from "../rockide";
 export class JsonProvider implements vscode.CompletionItemProvider, vscode.DefinitionProvider {
   constructor(private rockide: Rockide) {}
   get selector(): vscode.DocumentSelector {
-    return [
-      { scheme: "file", language: "json" },
-      { scheme: "file", language: "jsonc" },
-    ];
+    return jsonSelector;
   }
   provideCompletionItems(
     document: vscode.TextDocument,
