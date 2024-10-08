@@ -110,8 +110,11 @@ export function createContext(document: vscode.TextDocument, position: vscode.Po
       return key ? this.matchField(key) : true && typeof path.at(-2) === "number" && path.at(-3) === root;
     },
 
-    createCompletion(value: string) {
-      const completion = new vscode.CompletionItem(value, vscode.CompletionItemKind.Value);
+    createCompletion(value: string | vscode.CompletionItem) {
+      if (value instanceof vscode.CompletionItem) {
+        return value;
+      }
+      const completion = new vscode.CompletionItem(value, vscode.CompletionItemKind.Variable);
       completion.range = document.getWordRangeAtPosition(position, /[\w.:/]+/);
       if (node.type === "null") {
         completion.insertText = `"${value}"`;

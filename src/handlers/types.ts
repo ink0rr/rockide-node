@@ -11,6 +11,6 @@ export type RockideHandler = {
 } & Partial<Providers>;
 
 export type RockideProcess = {
-  completions?(): string[];
+  completions?(): Array<string | vscode.CompletionItem>;
   definitions?(): Promise<vscode.LocationLink>[] | vscode.LocationLink[] | void;
 };
