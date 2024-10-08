@@ -75,6 +75,454 @@
           ]
         }
       }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": [
+          "behavior_pack/texts/languages.{json,jsonc,json5}",
+          "*BP/texts/languages.{json,jsonc,json5}",
+          "BP_*/texts/languages.{json,jsonc,json5}",
+          "*bp/texts/languages.{json,jsonc,json5}",
+          "bp_*/texts/languages.{json,jsonc,json5}",
+          "resource_pack/texts/languages.{json,jsonc,json5}",
+          "*RP/texts/languages.{json,jsonc,json5}",
+          "RP_*/texts/languages.{json,jsonc,json5}",
+          "*rp/texts/languages.{json,jsonc,json5}",
+          "rp_*/texts/languages.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/language/languages.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/manifest.{json,jsonc,json5}",
+          "*BP/manifest.{json,jsonc,json5}",
+          "BP_*/manifest.{json,jsonc,json5}",
+          "*bp/manifest.{json,jsonc,json5}",
+          "bp_*/manifest.{json,jsonc,json5}",
+          "resource_pack/manifest.{json,jsonc,json5}",
+          "*RP/manifest.{json,jsonc,json5}",
+          "RP_*/manifest.{json,jsonc,json5}",
+          "*rp/manifest.{json,jsonc,json5}",
+          "rp_*/manifest.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/general/manifest.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/animation_controllers/**/*.{json,jsonc,json5}",
+          "*RP/animation_controllers/**/*.{json,jsonc,json5}",
+          "RP_*/animation_controllers/**/*.{json,jsonc,json5}",
+          "*rp/animation_controllers/**/*.{json,jsonc,json5}",
+          "rp_*/animation_controllers/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/animation_controllers/animation_controller.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/animations/**/*.{json,jsonc,json5}",
+          "*RP/animations/**/*.{json,jsonc,json5}",
+          "RP_*/animations/**/*.{json,jsonc,json5}",
+          "*rp/animations/**/*.{json,jsonc,json5}",
+          "rp_*/animations/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/animations/actor_animation.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/attachables/**/*.{json,jsonc,json5}",
+          "*RP/attachables/**/*.{json,jsonc,json5}",
+          "RP_*/attachables/**/*.{json,jsonc,json5}",
+          "*rp/attachables/**/*.{json,jsonc,json5}",
+          "rp_*/attachables/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/attachables/attachables.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/block_culling/**/*.{json,jsonc,json5}",
+          "*RP/block_culling/**/*.{json,jsonc,json5}",
+          "RP_*/block_culling/**/*.{json,jsonc,json5}",
+          "*rp/block_culling/**/*.{json,jsonc,json5}",
+          "rp_*/block_culling/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/block_culling/block_culling.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/biomes_client.{json,jsonc,json5}",
+          "*RP/biomes_client.{json,jsonc,json5}",
+          "RP_*/biomes_client.{json,jsonc,json5}",
+          "*rp/biomes_client.{json,jsonc,json5}",
+          "rp_*/biomes_client.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/biomes_client.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/blocks.{json,jsonc,json5}",
+          "*RP/blocks.{json,jsonc,json5}",
+          "RP_*/blocks.{json,jsonc,json5}",
+          "*rp/blocks.{json,jsonc,json5}",
+          "rp_*/blocks.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/blocks.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/entity/**/*.{json,jsonc,json5}",
+          "*RP/entity/**/*.{json,jsonc,json5}",
+          "RP_*/entity/**/*.{json,jsonc,json5}",
+          "*rp/entity/**/*.{json,jsonc,json5}",
+          "rp_*/entity/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/entity/entity.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/fogs/**/*.{json,jsonc,json5}",
+          "*RP/fogs/**/*.{json,jsonc,json5}",
+          "RP_*/fogs/**/*.{json,jsonc,json5}",
+          "*rp/fogs/**/*.{json,jsonc,json5}",
+          "rp_*/fogs/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/fog/fog.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/textures/flipbook_textures.{json,jsonc,json5}",
+          "*RP/textures/flipbook_textures.{json,jsonc,json5}",
+          "RP_*/textures/flipbook_textures.{json,jsonc,json5}",
+          "*rp/textures/flipbook_textures.{json,jsonc,json5}",
+          "rp_*/textures/flipbook_textures.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/textures/flipbook_textures.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/textures/item_texture.{json,jsonc,json5}",
+          "*RP/textures/item_texture.{json,jsonc,json5}",
+          "RP_*/textures/item_texture.{json,jsonc,json5}",
+          "*rp/textures/item_texture.{json,jsonc,json5}",
+          "rp_*/textures/item_texture.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/textures/item_texture.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/textures/textures_list.{json,jsonc,json5}",
+          "*RP/textures/textures_list.{json,jsonc,json5}",
+          "RP_*/textures/textures_list.{json,jsonc,json5}",
+          "*rp/textures/textures_list.{json,jsonc,json5}",
+          "rp_*/textures/textures_list.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/textures/textures_list.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/textures/**/*.texture_set.{json,jsonc,json5}",
+          "*RP/textures/**/*.texture_set.{json,jsonc,json5}",
+          "RP_*/textures/**/*.texture_set.{json,jsonc,json5}",
+          "*rp/textures/**/*.texture_set.{json,jsonc,json5}",
+          "rp_*/textures/**/*.texture_set.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/textures/texture_set.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/items/**/*.{json,jsonc,json5}",
+          "*RP/items/**/*.{json,jsonc,json5}",
+          "RP_*/items/**/*.{json,jsonc,json5}",
+          "*rp/items/**/*.{json,jsonc,json5}",
+          "rp_*/items/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/items/items.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/models/entity/**/*.{json,jsonc,json5}",
+          "*RP/models/entity/**/*.{json,jsonc,json5}",
+          "RP_*/models/entity/**/*.{json,jsonc,json5}",
+          "*rp/models/entity/**/*.{json,jsonc,json5}",
+          "rp_*/models/entity/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/models/entity/model_entity.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/materials/**/*.material",
+          "*RP/materials/**/*.material",
+          "RP_*/materials/**/*.material",
+          "*rp/materials/**/*.material",
+          "rp_*/materials/**/*.material"
+        ],
+        "url": "./schemas/resource/materials/materials.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/sounds/music_definitions.{json,jsonc,json5}",
+          "*RP/sounds/music_definitions.{json,jsonc,json5}",
+          "RP_*/sounds/music_definitions.{json,jsonc,json5}",
+          "*rp/sounds/music_definitions.{json,jsonc,json5}",
+          "rp_*/sounds/music_definitions.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/sounds/music_definitions.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/particles/**/*.{json,jsonc,json5}",
+          "*RP/particles/**/*.{json,jsonc,json5}",
+          "RP_*/particles/**/*.{json,jsonc,json5}",
+          "*rp/particles/**/*.{json,jsonc,json5}",
+          "rp_*/particles/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/particles/particles.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/render_controllers/**/*.{json,jsonc,json5}",
+          "*RP/render_controllers/**/*.{json,jsonc,json5}",
+          "RP_*/render_controllers/**/*.{json,jsonc,json5}",
+          "*rp/render_controllers/**/*.{json,jsonc,json5}",
+          "rp_*/render_controllers/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/render_controllers/render_controllers.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/sounds/sound_definitions.{json,jsonc,json5}",
+          "*RP/sounds/sound_definitions.{json,jsonc,json5}",
+          "RP_*/sounds/sound_definitions.{json,jsonc,json5}",
+          "*rp/sounds/sound_definitions.{json,jsonc,json5}",
+          "rp_*/sounds/sound_definitions.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/sounds/sound_definitions.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/sounds.{json,jsonc,json5}",
+          "*RP/sounds.{json,jsonc,json5}",
+          "RP_*/sounds.{json,jsonc,json5}",
+          "*rp/sounds.{json,jsonc,json5}",
+          "rp_*/sounds.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/sounds.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/textures/terrain_texture.{json,jsonc,json5}",
+          "*RP/textures/terrain_texture.{json,jsonc,json5}",
+          "RP_*/textures/terrain_texture.{json,jsonc,json5}",
+          "*rp/textures/terrain_texture.{json,jsonc,json5}",
+          "rp_*/textures/terrain_texture.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/textures/terrain_texture.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/ui/_ui_defs.{json,jsonc,json5}",
+          "*RP/ui/_ui_defs.{json,jsonc,json5}",
+          "RP_*/ui/_ui_defs.{json,jsonc,json5}",
+          "*rp/ui/_ui_defs.{json,jsonc,json5}",
+          "rp_*/ui/_ui_defs.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/ui/_ui_defs.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/ui/_global_variables.{json,jsonc,json5}",
+          "*RP/ui/_global_variables.{json,jsonc,json5}",
+          "RP_*/ui/_global_variables.{json,jsonc,json5}",
+          "*rp/ui/_global_variables.{json,jsonc,json5}",
+          "rp_*/ui/_global_variables.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/ui/_global_variables.json"
+      },
+      {
+        "fileMatch": [
+          "resource_pack/ui/**/*.{json,jsonc,json5}",
+          "*RP/ui/**/*.{json,jsonc,json5}",
+          "RP_*/ui/**/*.{json,jsonc,json5}",
+          "*rp/ui/**/*.{json,jsonc,json5}",
+          "rp_*/ui/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/resource/ui/ui.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/animation_controllers/**/*.{json,jsonc,json5}",
+          "*BP/animation_controllers/**/*.{json,jsonc,json5}",
+          "BP_*/animation_controllers/**/*.{json,jsonc,json5}",
+          "*bp/animation_controllers/**/*.{json,jsonc,json5}",
+          "bp_*/animation_controllers/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/animation_controllers/animation_controller.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/animations/**/*.{json,jsonc,json5}",
+          "*BP/animations/**/*.{json,jsonc,json5}",
+          "BP_*/animations/**/*.{json,jsonc,json5}",
+          "*bp/animations/**/*.{json,jsonc,json5}",
+          "bp_*/animations/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/animations/animations.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/biomes/**/*.{json,jsonc,json5}",
+          "*BP/biomes/**/*.{json,jsonc,json5}",
+          "BP_*/biomes/**/*.{json,jsonc,json5}",
+          "*bp/biomes/**/*.{json,jsonc,json5}",
+          "bp_*/biomes/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/biomes/biomes.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/blocks/**/*.{json,jsonc,json5}",
+          "*BP/blocks/**/*.{json,jsonc,json5}",
+          "BP_*/blocks/**/*.{json,jsonc,json5}",
+          "*bp/blocks/**/*.{json,jsonc,json5}",
+          "bp_*/blocks/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/blocks/blocks.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/cameras/presets/**/*.{json,jsonc,json5}",
+          "*BP/cameras/presets/**/*.{json,jsonc,json5}",
+          "BP_*/cameras/presets/**/*.{json,jsonc,json5}",
+          "*bp/cameras/presets/**/*.{json,jsonc,json5}",
+          "bp_*/cameras/presets/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/cameras/presets/camera.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/dialogue/**/*.{json,jsonc,json5}",
+          "*BP/dialogue/**/*.{json,jsonc,json5}",
+          "BP_*/dialogue/**/*.{json,jsonc,json5}",
+          "*bp/dialogue/**/*.{json,jsonc,json5}",
+          "bp_*/dialogue/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/dialogue/dialogue.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/entities/**/*.{json,jsonc,json5}",
+          "*BP/entities/**/*.{json,jsonc,json5}",
+          "BP_*/entities/**/*.{json,jsonc,json5}",
+          "*bp/entities/**/*.{json,jsonc,json5}",
+          "bp_*/entities/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/entities/entities.json"
+      },
+      {
+        "fileMatch": [
+          "functions/tick.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/functions/tick.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/features/**/*.{json,jsonc,json5}",
+          "*BP/features/**/*.{json,jsonc,json5}",
+          "BP_*/features/**/*.{json,jsonc,json5}",
+          "*bp/features/**/*.{json,jsonc,json5}",
+          "bp_*/features/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/features/features.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/feature_rules/**/*.{json,jsonc,json5}",
+          "*BP/feature_rules/**/*.{json,jsonc,json5}",
+          "BP_*/feature_rules/**/*.{json,jsonc,json5}",
+          "*bp/feature_rules/**/*.{json,jsonc,json5}",
+          "bp_*/feature_rules/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/feature_rules/feature_rules.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/lighting/global.{json,jsonc,json5}",
+          "*BP/lighting/global.{json,jsonc,json5}",
+          "BP_*/lighting/global.{json,jsonc,json5}",
+          "*bp/lighting/global.{json,jsonc,json5}",
+          "bp_*/lighting/global.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/lighting/global.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/lighting/atmospherics.{json,jsonc,json5}",
+          "*BP/lighting/atmospherics.{json,jsonc,json5}",
+          "BP_*/lighting/atmospherics.{json,jsonc,json5}",
+          "*bp/lighting/atmospherics.{json,jsonc,json5}",
+          "bp_*/lighting/atmospherics.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/lighting/atmospherics.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/items/**/*.{json,jsonc,json5}",
+          "*BP/items/**/*.{json,jsonc,json5}",
+          "BP_*/items/**/*.{json,jsonc,json5}",
+          "*bp/items/**/*.{json,jsonc,json5}",
+          "bp_*/items/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/items/items.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/recipes/**/*.{json,jsonc,json5}",
+          "*BP/recipes/**/*.{json,jsonc,json5}",
+          "BP_*/recipes/**/*.{json,jsonc,json5}",
+          "*bp/recipes/**/*.{json,jsonc,json5}",
+          "bp_*/recipes/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/recipes/recipes.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/loot_tables/**/*.{json,jsonc,json5}",
+          "*BP/loot_tables/**/*.{json,jsonc,json5}",
+          "BP_*/loot_tables/**/*.{json,jsonc,json5}",
+          "*bp/loot_tables/**/*.{json,jsonc,json5}",
+          "bp_*/loot_tables/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/loot_tables/loot_tables.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/spawn_rules/**/*.{json,jsonc,json5}",
+          "*BP/spawn_rules/**/*.{json,jsonc,json5}",
+          "BP_*/spawn_rules/**/*.{json,jsonc,json5}",
+          "*bp/spawn_rules/**/*.{json,jsonc,json5}",
+          "bp_*/spawn_rules/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/spawn_rules/spawn_rules.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/trading/**/*.{json,jsonc,json5}",
+          "*BP/trading/**/*.{json,jsonc,json5}",
+          "BP_*/trading/**/*.{json,jsonc,json5}",
+          "*bp/trading/**/*.{json,jsonc,json5}",
+          "bp_*/trading/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/trading/trading.json"
+      },
+      {
+        "fileMatch": [
+          "behavior_pack/volumes/**/*.{json,jsonc,json5}",
+          "*BP/volumes/**/*.{json,jsonc,json5}",
+          "BP_*/volumes/**/*.{json,jsonc,json5}",
+          "*bp/volumes/**/*.{json,jsonc,json5}",
+          "bp_*/volumes/**/*.{json,jsonc,json5}"
+        ],
+        "url": "./schemas/behavior/volumes/volumes.json"
+      }
     ]
   }
 }
