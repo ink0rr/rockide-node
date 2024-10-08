@@ -7,6 +7,7 @@ import { geometryHandler } from "./data/geometry";
 import { itemHandler } from "./data/item";
 import { itemTextureHandler } from "./data/item_textures";
 import { lootTableHandler } from "./data/loot_table";
+import { manifest } from "./data/manifest";
 import { particleHandler } from "./data/particle";
 import { renderControllerHandler } from "./data/render_controller";
 import { soundDefinitionsHandler } from "./data/sound_definitions";
@@ -22,6 +23,7 @@ export const fileHandlers = [
   itemHandler,
   itemTextureHandler,
   lootTableHandler,
+  manifest,
   particleHandler,
   renderControllerHandler,
   soundDefinitionsHandler,

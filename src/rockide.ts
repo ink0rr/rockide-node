@@ -168,6 +168,16 @@ export class Rockide {
       });
   }
 
+  getManifests(): IndexedData[] {
+    return [...this.files]
+      .filter(([path]) => isMatch(path, `**/${projectGlob}/manifest.json`))
+      .map(([path, root]) => {
+        const json = JSONC.getNodeValue(root);
+        const uuid = json?.header?.uuid;
+        return { path, root, values: uuid ? [uuid] : uuid };
+      });
+  }
+
   getTextures() {
     return this.assets.filter(({ bedrockPath: path }) => path.startsWith("textures/"));
   }

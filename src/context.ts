@@ -17,6 +17,7 @@ export function createContext(document: vscode.TextDocument, position: vscode.Po
     document,
     position,
     path,
+    node,
     nodeValue,
     rootJson() {
       return JSONC.parse(text);
@@ -107,7 +108,7 @@ export function createContext(document: vscode.TextDocument, position: vscode.Po
      * ```
      */
     matchArrayObject(root: string, key?: string) {
-      return key ? this.matchField(key) : true && typeof path.at(-2) === "number" && path.at(-3) === root;
+      return (key ? this.matchField(key) : true) && typeof path.at(-2) === "number" && path.at(-3) === root;
     },
 
     createCompletion(value: string | vscode.CompletionItem) {
