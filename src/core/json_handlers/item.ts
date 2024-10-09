@@ -1,8 +1,8 @@
 import * as JSONC from "jsonc-parser";
 import { bpGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { JsonHandler } from "./_type";
 
-export const itemHandler: RockideHandler = {
+export const itemHandler: JsonHandler = {
   pattern: `**/${bpGlob}/items/**/*.json`,
   process(ctx, rockide) {
     if (ctx.matchField("minecraft:icon") || ctx.matchProperty("textures")) {

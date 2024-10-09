@@ -1,7 +1,7 @@
 import { bpGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { JsonHandler } from "./_type";
 
-export const lootTableHandler: RockideHandler = {
+export const lootTableHandler: JsonHandler = {
   pattern: `**/${bpGlob}/loot_tables/**/*.json`,
   index: "path",
 };

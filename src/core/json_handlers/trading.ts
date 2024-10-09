@@ -1,7 +1,7 @@
 import { bpGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { JsonHandler } from "./_type";
 
-export const tradingHandler: RockideHandler = {
+export const tradingHandler: JsonHandler = {
   pattern: `**/${bpGlob}/trading/**/*.json`,
   index: "path",
 };

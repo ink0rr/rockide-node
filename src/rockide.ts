@@ -3,7 +3,7 @@ import { isMatch } from "micromatch";
 import { relative } from "path";
 import * as vscode from "vscode";
 import { bpGlob, NullNode, projectGlob, rpGlob } from "./constants";
-import { fileHandlers } from "./handlers";
+import { jsonHandlers } from "./core/json_handlers";
 
 export type IndexedData = {
   path: string;
@@ -18,7 +18,7 @@ export type AssetData = {
 
 export class Rockide {
   diagnostics = vscode.languages.createDiagnosticCollection("rockide");
-  files = new Map<string, JSONC.Node>();
+  jsonFiles = new Map<string, JSONC.Node>();
   assets: AssetData[] = [];
   jsonAssets: AssetData[] = [];
 
@@ -42,14 +42,14 @@ export class Rockide {
       return vscode.window.showInformationMessage("Multiple workspace is currently not supported.");
     }
     const workspace = vscode.workspace.workspaceFolders[0];
-    this.files.clear();
+    this.jsonFiles.clear();
     this.assets = [];
     vscode.window.withProgress({ title: "Indexing", location: vscode.ProgressLocation.Window }, async (progress) => {
       const fileList = await vscode.workspace.findFiles(`**/${projectGlob}/**/*.json`, "{.*,build}/**");
       const increment = 100 / fileList.length;
       for (const uri of fileList) {
         progress.report({ message: relative(workspace.uri.fsPath, uri.fsPath), increment });
-        await this.indexFile(uri);
+        await this.indexJson(uri);
       }
       const assetList = await vscode.workspace.findFiles(`**/${rpGlob}/**/*.{png,tga,fsb,ogg,wav}`, "{.*,build}/**");
       for (const uri of assetList) {
@@ -58,15 +58,15 @@ export class Rockide {
     });
   }
 
-  async indexFile(uri: vscode.Uri) {
-    for (const handler of fileHandlers) {
+  async indexJson(uri: vscode.Uri) {
+    for (const handler of jsonHandlers) {
       if (!handler.index || !isMatch(uri.fsPath, handler.pattern)) {
         continue;
       }
       if (handler.index === "parse") {
         const document = await vscode.workspace.openTextDocument(uri);
         const root = JSONC.parseTree(document.getText()) ?? NullNode;
-        this.files.set(uri.fsPath, root);
+        this.jsonFiles.set(uri.fsPath, root);
         break;
       }
       const path = uri.fsPath.replaceAll("\\", "/").split(/(behavior_pack|[^\\/]*?bp|bp_[^\\/]*?)\//i)[2];
@@ -91,7 +91,7 @@ export class Rockide {
   }
 
   getAnimations(): IndexedData[] {
-    return [...this.files]
+    return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${bpGlob}/{animations,animation_controllers}/**/*.json`))
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);
@@ -100,7 +100,7 @@ export class Rockide {
   }
 
   getClientAnimations(): IndexedData[] {
-    return [...this.files]
+    return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${rpGlob}/{animations,animation_controllers}/**/*.json`))
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);
@@ -109,7 +109,7 @@ export class Rockide {
   }
 
   getGeometries(): IndexedData[] {
-    return [...this.files]
+    return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${rpGlob}/models/**/*.json`))
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);
@@ -132,7 +132,7 @@ export class Rockide {
   }
 
   getRenderControllers(): IndexedData[] {
-    return [...this.files]
+    return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${rpGlob}/render_controllers/**/*.json`))
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);
@@ -141,7 +141,7 @@ export class Rockide {
   }
 
   getParticles(): IndexedData[] {
-    return [...this.files]
+    return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${rpGlob}/particles/**/*.json`))
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);
@@ -151,7 +151,7 @@ export class Rockide {
   }
 
   getItemIcons(): IndexedData[] {
-    return [...this.files]
+    return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${rpGlob}/textures/item_texture.json`))
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);
@@ -160,7 +160,7 @@ export class Rockide {
   }
 
   getSoundDefinitions(): IndexedData[] {
-    return [...this.files]
+    return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${rpGlob}/sounds/sound_definitions.json`))
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);
@@ -169,7 +169,7 @@ export class Rockide {
   }
 
   getManifests(): IndexedData[] {
-    return [...this.files]
+    return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${projectGlob}/manifest.json`))
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);

@@ -1,9 +1,9 @@
 import { randomUUID } from "crypto";
 import * as vscode from "vscode";
 import { projectGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { JsonHandler } from "./_type";
 
-export const manifest: RockideHandler = {
+export const manifest: JsonHandler = {
   pattern: `**/${projectGlob}/manifest.json`,
   index: "parse",
   process(ctx, rockide) {
@@ -26,9 +26,6 @@ export const manifest: RockideHandler = {
         completions: () => {
           const generateUuid = new vscode.CompletionItem("Generate UUID", vscode.CompletionItemKind.Constant);
           generateUuid.insertText = randomUUID();
-          if (ctx.node.type === "null") {
-            generateUuid.insertText = `"${generateUuid.insertText}"`;
-          }
           return [generateUuid];
         },
       };

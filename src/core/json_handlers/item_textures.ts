@@ -1,11 +1,11 @@
 import { rpGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { JsonHandler } from "./_type";
 
-export const particleHandler: RockideHandler = {
-  pattern: `**/${rpGlob}/particles/**/*.json`,
+export const itemTextureHandler: JsonHandler = {
+  pattern: `**/${rpGlob}/textures/item_texture.json`,
   index: "parse",
   process(ctx, rockide) {
-    if (ctx.matchField("texture")) {
+    if (ctx.matchField("textures")) {
       return {
         completions: () => rockide.getTextures().map(({ bedrockPath: path }) => path),
         definitions: () =>

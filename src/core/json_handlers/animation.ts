@@ -1,7 +1,7 @@
 import { bpGlob, rpGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { JsonHandler } from "./_type";
 
-export const animationHandler: RockideHandler = {
+export const animationHandler: JsonHandler = {
   pattern: [`**/${bpGlob}/animations/**/*.json`, `**/${rpGlob}/animations/**/*.json`],
   index: "parse",
 };

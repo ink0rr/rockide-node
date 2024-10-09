@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { jsonSelector } from "./constants";
-import { JsonProvider } from "./providers/json";
-import { MolangProvider } from "./providers/molang";
+import { JsonProvider } from "./core/json_provider";
+import { MolangProvider } from "./core/molang_provider";
 import { Rockide } from "./rockide";
 import { legend } from "./semantics";
 

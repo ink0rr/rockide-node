@@ -1,8 +1,8 @@
 import { bpGlob, rpGlob } from "../../constants";
-import { molangCompletions } from "../shared";
-import { RockideHandler } from "../types";
+import { getMolangCompletions } from "../molang_handlers";
+import { JsonHandler } from "./_type";
 
-export const animationControllerHandler: RockideHandler = {
+export const animationControllerHandler: JsonHandler = {
   pattern: [`**/${bpGlob}/animation_controllers/**/*.json`, `**/${rpGlob}/animation_controllers/**/*.json`],
   index: "parse",
   process(ctx) {
@@ -17,7 +17,7 @@ export const animationControllerHandler: RockideHandler = {
       ctx.matchArrayObject("transitions")
     ) {
       return {
-        completions: () => molangCompletions(ctx),
+        completions: () => getMolangCompletions(ctx.document, ctx.position),
       };
     }
   },

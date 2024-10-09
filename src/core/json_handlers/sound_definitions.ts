@@ -1,7 +1,7 @@
 import { rpGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { JsonHandler } from "./_type";
 
-export const soundDefinitionsHandler: RockideHandler = {
+export const soundDefinitionsHandler: JsonHandler = {
   pattern: `**/${rpGlob}/sounds/sound_definitions.json`,
   index: "parse",
   process(ctx, rockide) {

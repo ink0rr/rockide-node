@@ -1,14 +1,14 @@
 import * as vscode from "vscode";
-import { RockideContext } from "../context";
-import { Rockide } from "../rockide";
+import { Rockide } from "../../rockide";
+import { JsonContext } from "../json_context";
 
-export type RockideHandler = {
+export type JsonHandler = {
   pattern: string | string[];
   index?: "parse" | "path";
-  process?(ctx: RockideContext, rockide: Rockide): RockideProcess | void;
+  process?(ctx: JsonContext, rockide: Rockide): JsonHandlerResult | void;
 };
 
-export type RockideProcess = {
+export type JsonHandlerResult = {
   completions?(): Array<string | vscode.CompletionItem>;
   definitions?(): Promise<vscode.LocationLink>[] | vscode.LocationLink[] | void;
 };

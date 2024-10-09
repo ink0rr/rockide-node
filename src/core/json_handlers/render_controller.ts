@@ -1,7 +1,7 @@
 import { rpGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { JsonHandler } from "./_type";
 
-export const renderControllerHandler: RockideHandler = {
+export const renderControllerHandler: JsonHandler = {
   pattern: `**/${rpGlob}/render_controllers/**/*.json`,
   index: "parse",
 };

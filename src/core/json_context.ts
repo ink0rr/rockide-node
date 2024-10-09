@@ -1,9 +1,9 @@
 import * as JSONC from "jsonc-parser";
 import * as vscode from "vscode";
-import { NullNode } from "./constants";
-import { RockideProcess } from "./handlers/types";
+import { NullNode } from "../constants";
+import { JsonHandlerResult } from "./json_handlers/_type";
 
-export function createContext(document: vscode.TextDocument, position: vscode.Position) {
+export function createJsonContext(document: vscode.TextDocument, position: vscode.Position) {
   const text = document.getText();
   const offset = document.offsetAt(position);
   const location = JSONC.getLocation(text, offset);
@@ -111,11 +111,36 @@ export function createContext(document: vscode.TextDocument, position: vscode.Po
       return (key ? this.matchField(key) : true) && typeof path.at(-2) === "number" && path.at(-3) === root;
     },
 
+    localRef(path: JSONC.JSONPath): JsonHandlerResult {
+      return {
+        completions: () => this.getKeys(path),
+        definitions: () => {
+          let target = this.findNode(path.concat([this.nodeValue]));
+          if (!target) {
+            return;
+          }
+          if (target.parent) {
+            target = target.parent;
+          }
+          return [
+            {
+              originSelectionRange: new vscode.Range(
+                document.positionAt(node.offset),
+                document.positionAt(node.offset + node.length),
+              ),
+              targetRange: new vscode.Range(
+                document.positionAt(target.offset),
+                document.positionAt(target.offset + target.length),
+              ),
+              targetUri: document.uri,
+            },
+          ];
+        },
+      };
+    },
     createCompletion(value: string | vscode.CompletionItem) {
-      if (value instanceof vscode.CompletionItem) {
-        return value;
-      }
-      const completion = new vscode.CompletionItem(value, vscode.CompletionItemKind.Variable);
+      const completion =
+        typeof value === "string" ? new vscode.CompletionItem(value, vscode.CompletionItemKind.Variable) : value;
       completion.range = document.getWordRangeAtPosition(position, /[\w.:/]+/);
       if (node.type === "null") {
         completion.insertText = `"${value}"`;
@@ -163,34 +188,7 @@ export function createContext(document: vscode.TextDocument, position: vscode.Po
         targetUri: targetDocument.uri,
       };
     },
-    localRef(path: JSONC.JSONPath): RockideProcess {
-      return {
-        completions: () => this.getKeys(path),
-        definitions: () => {
-          let target = this.findNode(path.concat([this.nodeValue]));
-          if (!target) {
-            return;
-          }
-          if (target.parent) {
-            target = target.parent;
-          }
-          return [
-            {
-              originSelectionRange: new vscode.Range(
-                document.positionAt(node.offset),
-                document.positionAt(node.offset + node.length),
-              ),
-              targetRange: new vscode.Range(
-                document.positionAt(target.offset),
-                document.positionAt(target.offset + target.length),
-              ),
-              targetUri: document.uri,
-            },
-          ];
-        },
-      };
-    },
   };
 }
 
-export type RockideContext = NonNullable<ReturnType<typeof createContext>>;
+export type JsonContext = NonNullable<ReturnType<typeof createJsonContext>>;

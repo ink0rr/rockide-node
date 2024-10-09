@@ -1,7 +1,9 @@
+import { isMatch } from "micromatch";
 import * as vscode from "vscode";
+import { projectGlob } from "../constants";
 import { legend, SemanticToken } from "../semantics";
 
-const molangSemantics: SemanticToken[] = [
+const semantics: SemanticToken[] = [
   {
     pattern: /\b(q|v|t|c|query|variable|temp|context|math|array|geometry|material|texture)(?=\.)/gi,
     type: "class",
@@ -34,9 +36,12 @@ const molangSemantics: SemanticToken[] = [
 
 export class MolangProvider implements vscode.DocumentSemanticTokensProvider {
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
+    if (!isMatch(document.uri.fsPath, `**/${projectGlob}/**/*.json`)) {
+      return;
+    }
     const text = document.getText();
     const tokens = new vscode.SemanticTokensBuilder(legend);
-    for (const { pattern, type, modifiers } of molangSemantics) {
+    for (const { pattern, type, modifiers } of semantics) {
       let match;
       while ((match = pattern.exec(text))) {
         const start = match.index;

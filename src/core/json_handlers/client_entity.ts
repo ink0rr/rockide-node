@@ -1,9 +1,9 @@
 import * as JSONC from "jsonc-parser";
 import { rpGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { JsonHandler } from "./_type";
 
-export const attachableHandler: RockideHandler = {
-  pattern: `**/${rpGlob}/attachables/**/*.json`,
+export const clientEntityHandler: JsonHandler = {
+  pattern: `**/${rpGlob}/entity/**/*.json`,
   process(ctx, rockide) {
     if (ctx.matchProperty("animations")) {
       return {
@@ -42,7 +42,7 @@ export const attachableHandler: RockideHandler = {
           rockide
             .getTextures()
             .filter(({ bedrockPath: path }) => path === ctx.nodeValue)
-            .map(({ bedrockPath: path }) => ctx.createDefinition(path)),
+            .map(({ uri }) => ctx.createDefinition(uri.fsPath)),
       };
     }
     if (ctx.matchProperty("particle_effects")) {
@@ -68,6 +68,22 @@ export const attachableHandler: RockideHandler = {
             }),
       };
     }
+    if (ctx.matchProperty("spawn_egg", "texture")) {
+      return {
+        completions: () => rockide.getItemIcons().flatMap(({ values }) => values),
+        definitions: () =>
+          rockide
+            .getItemIcons()
+            .map(({ path, root }) => {
+              const target = JSONC.findNodeAtLocation(root, ["texture_data", ctx.nodeValue]);
+              if (!target) {
+                return;
+              }
+              return ctx.createDefinition(path, target);
+            })
+            .filter((v) => v !== undefined),
+      };
+    }
     if (ctx.matchArray("render_controllers", true)) {
       return {
         completions: () => rockide.getRenderControllers().flatMap(({ values }) => values),
@@ -82,7 +98,7 @@ export const attachableHandler: RockideHandler = {
       };
     }
     if (ctx.matchArray("animate", true)) {
-      return ctx.localRef(["minecraft:attachable", "description", "animations"]);
+      return ctx.localRef(["minecraft:client_entity", "description", "animations"]);
     }
   },
 };
