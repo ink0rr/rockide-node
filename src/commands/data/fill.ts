@@ -1,3 +1,5 @@
+import { blockIdentifier } from "../../literals/block_identifier";
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const fill: CommandInfo = {
@@ -6,64 +8,54 @@ const fill: CommandInfo = {
   overloads: [
     {
       params: [
+        ...Parameter.createPosition("from"),
+        ...Parameter.createPosition("to"),
         {
-          value: "position",
-          type: ParamType.keyword,
+          // todo: dynamic block identifier
+          value: blockIdentifier,
+          signatureValue: "<tileName>",
+          type: ParamType.enum,
         },
         {
-          value: "position",
-          type: ParamType.keyword,
-        },
-        {
-          value: ["minecraft:dirt", "dirt", "todo"],
-          type: ParamType.keyword,
-        },
-        {
-          value: "blockState",
+          value: "todo:blockState",
           type: ParamType.keyword,
         },
         {
           value: ["outline", "hollow", "destroy", "keep"],
-          type: ParamType.keyword,
+          signatureValue: "<oldBlockHandling>",
+          type: ParamType.enum,
         },
       ],
     },
     {
       params: [
+        ...Parameter.createPosition("from"),
+        ...Parameter.createPosition("to"),
         {
-          value: "position",
-          type: ParamType.keyword,
-        },
-        {
-          value: "position",
-          type: ParamType.keyword,
-        },
-        {
-          value: ["minecraft:dirt", "dirt", "todo"],
-          type: ParamType.keyword,
+          // todo: dynamic block identifier
+          value: blockIdentifier,
+          signatureValue: "<tileName>",
+          type: ParamType.enum,
         },
         {
           value: ["outline", "hollow", "destroy", "keep"],
-          type: ParamType.keyword,
+          signatureValue: "<oldBlockHandling>",
+          type: ParamType.enum,
         },
       ],
     },
     {
       params: [
+        ...Parameter.createPosition("from"),
+        ...Parameter.createPosition("to"),
         {
-          value: "position",
-          type: ParamType.keyword,
+          // todo: dynamic block identifier
+          value: blockIdentifier,
+          signatureValue: "<tileName>",
+          type: ParamType.enum,
         },
         {
-          value: "position",
-          type: ParamType.keyword,
-        },
-        {
-          value: ["minecraft:dirt", "dirt", "todo"],
-          type: ParamType.keyword,
-        },
-        {
-          value: "blockState",
+          value: "todo:blockState",
           type: ParamType.keyword,
         },
         {
@@ -71,39 +63,39 @@ const fill: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
-          type: ParamType.keyword,
+          // todo: dynamic block identifier
+          value: blockIdentifier,
+          signatureValue: "<tileName>",
+          type: ParamType.enum,
         },
         {
-          value: "blockState",
+          value: "todo:blockState",
           type: ParamType.keyword,
         },
       ],
     },
     {
       params: [
+        ...Parameter.createPosition("from"),
+        ...Parameter.createPosition("to"),
         {
-          value: "position",
-          type: ParamType.keyword,
-        },
-        {
-          value: "position",
-          type: ParamType.keyword,
-        },
-        {
-          value: ["minecraft:dirt", "dirt", "todo"],
-          type: ParamType.keyword,
+          // todo: dynamic block identifier
+          value: blockIdentifier,
+          signatureValue: "<tileName>",
+          type: ParamType.enum,
         },
         {
           value: ["replace"],
           type: ParamType.keyword,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
-          type: ParamType.keyword,
+          // todo: dynamic block identifier
+          value: blockIdentifier,
+          signatureValue: "<tileName>",
+          type: ParamType.enum,
         },
         {
-          value: "blockState",
+          value: "todo:blockState",
           type: ParamType.keyword,
         },
       ],

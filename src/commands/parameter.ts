@@ -15,6 +15,20 @@ export namespace Parameter {
       type: ParamType.location,
     },
   ];
+  export const createPosition = (name: string): ParamInfo[] => [
+    {
+      value: `<${name}:x>`,
+      type: ParamType.location,
+    },
+    {
+      value: `<${name}:y>`,
+      type: ParamType.location,
+    },
+    {
+      value: `<${name}:z>`,
+      type: ParamType.location,
+    },
+  ];
   export const rotXY: ParamInfo[] = [
     {
       value: "<pitch>",
