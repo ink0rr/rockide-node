@@ -5,9 +5,6 @@ const gamerule: CommandInfo = {
   documentation: "Sets or queries a game rule value.",
   overloads: [
     {
-      params: [],
-    },
-    {
       params: [
         {
           value: [
@@ -44,10 +41,12 @@ const gamerule: CommandInfo = {
             "projectilescanbreakblocks",
             "tntexplosiondropdecay",
           ],
-          type: ParamType.keyword,
+          signatureValue: "<rule>",
+          type: ParamType.enum,
         },
         {
           value: ["true", "false"],
+          signatureValue: "<value>",
           type: ParamType.keyword,
         },
       ],
@@ -62,11 +61,13 @@ const gamerule: CommandInfo = {
             "spawnradius",
             "playerssleepingpercentage",
           ],
-          type: ParamType.keyword,
+          signatureValue: "<rule>",
+          type: ParamType.enum,
         },
         {
-          value: "int",
-          type: ParamType.keyword,
+          // todo: dynamic value
+          value: "<value>",
+          type: ParamType.number,
         },
       ],
     },

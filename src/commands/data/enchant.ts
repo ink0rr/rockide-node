@@ -17,6 +17,7 @@ const enchant: CommandInfo = {
           type: ParamType.enum,
         },
         {
+          // todo: dynamic value
           value: "[level]",
           type: ParamType.number,
         },
