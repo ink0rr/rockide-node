@@ -8,10 +8,11 @@ const gamemode: CommandInfo = {
       params: [
         {
           value: ["default", "creative", "spectator", "survival", "adventure", "d", "c", "s", "a"],
-          type: ParamType.keyword,
+          signatureValue: "<gameMode>",
+          type: ParamType.enum,
         },
         {
-          value: "selector",
+          value: "<player>",
           type: ParamType.playerSelector,
         },
       ],
@@ -19,11 +20,12 @@ const gamemode: CommandInfo = {
     {
       params: [
         {
-          value: "int",
-          type: ParamType.keyword,
+          value: ["0", "1", "2", "5"],
+          documentation: ["survival", "creative", "adventure", "default"],
+          type: ParamType.enum,
         },
         {
-          value: "selector",
+          value: "<player>",
           type: ParamType.playerSelector,
         },
       ],
