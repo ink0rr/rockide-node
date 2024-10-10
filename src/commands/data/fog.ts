@@ -7,7 +7,7 @@ const fog: CommandInfo = {
     {
       params: [
         {
-          value: "selector",
+          value: "<target>",
           type: ParamType.playerSelector,
         },
         {
@@ -15,28 +15,32 @@ const fog: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
-          type: ParamType.keyword,
+          // todo: dynamic fog id
+          value: "<fogId>",
+          type: ParamType.string,
         },
         {
-          value: "todo",
-          type: ParamType.keyword,
+          // todo: dynamic fog id
+          value: "<userProvidedId>",
+          type: ParamType.string,
         },
       ],
     },
     {
       params: [
         {
-          value: "selector",
+          value: "<target>",
           type: ParamType.playerSelector,
         },
         {
           value: ["pop", "remove"],
+          signatureValue: "<mode>",
           type: ParamType.keyword,
         },
         {
-          value: "todo",
-          type: ParamType.keyword,
+          // todo: dynamic fog id
+          value: "<userProvidedId>",
+          type: ParamType.string,
         },
       ],
     },
