@@ -326,6 +326,9 @@ export function signatureHelper(ctx: RockideContext, overLine?: string): Signatu
               return true;
             }
             const param = overload.params[i - executeIndex];
+            if (!param) {
+              return false;
+            }
             // execute check
             // run subcommand check
             if (param.type === ParamType.subcommand) {
