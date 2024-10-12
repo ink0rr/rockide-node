@@ -181,8 +181,7 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
         return [];
       }
       // const [, ...args] = line
-      //   .slice(match[0].length)
-      //   .split(/\s+/g)
+      //   .split(/\b\s+/g)
       //   .map((arg) => {
       //     const ok = new RegExp(/((~|\^)-?(\d+)?())/g).test(arg);
       //     if (!ok) {
@@ -192,7 +191,8 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
       //   })
       //   .flat();
       const [, ...args] = line
-        .split(/\b\s+/g)
+        .split(/(\b|(?<="))\s+/g)
+        .filter((_, i) => i % 2 === 0)
         .map((arg) => {
           const ok = new RegExp(/((~|\^)-?(\d+)?())/g).test(arg);
           if (!ok) {
@@ -201,11 +201,12 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
           return arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [];
         })
         .flat();
+      console.log(args);
       if (args.length === 1) {
         return overloads
           .map((overload) => getParamCompletion(overload.params[0]))
           .flat()
-          .filter((v, i, s) => s.findIndex((obj) => JSON.stringify(obj) === JSON.stringify(v)) === i);
+          .filter((v, i, s) => s.findIndex((obj) => obj.label === v.label) === i);
       }
       let tempOverloads = [...overloads];
       let executeIndex = 0;
@@ -306,8 +307,8 @@ export function signatureHelper(ctx: RockideContext, overLine?: string): Signatu
         return signature;
       }
       const [, ...args] = line
-        .slice(match[0].length)
-        .split(/\s+/g)
+        .split(/(\b|(?<="))\s+/g)
+        .filter((_, i) => i % 2 === 0)
         .map((arg) => {
           const ok = new RegExp(/((~|\^)-?(\d+)?())/g).test(arg);
           if (!ok) {
