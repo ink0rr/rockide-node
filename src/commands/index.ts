@@ -45,7 +45,6 @@ import schedule from "./data/schedule";
 import scoreboard from "./data/scoreboard";
 import script from "./data/script";
 import scriptevent from "./data/scriptevent";
-import sendshowstoreoffer from "./data/sendshowstoreoffer";
 import setblock from "./data/setblock";
 import setmaxplayers from "./data/setmaxplayers";
 import setworldspawn from "./data/setworldspawn";
@@ -123,7 +122,6 @@ export const commands: CommandInfo[] = [
   scoreboard,
   script,
   scriptevent,
-  sendshowstoreoffer,
   setblock,
   setmaxplayers,
   setworldspawn,
