@@ -10,6 +10,7 @@ import { ParamInfo, ParamType } from "./types";
  * - idk why multiline doesn't work
  * - create separate context for non json files
  * - Merge signature location params
+ * - inside quote for jsons (itemnbt, rawjsonmessage)
  */
 
 /**
@@ -268,7 +269,9 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
               arg.startsWith("{") &&
               arg.endsWith("}")
             ) {
-              skipCurly = true;
+              if (param.type === ParamType.itemNBT) {
+                skipCurly = true;
+              }
               return true;
             }
             const regex = getParamRegex(param);

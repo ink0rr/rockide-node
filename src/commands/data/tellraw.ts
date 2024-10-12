@@ -27,7 +27,7 @@ const tellraw: CommandInfo = {
             "Provides a token that will get replaced with the value of a score.",
           ],
           signatureValue: "<raw json message>",
-          type: ParamType.keyword,
+          type: ParamType.rawJsonMessage,
         },
       ],
     },
