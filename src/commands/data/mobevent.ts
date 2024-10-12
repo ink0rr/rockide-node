@@ -14,7 +14,7 @@ const mobevent: CommandInfo = {
             "events_enabled",
           ],
           signatureValue: "<event>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
           value: ["true", "false"],
