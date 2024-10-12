@@ -14,22 +14,22 @@ const music: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<trackName>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "int",
           signatureValue: "[volume]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "int",
           signatureValue: "[fadeSeconds]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: ["play_once", "loop"],
           signatureValue: "[repeatMode]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -43,22 +43,22 @@ const music: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<trackName>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "int",
           signatureValue: "[volume]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "int",
           signatureValue: "[fadeSeconds]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: ["play_once", "loop"],
           signatureValue: "[repeatMode]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -72,7 +72,7 @@ const music: CommandInfo = {
         {
           value: "int",
           signatureValue: "[fadeSeconds]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
       ],
     },
