@@ -14,7 +14,7 @@ const weather: CommandInfo = {
         {
           value: "int",
           signatureValue: "[duration]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
       ],
     },
