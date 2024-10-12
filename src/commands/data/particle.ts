@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const particle: CommandInfo = {
@@ -9,13 +10,9 @@ const particle: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<effect>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
-        {
-          value: "position",
-          signatureValue: "[position]",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("position"),
       ],
     },
   ],
