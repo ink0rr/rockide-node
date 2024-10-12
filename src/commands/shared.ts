@@ -36,6 +36,9 @@ function getParamValue(info: ParamInfo) {
       return "0";
     }
     case ParamType.float:
+      if (Array.isArray(info.value)) {
+        return info.value;
+      }
       return "0.0";
     case ParamType.location:
       return ["~", "^", "0"];

@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const structure: CommandInfo = {
@@ -14,18 +15,10 @@ const structure: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<name>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
-        {
-          value: "position",
-          signatureValue: "<from>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "position",
-          signatureValue: "<to>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("from"),
+        ...Parameter.createPosition("to"),
         {
           value: ["disk", "memory"],
           signatureValue: "[saveMode]",
@@ -43,18 +36,10 @@ const structure: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<name>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
-        {
-          value: "position",
-          signatureValue: "<from>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "position",
-          signatureValue: "<to>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("from"),
+        ...Parameter.createPosition("to"),
         {
           value: ["true", "false"],
           signatureValue: "[includeEntities]",
@@ -82,7 +67,7 @@ const structure: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<name>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -96,13 +81,9 @@ const structure: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<name>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
-        {
-          value: "position",
-          signatureValue: "<to>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("to"),
         {
           value: ["0_degrees", "90_degrees", "180_degrees", "270_degrees"],
           signatureValue: "[rotation]",
@@ -129,14 +110,14 @@ const structure: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "int",
+          value: Array.from({ length: 11 }).map((_, i) => `${10 * i}`),
           signatureValue: "[integrity]",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
         {
           value: "todo",
           signatureValue: "[seed]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -150,13 +131,9 @@ const structure: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<name>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
-        {
-          value: "position",
-          signatureValue: "<to>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("to"),
         {
           value: ["0_degrees", "90_degrees", "180_degrees", "270_degrees"],
           signatureValue: "[rotation]",
@@ -173,9 +150,9 @@ const structure: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "int",
+          value: Array.from({ length: 11 }).map((_, i) => `${i / 10}`),
           signatureValue: "[animationSeconds]",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
         {
           value: ["true", "false"],
@@ -193,14 +170,14 @@ const structure: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "int",
+          value: Array.from({ length: 11 }).map((_, i) => `${10 * i}`),
           signatureValue: "[integrity]",
           type: ParamType.keyword,
         },
         {
           value: "todo",
           signatureValue: "[seed]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
