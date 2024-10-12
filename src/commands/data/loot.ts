@@ -1,3 +1,6 @@
+import { blockIdentifier } from "../../literals/block_identifier";
+import { slot } from "../../literals/slot";
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const loot: CommandInfo = {
@@ -11,11 +14,7 @@ const loot: CommandInfo = {
           signatureValue: "<target>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["loot"],
           signatureValue: "<source>",
@@ -27,9 +26,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -40,11 +39,7 @@ const loot: CommandInfo = {
           signatureValue: "<target>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["kill"],
           signatureValue: "<source>",
@@ -56,9 +51,9 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -85,9 +80,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -114,9 +109,9 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -127,11 +122,7 @@ const loot: CommandInfo = {
           signatureValue: "<target>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["loot"],
           signatureValue: "<source>",
@@ -143,9 +134,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -156,11 +147,7 @@ const loot: CommandInfo = {
           signatureValue: "<target>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["kill"],
           signatureValue: "<source>",
@@ -172,9 +159,9 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -196,29 +183,14 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: [
-            "slot.weapon.mainhand",
-            "slot.weapon.offhand",
-            "slot.armor.head",
-            "slot.armor.chest",
-            "slot.armor.legs",
-            "slot.armor.feet",
-            "slot.armor.body",
-            "slot.hotbar",
-            "slot.inventory",
-            "slot.enderchest",
-            "slot.saddle",
-            "slot.armor",
-            "slot.chest",
-            "slot.equippable",
-          ],
+          value: slot,
           signatureValue: "<slotType>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
           value: "int",
           signatureValue: "<slotId>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "int",
@@ -236,9 +208,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -260,29 +232,14 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: [
-            "slot.weapon.mainhand",
-            "slot.weapon.offhand",
-            "slot.armor.head",
-            "slot.armor.chest",
-            "slot.armor.legs",
-            "slot.armor.feet",
-            "slot.armor.body",
-            "slot.hotbar",
-            "slot.inventory",
-            "slot.enderchest",
-            "slot.saddle",
-            "slot.armor",
-            "slot.chest",
-            "slot.equippable",
-          ],
+          value: slot,
           signatureValue: "<slotType>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
           value: "int",
           signatureValue: "<slotId>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: ["loot"],
@@ -295,9 +252,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -319,29 +276,14 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: [
-            "slot.weapon.mainhand",
-            "slot.weapon.offhand",
-            "slot.armor.head",
-            "slot.armor.chest",
-            "slot.armor.legs",
-            "slot.armor.feet",
-            "slot.armor.body",
-            "slot.hotbar",
-            "slot.inventory",
-            "slot.enderchest",
-            "slot.saddle",
-            "slot.armor",
-            "slot.chest",
-            "slot.equippable",
-          ],
+          value: slot,
           signatureValue: "<slotType>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
           value: "int",
           signatureValue: "<slotId>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "int",
@@ -359,9 +301,9 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -383,29 +325,14 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: [
-            "slot.weapon.mainhand",
-            "slot.weapon.offhand",
-            "slot.armor.head",
-            "slot.armor.chest",
-            "slot.armor.legs",
-            "slot.armor.feet",
-            "slot.armor.body",
-            "slot.hotbar",
-            "slot.inventory",
-            "slot.enderchest",
-            "slot.saddle",
-            "slot.armor",
-            "slot.chest",
-            "slot.equippable",
-          ],
+          value: slot,
           signatureValue: "<slotType>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
           value: "int",
           signatureValue: "<slotId>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: ["kill"],
@@ -418,9 +345,9 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -436,11 +363,7 @@ const loot: CommandInfo = {
           signatureValue: "<block>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["slot.container"],
           signatureValue: "<slotType>",
@@ -449,12 +372,12 @@ const loot: CommandInfo = {
         {
           value: "int",
           signatureValue: "<slotId>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "int",
           signatureValue: "<count>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: ["loot"],
@@ -467,9 +390,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -485,11 +408,7 @@ const loot: CommandInfo = {
           signatureValue: "<block>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["slot.container"],
           signatureValue: "<slotType>",
@@ -498,12 +417,12 @@ const loot: CommandInfo = {
         {
           value: "int",
           signatureValue: "<slotId>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: ["loot"],
           signatureValue: "<source>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "todo",
@@ -511,9 +430,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -529,11 +448,7 @@ const loot: CommandInfo = {
           signatureValue: "<block>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["slot.container"],
           signatureValue: "<slotType>",
@@ -542,12 +457,12 @@ const loot: CommandInfo = {
         {
           value: "int",
           signatureValue: "<slotId>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "int",
           signatureValue: "<count>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: ["kill"],
@@ -560,9 +475,9 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -578,11 +493,7 @@ const loot: CommandInfo = {
           signatureValue: "<block>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["slot.container"],
           signatureValue: "<slotType>",
@@ -591,7 +502,7 @@ const loot: CommandInfo = {
         {
           value: "int",
           signatureValue: "<slotId>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: ["kill"],
@@ -604,9 +515,9 @@ const loot: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          value: blockIdentifier.concat("mainhand", "offhand"),
           signatureValue: "[<tool>|mainhand|offhand]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
