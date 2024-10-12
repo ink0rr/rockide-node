@@ -9,22 +9,22 @@ const spreadplayers: CommandInfo = {
         {
           value: "rot",
           signatureValue: "<x>",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
         {
           value: "rot",
           signatureValue: "<z>",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
         {
           value: "int",
           signatureValue: "<spreadDistance>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "int",
           signatureValue: "<maxRange>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "selector",
@@ -34,7 +34,7 @@ const spreadplayers: CommandInfo = {
         {
           value: "rot",
           signatureValue: "[maxHeight]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
       ],
     },
