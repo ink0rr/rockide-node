@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const testforblocks: CommandInfo = {
@@ -6,21 +7,9 @@ const testforblocks: CommandInfo = {
   overloads: [
     {
       params: [
-        {
-          value: "position",
-          signatureValue: "<begin>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "position",
-          signatureValue: "<end>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "position",
-          signatureValue: "<destination>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("begin"),
+        ...Parameter.createPosition("end"),
+        ...Parameter.createPosition("destination"),
         {
           value: ["masked", "all"],
           signatureValue: "[mode]",
