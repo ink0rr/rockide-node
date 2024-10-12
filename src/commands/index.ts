@@ -66,7 +66,6 @@ import title from "./data/title";
 import titleraw from "./data/titleraw";
 import toggledownfall from "./data/toggledownfall";
 import tp from "./data/tp";
-import transfer from "./data/transfer";
 import w from "./data/w";
 import weather from "./data/weather";
 import wsserver from "./data/wsserver";
@@ -142,7 +141,6 @@ export const commands: CommandInfo[] = [
   titleraw,
   toggledownfall,
   tp,
-  transfer,
   w,
   weather,
   wsserver,
