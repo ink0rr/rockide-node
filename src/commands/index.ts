@@ -38,7 +38,6 @@ import playanimation from "./data/playanimation";
 import playsound from "./data/playsound";
 import recipe from "./data/recipe";
 import reload from "./data/reload";
-import reloadconfig from "./data/reloadconfig";
 import replaceitem from "./data/replaceitem";
 import ride from "./data/ride";
 import save from "./data/save";
@@ -118,7 +117,6 @@ export const commands: CommandInfo[] = [
   playsound,
   recipe,
   reload,
-  reloadconfig,
   replaceitem,
   ride,
   save,
