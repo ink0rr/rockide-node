@@ -20,7 +20,6 @@ import gamemode from "./data/gamemode";
 import gamerule from "./data/gamerule";
 import gametest from "./data/gametest";
 import give from "./data/give";
-import help from "./data/help";
 import hud from "./data/hud";
 import inputpermission from "./data/inputpermission";
 import kick from "./data/kick";
@@ -103,7 +102,6 @@ export const commands: CommandInfo[] = [
   gamerule,
   gametest,
   give,
-  help,
   hud,
   inputpermission,
   kick,
