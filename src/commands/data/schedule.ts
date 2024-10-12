@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const schedule: CommandInfo = {
@@ -16,18 +17,10 @@ const schedule: CommandInfo = {
           signatureValue: "<condition>",
           type: ParamType.keyword,
         },
+        ...Parameter.createPosition("from"),
+        ...Parameter.createPosition("to"),
         {
-          value: "position",
-          signatureValue: "<from>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "position",
-          signatureValue: "<to>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "mcfunctionPath",
+          value: "todomcfunctionPath",
           signatureValue: "<function>",
           type: ParamType.keyword,
         },
@@ -50,18 +43,14 @@ const schedule: CommandInfo = {
           signatureValue: "<type>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<center>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("radius"),
         {
           value: "int",
           signatureValue: "<radius>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
-          value: "mcfunctionPath",
+          value: "todomcfunctionPath",
           signatureValue: "<function>",
           type: ParamType.keyword,
         },
@@ -90,7 +79,7 @@ const schedule: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "mcfunctionPath",
+          value: "todomcfunctionPath",
           signatureValue: "<function>",
           type: ParamType.keyword,
         },
