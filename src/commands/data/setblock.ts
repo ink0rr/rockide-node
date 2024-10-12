@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const setblock: CommandInfo = {
@@ -6,11 +7,7 @@ const setblock: CommandInfo = {
   overloads: [
     {
       params: [
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["minecraft:dirt", "dirt", "todo"],
           signatureValue: "<tileName>",
@@ -30,11 +27,7 @@ const setblock: CommandInfo = {
     },
     {
       params: [
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("location"),
         {
           value: ["minecraft:dirt", "dirt", "todo"],
           signatureValue: "<tileName>",
