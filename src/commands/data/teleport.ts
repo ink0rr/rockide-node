@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const teleport: CommandInfo = {
@@ -6,11 +7,7 @@ const teleport: CommandInfo = {
   overloads: [
     {
       params: [
-        {
-          value: "position",
-          signatureValue: "<destination>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("destination"),
         {
           value: ["true", "false"],
           signatureValue: "[checkForBlocks]",
@@ -20,21 +17,8 @@ const teleport: CommandInfo = {
     },
     {
       params: [
-        {
-          value: "position",
-          signatureValue: "<destination>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "rot",
-          signatureValue: "[yRot]",
-          type: ParamType.keyword,
-        },
-        {
-          value: "rot",
-          signatureValue: "[xRot]",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("destination"),
+        ...Parameter.rotYX,
         {
           value: ["true", "false"],
           signatureValue: "[checkForBlocks]",
@@ -44,21 +28,13 @@ const teleport: CommandInfo = {
     },
     {
       params: [
-        {
-          value: "position",
-          signatureValue: "<destination>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("destination"),
         {
           value: ["facing"],
           signatureValue: "<facing>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<lookAtPosition>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("lookAtPosition"),
         {
           value: ["true", "false"],
           signatureValue: "[checkForBlocks]",
@@ -68,11 +44,7 @@ const teleport: CommandInfo = {
     },
     {
       params: [
-        {
-          value: "position",
-          signatureValue: "<destination>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("destination"),
         {
           value: ["facing"],
           signatureValue: "<facing>",
@@ -81,7 +53,7 @@ const teleport: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<lookAtEntity>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: ["true", "false"],
@@ -95,23 +67,10 @@ const teleport: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
-        {
-          value: "position",
-          signatureValue: "<destination>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "rot",
-          signatureValue: "[yRot]",
-          type: ParamType.keyword,
-        },
-        {
-          value: "rot",
-          signatureValue: "[xRot]",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("destination"),
+        ...Parameter.rotYX,
         {
           value: ["true", "false"],
           signatureValue: "[checkForBlocks]",
@@ -124,13 +83,9 @@ const teleport: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
-        {
-          value: "position",
-          signatureValue: "<destination>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("destination"),
         {
           value: ["true", "false"],
           signatureValue: "[checkForBlocks]",
@@ -143,23 +98,15 @@ const teleport: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
-        {
-          value: "position",
-          signatureValue: "<destination>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("destination"),
         {
           value: ["facing"],
           signatureValue: "<facing>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<lookAtPosition>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("lookAtPosition"),
         {
           value: ["true", "false"],
           signatureValue: "[checkForBlocks]",
@@ -172,13 +119,9 @@ const teleport: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
-        {
-          value: "position",
-          signatureValue: "<destination>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("destination"),
         {
           value: ["facing"],
           signatureValue: "<facing>",
@@ -187,7 +130,7 @@ const teleport: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<lookAtEntity>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: ["true", "false"],
@@ -201,7 +144,7 @@ const teleport: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<destination>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
       ],
     },
@@ -210,12 +153,12 @@ const teleport: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: "selector",
           signatureValue: "<destination>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: ["true", "false"],
