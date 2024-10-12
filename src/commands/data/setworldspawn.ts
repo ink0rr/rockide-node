@@ -1,17 +1,12 @@
-import { CommandInfo, ParamType } from "../types";
+import { Parameter } from "../parameter";
+import { CommandInfo } from "../types";
 
 const setworldspawn: CommandInfo = {
   command: "setworldspawn",
   documentation: "Sets the world spawn.",
   overloads: [
     {
-      params: [
-        {
-          value: "position",
-          signatureValue: "[spawnPoint]",
-          type: ParamType.keyword,
-        },
-      ],
+      params: [...Parameter.createPosition("position")],
     },
   ],
 };
