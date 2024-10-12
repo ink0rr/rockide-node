@@ -14,7 +14,7 @@ const time: CommandInfo = {
         {
           value: "int",
           signatureValue: "<amount>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
       ],
     },
@@ -28,7 +28,7 @@ const time: CommandInfo = {
         {
           value: "int",
           signatureValue: "<amount>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
       ],
     },
@@ -42,7 +42,7 @@ const time: CommandInfo = {
         {
           value: ["day", "sunrise", "noon", "sunset", "night", "midnight"],
           signatureValue: "<time>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -56,7 +56,7 @@ const time: CommandInfo = {
         {
           value: ["daytime", "gametime", "day"],
           signatureValue: "<time>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
