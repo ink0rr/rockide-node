@@ -14,10 +14,10 @@ const testforblock: CommandInfo = {
         {
           value: ["minecraft:dirt", "dirt", "todo"],
           signatureValue: "<tileName>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
-          value: "blockState",
+          value: "todoblockState",
           signatureValue: "[blockStates]",
           type: ParamType.keyword,
         },
