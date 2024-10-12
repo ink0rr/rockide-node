@@ -10,7 +10,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<riders>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: ["start_riding"],
@@ -20,17 +20,17 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<ride>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: ["teleport_rider", "teleport_ride"],
           signatureValue: "[teleportRules]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
           value: ["until_full", "if_group_fits"],
           signatureValue: "[howToFill]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -39,7 +39,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<riders>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: ["stop_riding"],
@@ -53,7 +53,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<rides>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: ["evict_riders"],
@@ -67,7 +67,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<rides>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: ["summon_rider"],
@@ -75,19 +75,19 @@ const ride: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["entity_type", "minecraft:slime"],
+          value: ["todo", "entity_type", "minecraft:slime"],
           signatureValue: "<entityType>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
           signatureValue: "[spawnEvent]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "todo",
           signatureValue: "[nameTag]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -96,7 +96,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<riders>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: ["summon_ride"],
@@ -104,7 +104,7 @@ const ride: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["entity_type", "minecraft:slime"],
+          value: ["todo", "entity_type", "minecraft:slime"],
           signatureValue: "<entityType>",
           type: ParamType.keyword,
         },
@@ -116,12 +116,12 @@ const ride: CommandInfo = {
         {
           value: "todo",
           signatureValue: "[spawnEvent]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "todo",
           signatureValue: "[nameTag]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
