@@ -14,7 +14,7 @@ const stopsound: CommandInfo = {
         {
           value: "todo",
           signatureValue: "[sound]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
