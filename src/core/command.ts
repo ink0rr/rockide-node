@@ -19,6 +19,14 @@ import { legend, SemanticToken } from "../semantics";
 
 const semantics: SemanticToken[] = [
   {
+    pattern: /([a-zA-Z_]+):/g,
+    type: "class",
+  },
+  {
+    pattern: /(?<=[a-zA-Z_]+:)([a-zA-Z_]+)/g,
+    type: "function",
+  },
+  {
     pattern: /"[^"]*"/g,
     type: "variable",
   },
