@@ -28,6 +28,9 @@ function getParamValue(info: ParamInfo) {
     case ParamType.scoreboardSelector:
       return ["@a", "@e", "@s", "@p", "@r", "*", '"#var"'];
     case ParamType.string:
+      if (Array.isArray(info.value)) {
+        return info.value;
+      }
       return '""';
     case ParamType.number: {
       if (Array.isArray(info.value)) {
