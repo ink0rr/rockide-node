@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const tickingarea: CommandInfo = {
@@ -11,20 +12,13 @@ const tickingarea: CommandInfo = {
           signatureValue: "<mode>",
           type: ParamType.keyword,
         },
+        ...Parameter.createPosition("from"),
+        ...Parameter.createPosition("to"),
         {
-          value: "position",
-          signatureValue: "<from>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "position",
-          signatureValue: "<to>",
-          type: ParamType.keyword,
-        },
-        {
+          // todo: dynamic if possible
           value: "todo",
           signatureValue: "[name]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: ["true", "false"],
@@ -45,20 +39,17 @@ const tickingarea: CommandInfo = {
           signatureValue: "<circle>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<center>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("center"),
         {
           value: "int",
           signatureValue: "<radius>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
+          // todo: dynamic if possible
           value: "todo",
           signatureValue: "[name]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: ["true", "false"],
@@ -74,11 +65,7 @@ const tickingarea: CommandInfo = {
           signatureValue: "<mode>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("position"),
       ],
     },
     {
@@ -89,9 +76,10 @@ const tickingarea: CommandInfo = {
           type: ParamType.keyword,
         },
         {
+          // todo: dynamic if possible
           value: "todo",
           signatureValue: "<name>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -125,11 +113,7 @@ const tickingarea: CommandInfo = {
           signatureValue: "<mode>",
           type: ParamType.keyword,
         },
-        {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("position"),
         {
           value: ["true", "false"],
           signatureValue: "[preload]",
@@ -145,9 +129,10 @@ const tickingarea: CommandInfo = {
           type: ParamType.keyword,
         },
         {
+          // todo: dynamic if possible
           value: "todo",
           signatureValue: "<name>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: ["true", "false"],
