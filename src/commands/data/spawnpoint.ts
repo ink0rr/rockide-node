@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const spawnpoint: CommandInfo = {
@@ -11,11 +12,7 @@ const spawnpoint: CommandInfo = {
           signatureValue: "[player]",
           type: ParamType.playerSelector,
         },
-        {
-          value: "position",
-          signatureValue: "[spawnPos]",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("spawnPos"),
       ],
     },
   ],
