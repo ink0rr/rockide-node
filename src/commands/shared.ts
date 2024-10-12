@@ -82,6 +82,8 @@ function getParamRegex(info: ParamInfo): RegExp {
       return /-?(90|[1-8]?[0-9])/g;
     case ParamType.location:
       return /((~|\^|\d+)\.?)/g;
+    case ParamType.xpLevel:
+      return /-?(\d+)L?/g;
     case ParamType.itemNBT:
     case ParamType.rawJsonMessage:
       return /{[^]*?}/g;

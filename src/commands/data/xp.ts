@@ -7,23 +7,9 @@ const xp: CommandInfo = {
     {
       params: [
         {
-          value: "int",
+          value: ["20", "20L", "-20L"],
           signatureValue: "<amount>",
-          type: ParamType.keyword,
-        },
-        {
-          value: "selector",
-          signatureValue: "[player]",
-          type: ParamType.playerSelector,
-        },
-      ],
-    },
-    {
-      params: [
-        {
-          value: ["20", "20L"],
-          signatureValue: "<amount>",
-          type: ParamType.keyword,
+          type: ParamType.xpLevel,
         },
         {
           value: "selector",

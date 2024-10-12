@@ -38,4 +38,5 @@ export enum ParamType {
   subcommand = "subcommand",
   itemNBT = "itemNBT",
   rawJsonMessage = "rawJsonMessage",
+  xpLevel = "xpLevel",
 }
