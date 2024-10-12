@@ -34,7 +34,7 @@ const hud: CommandInfo = {
             "item_text",
           ],
           signatureValue: "[hud_element]",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
