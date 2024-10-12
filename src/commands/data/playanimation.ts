@@ -9,32 +9,32 @@ const playanimation: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
           value: "todo",
           signatureValue: "<animation>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "todo",
           signatureValue: "[next_state]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "int",
           signatureValue: "[blend_out_time]",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
         {
           value: "todo",
           signatureValue: "[stop_expression]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "todo",
           signatureValue: "[controller]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
