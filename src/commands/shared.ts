@@ -231,7 +231,7 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
             if (!param) {
               return false;
             }
-            if (param.type === ParamType.itemNBT) {
+            if (param.type === ParamType.itemNBT && arg.startsWith("{") && arg.endsWith("}")) {
               skipCurly = true;
               return true;
             }
