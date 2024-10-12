@@ -24,7 +24,6 @@ import hud from "./data/hud";
 import inputpermission from "./data/inputpermission";
 import kick from "./data/kick";
 import kill from "./data/kill";
-import list from "./data/list";
 import locate from "./data/locate";
 import loot from "./data/loot";
 import me from "./data/me";
@@ -106,7 +105,6 @@ export const commands: CommandInfo[] = [
   inputpermission,
   kick,
   kill,
-  list,
   locate,
   loot,
   me,
