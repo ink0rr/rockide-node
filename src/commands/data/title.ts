@@ -47,7 +47,7 @@ const title: CommandInfo = {
         {
           value: "string",
           signatureValue: "<titleText>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -66,17 +66,17 @@ const title: CommandInfo = {
         {
           value: "int",
           signatureValue: "<fadeIn>",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
         {
           value: "int",
           signatureValue: "<stay>",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
         {
           value: "int",
           signatureValue: "<fadeOut>",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
       ],
     },
