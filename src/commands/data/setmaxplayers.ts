@@ -7,9 +7,9 @@ const setmaxplayers: CommandInfo = {
     {
       params: [
         {
-          value: "int",
+          value: Array.from({ length: 10 }).map(String),
           signatureValue: "<maxPlayers>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
       ],
     },
