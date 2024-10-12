@@ -37,4 +37,5 @@ export enum ParamType {
   executeChainedOption = "executeChainedOption",
   subcommand = "subcommand",
   itemNBT = "itemNBT",
+  rawJsonMessage = "rawJsonMessage",
 }

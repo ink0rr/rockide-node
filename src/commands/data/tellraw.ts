@@ -12,7 +12,20 @@ const tellraw: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["unknown_JSON_OBJECT"],
+          value: [
+            JSON.stringify({ rawtext: [] }),
+            JSON.stringify({ translate: "" }),
+            JSON.stringify({ text: "" }),
+            JSON.stringify({ with: [] }),
+            JSON.stringify({ score: { name: "", objective: "" } }),
+          ],
+          documentation: [
+            "Provides a raw-text equivalent of the current message.",
+            "Provides a translation token where, if the client has an available resource in the players' language which matches the token, will get translated on the client.",
+            "Provides a string literal value to use.",
+            "Arguments for the translation token. Can be either an array of strings or RawMessage containing an array of raw text objects.",
+            "Provides a token that will get replaced with the value of a score.",
+          ],
           signatureValue: "<raw json message>",
           type: ParamType.keyword,
         },

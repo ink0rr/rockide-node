@@ -82,6 +82,7 @@ function getParamRegex(info: ParamInfo): RegExp {
     case ParamType.location:
       return /((~|\^|\d+)\.?)/g;
     case ParamType.itemNBT:
+    case ParamType.rawJsonMessage:
       return /{[^]*?}/g;
     default: {
       if (Array.isArray(info.value)) {
@@ -262,7 +263,11 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
               executeIndex = i;
               return true;
             }
-            if (param.type === ParamType.itemNBT && arg.startsWith("{") && arg.endsWith("}")) {
+            if (
+              [ParamType.itemNBT, ParamType.rawJsonMessage].includes(param.type) &&
+              arg.startsWith("{") &&
+              arg.endsWith("}")
+            ) {
               skipCurly = true;
               return true;
             }
