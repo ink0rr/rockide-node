@@ -50,7 +50,6 @@ import setmaxplayers from "./data/setmaxplayers";
 import setworldspawn from "./data/setworldspawn";
 import spawnpoint from "./data/spawnpoint";
 import spreadplayers from "./data/spreadplayers";
-import stop from "./data/stop";
 import stopsound from "./data/stopsound";
 import structure from "./data/structure";
 import summon from "./data/summon";
@@ -127,7 +126,6 @@ export const commands: CommandInfo[] = [
   setworldspawn,
   spawnpoint,
   spreadplayers,
-  stop,
   stopsound,
   structure,
   summon,
