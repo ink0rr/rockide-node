@@ -9,7 +9,7 @@ const tag: CommandInfo = {
         {
           value: "*",
           signatureValue: "<entity>",
-          type: ParamType.keyword,
+          type: ParamType.selectorWildcard,
         },
         {
           value: ["add", "remove"],
@@ -17,9 +17,9 @@ const tag: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: [],
+          value: ["todotag"],
           signatureValue: "<name>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -28,7 +28,7 @@ const tag: CommandInfo = {
         {
           value: "*",
           signatureValue: "<entity>",
-          type: ParamType.keyword,
+          type: ParamType.selectorWildcard,
         },
         {
           value: ["list"],
