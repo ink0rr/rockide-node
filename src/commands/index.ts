@@ -40,7 +40,6 @@ import recipe from "./data/recipe";
 import reload from "./data/reload";
 import replaceitem from "./data/replaceitem";
 import ride from "./data/ride";
-import save from "./data/save";
 import say from "./data/say";
 import schedule from "./data/schedule";
 import scoreboard from "./data/scoreboard";
@@ -119,7 +118,6 @@ export const commands: CommandInfo[] = [
   reload,
   replaceitem,
   ride,
-  save,
   say,
   schedule,
   scoreboard,
