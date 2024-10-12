@@ -32,7 +32,7 @@ const locate: CommandInfo = {
             "minecraft:trial_chambers",
           ],
           signatureValue: "<structure>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
           value: ["true", "false"],
@@ -137,7 +137,7 @@ const locate: CommandInfo = {
             "cherry_grove",
           ],
           signatureValue: "<biome>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
