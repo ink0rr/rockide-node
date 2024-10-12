@@ -35,4 +35,5 @@ export enum ParamType {
   pitch = "pitch",
   executeChainedOption = "executeChainedOption",
   subcommand = "subcommand",
+  itemNBT = "itemNBT",
 }

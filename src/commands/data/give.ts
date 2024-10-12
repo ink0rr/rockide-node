@@ -1,3 +1,4 @@
+import { itemIdentifier } from "../../literals/item_identifier";
 import { CommandInfo, ParamType } from "../types";
 
 const give: CommandInfo = {
@@ -12,24 +13,29 @@ const give: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          // todo: dynamic item
+          value: itemIdentifier,
           signatureValue: "<itemName>",
           type: ParamType.keyword,
         },
         {
           value: "int",
           signatureValue: "[amount]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: "int",
           signatureValue: "[data]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
-          value: ["unknown_JSON_OBJECT"],
+          value: [
+            '{"item_lock": {"mode": "lock_in_slot"}}',
+            '{"item_lock": {"mode": "lock_in_inventory"}}',
+            '{"keep_on_death": {}}',
+          ],
           signatureValue: "[components]",
-          type: ParamType.keyword,
+          type: ParamType.itemNBT,
         },
       ],
     },

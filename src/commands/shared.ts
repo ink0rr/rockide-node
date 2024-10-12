@@ -59,6 +59,8 @@ function getParamRegex(info: ParamInfo): RegExp {
       return /\d+/g;
     case ParamType.location:
       return /((~|\^|\d+)\.?)/g;
+    case ParamType.itemNBT:
+      return /{[^]*?}/g;
     default: {
       if (Array.isArray(info.value)) {
         return new RegExp(`\\b${info.value.join("|")}\\b`, "g");
@@ -68,12 +70,17 @@ function getParamRegex(info: ParamInfo): RegExp {
   }
 }
 
+type CompletionOpts = {
+  skipCurly?: boolean;
+  isInQuote?: boolean;
+};
+
 /**
  * Convert ParamInfo to CompletionItem
  * @param info
  * @returns
  */
-function getParamCompletion(info: ParamInfo): CompletionItem | CompletionItem[] {
+function getParamCompletion(info: ParamInfo, opts?: CompletionOpts): CompletionItem | CompletionItem[] {
   const getKind = (type: ParamType) => {
     switch (type) {
       case ParamType.keyword:
@@ -130,6 +137,9 @@ function getParamCompletion(info: ParamInfo): CompletionItem | CompletionItem[] 
         if (Array.isArray(documentation)) {
           documentation = documentation[i];
         }
+        if (opts?.skipCurly) {
+          v = v.slice(1, v.length - 1);
+        }
         const completion = new CompletionItem(v, getKind(info.type));
         completion.documentation = documentation;
         return completion;
@@ -163,9 +173,19 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
       if (!overloads) {
         return [];
       }
+      // const [, ...args] = line
+      //   .slice(match[0].length)
+      //   .split(/\s+/g)
+      //   .map((arg) => {
+      //     const ok = new RegExp(/((~|\^)-?(\d+)?())/g).test(arg);
+      //     if (!ok) {
+      //       return arg;
+      //     }
+      //     return arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [];
+      //   })
+      //   .flat();
       const [, ...args] = line
-        .slice(match[0].length)
-        .split(/\s+/g)
+        .split(/\b\s+/g)
         .map((arg) => {
           const ok = new RegExp(/((~|\^)-?(\d+)?())/g).test(arg);
           if (!ok) {
@@ -183,6 +203,7 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
       let tempOverloads = [...overloads];
       let executeIndex = 0;
       let runIndex = 0;
+      let skipCurly = false;
       for (let i = 0; i < args.length; i++) {
         const arg = args[i];
         // Reset tempOverloads for exeucte index
@@ -210,6 +231,10 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
             if (!param) {
               return false;
             }
+            if (param.type === ParamType.itemNBT) {
+              skipCurly = true;
+              return true;
+            }
             const regex = getParamRegex(param);
             if (i === args.length - 1) {
               return !regex.test(arg);
@@ -232,7 +257,11 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
         return commandCompletion(ctx, line);
       }
       const completions = tempOverloads
-        .map((overload) => getParamCompletion(overload.params[args.length - 1 - executeIndex]))
+        .map((overload) =>
+          getParamCompletion(overload.params[args.length - 1 - executeIndex], {
+            skipCurly,
+          }),
+        )
         .flat()
         .filter((v, i, s) => s.findIndex((obj) => JSON.stringify(obj) === JSON.stringify(v)) === i);
       return completions;
