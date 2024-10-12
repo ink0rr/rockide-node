@@ -42,6 +42,10 @@ function getParamValue(info: ParamInfo) {
       return "0.0";
     case ParamType.location:
       return ["~", "^", "0"];
+    case ParamType.yaw:
+      return ["0.0", "-90.0", "90.0", "-180.0"];
+    case ParamType.pitch:
+      return ["0.0", "-90.0", "90.0"];
     case ParamType.executeChainedOption:
       return execute.overloads!.map((overload) => overload.params[0].value).flat();
     default:
@@ -68,6 +72,10 @@ function getParamRegex(info: ParamInfo): RegExp {
       return /("[^"]*"|\w+)/g;
     case ParamType.number:
       return /\d+/g;
+    case ParamType.yaw:
+      return /-?(180|1[0-7][0-9]|[1-9]?[0-9])/g;
+    case ParamType.pitch:
+      return /-?(90|[1-8]?[0-9])/g;
     case ParamType.location:
       return /((~|\^|\d+)\.?)/g;
     case ParamType.itemNBT:
@@ -238,6 +246,9 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
               return true;
             }
             const param = overload.params[i - executeIndex];
+            if (!param) {
+              return false;
+            }
             // run subcommand check
             if (param.type === ParamType.subcommand) {
               runIndex = i;
@@ -247,9 +258,6 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
             if (param.type === ParamType.executeChainedOption) {
               executeIndex = i;
               return true;
-            }
-            if (!param) {
-              return false;
             }
             if (param.type === ParamType.itemNBT && arg.startsWith("{") && arg.endsWith("}")) {
               skipCurly = true;
