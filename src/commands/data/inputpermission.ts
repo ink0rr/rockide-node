@@ -19,7 +19,7 @@ const inputpermission: CommandInfo = {
         {
           value: ["movement", "camera"],
           signatureValue: "<permission>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
           value: ["enabled", "disabled"],
@@ -43,7 +43,7 @@ const inputpermission: CommandInfo = {
         {
           value: ["movement", "camera"],
           signatureValue: "<permission>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
           value: ["enabled", "disabled"],
