@@ -7,14 +7,14 @@ const scriptevent: CommandInfo = {
     {
       params: [
         {
-          value: "todo",
+          value: "id",
           signatureValue: "<messageId>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "string",
           signatureValue: "<message>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
