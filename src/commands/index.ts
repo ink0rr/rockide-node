@@ -36,7 +36,6 @@ import particle from "./data/particle";
 import permission from "./data/permission";
 import playanimation from "./data/playanimation";
 import playsound from "./data/playsound";
-import project from "./data/project";
 import recipe from "./data/recipe";
 import reload from "./data/reload";
 import reloadconfig from "./data/reloadconfig";
@@ -117,7 +116,6 @@ export const commands: CommandInfo[] = [
   permission,
   playanimation,
   playsound,
-  project,
   recipe,
   reload,
   reloadconfig,
