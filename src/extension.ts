@@ -20,6 +20,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("rockide.reloadWorkspace", () => rockide.indexWorkspace()),
+    vscode.commands.registerCommand("rockide.insertParentheses", async () => {
+      await vscode.commands.executeCommand("cursorLeft");
+      await vscode.commands.executeCommand("editor.action.triggerParameterHints");
+    }),
 
     // json
     vscode.languages.registerCompletionItemProvider(jsonSelector, jsonProvider, "."),
@@ -31,6 +35,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     // molang
     vscode.languages.registerDocumentSemanticTokensProvider(jsonSelector, molangProvider, legend),
+    vscode.languages.registerSignatureHelpProvider(jsonSelector, molangProvider, "(", ",", " "),
   );
 }
 

@@ -1,15 +1,25 @@
 import * as vscode from "vscode";
-import { molangMath, molangNamespaces, molangQueries } from "./molang_data";
+import { createMolangContext } from "./molang_context";
+import { molangPrefixes } from "./molang_data";
 
 export function getMolangCompletions(document: vscode.TextDocument, position: vscode.Position) {
-  const molangRange = document.getWordRangeAtPosition(position, /\b(q|query)\.(\w+)?/);
-  if (molangRange) {
-    const prefix = document.getText(molangRange)[1] === "." ? "q" : "query";
-    return molangQueries.map((query) => `${prefix}.${query}`);
+  const ctx = createMolangContext(document, position);
+  const prefix = ctx.getPrefix();
+  const molangData = ctx.getMolangData(prefix);
+  if (molangData) {
+    return molangData.map(({ name, signature, description }) => {
+      const completion = new vscode.CompletionItem(`${prefix}.${name}`, vscode.CompletionItemKind.Method);
+      completion.documentation = description;
+      completion.detail = `${completion.label}${signature}`;
+      if (signature[0] !== ":") {
+        completion.insertText = `${completion.label}()`;
+        completion.command = {
+          title: "Insert Parentheses",
+          command: "rockide.insertParentheses",
+        };
+      }
+      return completion;
+    });
   }
-  const mathRange = document.getWordRangeAtPosition(position, /\bmath\.(\w+)?/);
-  if (mathRange) {
-    return molangMath;
-  }
-  return molangNamespaces;
+  return molangPrefixes;
 }
