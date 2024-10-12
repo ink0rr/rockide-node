@@ -9,7 +9,7 @@ const titleraw: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["clear"],
@@ -23,7 +23,7 @@ const titleraw: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["reset"],
@@ -37,7 +37,7 @@ const titleraw: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["title", "subtitle", "actionbar"],
@@ -56,7 +56,7 @@ const titleraw: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["times"],

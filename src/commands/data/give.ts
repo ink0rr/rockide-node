@@ -9,7 +9,7 @@ const give: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],

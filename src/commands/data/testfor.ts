@@ -9,7 +9,7 @@ const testfor: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
       ],
     },

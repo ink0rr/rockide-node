@@ -9,7 +9,7 @@ const playanimation: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: "todo",

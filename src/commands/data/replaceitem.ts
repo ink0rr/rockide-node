@@ -58,7 +58,7 @@ const replaceitem: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<target>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: [
@@ -166,7 +166,7 @@ const replaceitem: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<target>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: [

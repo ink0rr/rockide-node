@@ -111,7 +111,7 @@ const summon: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<lookAtEntity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["entity_events", "minecraft:on_spawned"],

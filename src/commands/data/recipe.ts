@@ -14,7 +14,7 @@ const recipe: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["unlockablerecipevalues", "minecraft:bundle", "*"],
@@ -33,7 +33,7 @@ const recipe: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["unlockablerecipevalues", "minecraft:bundle", "*"],

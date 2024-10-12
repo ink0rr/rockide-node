@@ -9,7 +9,7 @@ const op: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
       ],
     },

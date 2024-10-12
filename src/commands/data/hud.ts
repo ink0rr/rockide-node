@@ -9,7 +9,7 @@ const hud: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<target>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["hide", "reset"],

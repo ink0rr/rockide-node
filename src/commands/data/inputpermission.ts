@@ -14,7 +14,7 @@ const inputpermission: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<targets>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["movement", "camera"],
@@ -38,7 +38,7 @@ const inputpermission: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<targets>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["movement", "camera"],

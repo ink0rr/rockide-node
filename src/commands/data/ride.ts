@@ -10,7 +10,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<riders>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["start_riding"],
@@ -20,7 +20,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<ride>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["teleport_rider", "teleport_ride"],
@@ -39,7 +39,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<riders>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["stop_riding"],
@@ -53,7 +53,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<rides>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["evict_riders"],
@@ -67,7 +67,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<rides>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["summon_rider"],
@@ -96,7 +96,7 @@ const ride: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<riders>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["summon_ride"],

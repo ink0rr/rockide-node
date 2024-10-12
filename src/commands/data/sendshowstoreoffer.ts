@@ -9,7 +9,7 @@ const sendshowstoreoffer: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["marketplace", "character"],
@@ -28,7 +28,7 @@ const sendshowstoreoffer: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<player>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["server"],

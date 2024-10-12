@@ -9,7 +9,7 @@ const kick: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<name>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: "string",

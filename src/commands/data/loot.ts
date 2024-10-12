@@ -53,7 +53,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
@@ -72,7 +72,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<players>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["loot"],
@@ -101,7 +101,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<players>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["kill"],
@@ -111,7 +111,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
@@ -169,7 +169,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
@@ -193,7 +193,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: [
@@ -257,7 +257,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: [
@@ -316,7 +316,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: [
@@ -356,7 +356,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
@@ -380,7 +380,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: [
@@ -415,7 +415,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
@@ -557,7 +557,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
@@ -601,7 +601,7 @@ const loot: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<entity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],

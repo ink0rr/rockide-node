@@ -29,7 +29,7 @@ const spreadplayers: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: "rot",

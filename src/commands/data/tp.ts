@@ -81,7 +81,7 @@ const tp: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<lookAtEntity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["true", "false"],
@@ -95,7 +95,7 @@ const tp: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: "position",
@@ -124,7 +124,7 @@ const tp: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: "position",
@@ -143,7 +143,7 @@ const tp: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: "position",
@@ -172,7 +172,7 @@ const tp: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: "position",
@@ -187,7 +187,7 @@ const tp: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<lookAtEntity>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["true", "false"],
@@ -201,7 +201,7 @@ const tp: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<destination>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
       ],
     },
@@ -210,12 +210,12 @@ const tp: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<victim>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: "selector",
           signatureValue: "<destination>",
-          type: ParamType.selector,
+          type: ParamType.playerSelector,
         },
         {
           value: ["true", "false"],
