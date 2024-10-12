@@ -7,27 +7,32 @@ const tag: CommandInfo = {
     {
       params: [
         {
-          value: "<player>",
-          type: ParamType.selectorWildcard,
-        },
-        {
-          value: ["add", "remove"],
+          value: "*",
+          signatureValue: "<entity>",
           type: ParamType.keyword,
         },
         {
-          value: "<name>",
-          type: ParamType.string,
+          value: ["add", "remove"],
+          signatureValue: "<action>",
+          type: ParamType.keyword,
+        },
+        {
+          value: [],
+          signatureValue: "<name>",
+          type: ParamType.keyword,
         },
       ],
     },
     {
       params: [
         {
-          value: "<player>",
-          type: ParamType.selectorWildcard,
+          value: "*",
+          signatureValue: "<entity>",
+          type: ParamType.keyword,
         },
         {
           value: ["list"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
       ],

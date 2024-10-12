@@ -8,10 +8,12 @@ const script: CommandInfo = {
       params: [
         {
           value: ["profiler"],
+          signatureValue: "<mode>",
           type: ParamType.keyword,
         },
         {
           value: ["start"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
       ],
@@ -20,10 +22,12 @@ const script: CommandInfo = {
       params: [
         {
           value: ["profiler"],
+          signatureValue: "<mode>",
           type: ParamType.keyword,
         },
         {
           value: ["stop"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
       ],
@@ -32,10 +36,12 @@ const script: CommandInfo = {
       params: [
         {
           value: ["watchdog"],
+          signatureValue: "<mode>",
           type: ParamType.keyword,
         },
         {
           value: ["exportstats"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
       ],

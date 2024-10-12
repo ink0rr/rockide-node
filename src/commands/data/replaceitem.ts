@@ -8,34 +8,42 @@ const replaceitem: CommandInfo = {
       params: [
         {
           value: ["block"],
+          signatureValue: "<block>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["slot.container"],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "<itemName>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[amount]",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[data]",
           type: ParamType.keyword,
         },
         {
           value: ["unknown_JSON_OBJECT"],
+          signatureValue: "[components]",
           type: ParamType.keyword,
         },
       ],
@@ -44,11 +52,13 @@ const replaceitem: CommandInfo = {
       params: [
         {
           value: ["entity"],
+          signatureValue: "<entity>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<target>",
+          type: ParamType.selector,
         },
         {
           value: [
@@ -67,26 +77,32 @@ const replaceitem: CommandInfo = {
             "slot.chest",
             "slot.equippable",
           ],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "<itemName>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[amount]",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[data]",
           type: ParamType.keyword,
         },
         {
           value: ["unknown_JSON_OBJECT"],
+          signatureValue: "[components]",
           type: ParamType.keyword,
         },
       ],
@@ -95,38 +111,47 @@ const replaceitem: CommandInfo = {
       params: [
         {
           value: ["block"],
+          signatureValue: "<block>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["slot.container"],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: ["destroy", "keep"],
+          signatureValue: "<oldItemHandling>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "<itemName>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[amount]",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[data]",
           type: ParamType.keyword,
         },
         {
           value: ["unknown_JSON_OBJECT"],
+          signatureValue: "[components]",
           type: ParamType.keyword,
         },
       ],
@@ -135,11 +160,13 @@ const replaceitem: CommandInfo = {
       params: [
         {
           value: ["entity"],
+          signatureValue: "<entity>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<target>",
+          type: ParamType.selector,
         },
         {
           value: [
@@ -158,30 +185,37 @@ const replaceitem: CommandInfo = {
             "slot.chest",
             "slot.equippable",
           ],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: ["destroy", "keep"],
+          signatureValue: "<oldItemHandling>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "<itemName>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[amount]",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[data]",
           type: ParamType.keyword,
         },
         {
           value: ["unknown_JSON_OBJECT"],
+          signatureValue: "[components]",
           type: ParamType.keyword,
         },
       ],

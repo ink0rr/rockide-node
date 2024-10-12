@@ -8,6 +8,7 @@ const save: CommandInfo = {
       params: [
         {
           value: ["query", "hold", "resume"],
+          signatureValue: "<mode>",
           type: ParamType.keyword,
         },
       ],

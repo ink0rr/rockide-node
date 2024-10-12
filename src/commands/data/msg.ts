@@ -8,10 +8,12 @@ const msg: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<target>",
+          type: ParamType.selector,
         },
         {
           value: "string",
+          signatureValue: "<message>",
           type: ParamType.keyword,
         },
       ],

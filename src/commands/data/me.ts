@@ -8,6 +8,7 @@ const me: CommandInfo = {
       params: [
         {
           value: "string",
+          signatureValue: "<message>",
           type: ParamType.keyword,
         },
       ],

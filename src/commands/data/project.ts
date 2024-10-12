@@ -8,10 +8,12 @@ const project: CommandInfo = {
       params: [
         {
           value: ["export"],
+          signatureValue: "<subcommand>",
           type: ParamType.keyword,
         },
         {
           value: ["project", "template", "world"],
+          signatureValue: "<exportType>",
           type: ParamType.keyword,
         },
       ],

@@ -8,10 +8,12 @@ const stopsound: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: "todo",
+          signatureValue: "[sound]",
           type: ParamType.keyword,
         },
       ],

@@ -8,14 +8,17 @@ const recipe: CommandInfo = {
       params: [
         {
           value: ["give"],
+          signatureValue: "<give>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: ["unlockablerecipevalues", "minecraft:bundle", "*"],
+          signatureValue: "<recipe>",
           type: ParamType.keyword,
         },
       ],
@@ -24,14 +27,17 @@ const recipe: CommandInfo = {
       params: [
         {
           value: ["take"],
+          signatureValue: "<take>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: ["unlockablerecipevalues", "minecraft:bundle", "*"],
+          signatureValue: "<recipe>",
           type: ParamType.keyword,
         },
       ],

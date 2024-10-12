@@ -8,10 +8,12 @@ const tellraw: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<target>",
+          type: ParamType.selector,
         },
         {
           value: ["unknown_JSON_OBJECT"],
+          signatureValue: "<raw json message>",
           type: ParamType.keyword,
         },
       ],

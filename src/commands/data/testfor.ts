@@ -8,7 +8,8 @@ const testfor: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<victim>",
+          type: ParamType.selector,
         },
       ],
     },

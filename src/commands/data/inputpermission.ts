@@ -8,18 +8,22 @@ const inputpermission: CommandInfo = {
       params: [
         {
           value: ["set"],
+          signatureValue: "<option>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<targets>",
+          type: ParamType.selector,
         },
         {
           value: ["movement", "camera"],
+          signatureValue: "<permission>",
           type: ParamType.keyword,
         },
         {
           value: ["enabled", "disabled"],
+          signatureValue: "<state>",
           type: ParamType.keyword,
         },
       ],
@@ -28,18 +32,22 @@ const inputpermission: CommandInfo = {
       params: [
         {
           value: ["query"],
+          signatureValue: "<option>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<targets>",
+          type: ParamType.selector,
         },
         {
           value: ["movement", "camera"],
+          signatureValue: "<permission>",
           type: ParamType.keyword,
         },
         {
           value: ["enabled", "disabled"],
+          signatureValue: "[state]",
           type: ParamType.keyword,
         },
       ],

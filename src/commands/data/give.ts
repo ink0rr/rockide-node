@@ -8,22 +8,27 @@ const give: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "<itemName>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[amount]",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[data]",
           type: ParamType.keyword,
         },
         {
           value: ["unknown_JSON_OBJECT"],
+          signatureValue: "[components]",
           type: ParamType.keyword,
         },
       ],

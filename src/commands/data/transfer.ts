@@ -8,14 +8,17 @@ const transfer: CommandInfo = {
       params: [
         {
           value: "todo",
+          signatureValue: "<pfidOrMSA>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
+          signatureValue: "<server>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<port>",
           type: ParamType.keyword,
         },
       ],

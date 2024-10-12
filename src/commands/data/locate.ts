@@ -8,6 +8,7 @@ const locate: CommandInfo = {
       params: [
         {
           value: ["structure"],
+          signatureValue: "<subcommand>",
           type: ParamType.keyword,
         },
         {
@@ -30,10 +31,12 @@ const locate: CommandInfo = {
             "minecraft:trail_ruins",
             "minecraft:trial_chambers",
           ],
+          signatureValue: "<structure>",
           type: ParamType.keyword,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[useNewChunksOnly]",
           type: ParamType.keyword,
         },
       ],
@@ -42,6 +45,7 @@ const locate: CommandInfo = {
       params: [
         {
           value: ["biome"],
+          signatureValue: "<subcommand>",
           type: ParamType.keyword,
         },
         {
@@ -132,6 +136,7 @@ const locate: CommandInfo = {
             "mangrove_swamp",
             "cherry_grove",
           ],
+          signatureValue: "<biome>",
           type: ParamType.keyword,
         },
       ],

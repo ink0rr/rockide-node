@@ -8,10 +8,12 @@ const weather: CommandInfo = {
       params: [
         {
           value: ["clear", "rain", "thunder"],
+          signatureValue: "<type>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[duration]",
           type: ParamType.keyword,
         },
       ],
@@ -20,6 +22,7 @@ const weather: CommandInfo = {
       params: [
         {
           value: ["query"],
+          signatureValue: "<query>",
           type: ParamType.keyword,
         },
       ],

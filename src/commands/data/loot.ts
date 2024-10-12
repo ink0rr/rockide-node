@@ -8,22 +8,27 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["spawn"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["loot"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
+          signatureValue: "<loot_table>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -32,22 +37,27 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["spawn"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["kill"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -56,22 +66,27 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["give"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<players>",
+          type: ParamType.selector,
         },
         {
           value: ["loot"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
+          signatureValue: "<loot_table>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -80,22 +95,27 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["give"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<players>",
+          type: ParamType.selector,
         },
         {
           value: ["kill"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -104,22 +124,27 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["insert"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["loot"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
+          signatureValue: "<loot_table>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -128,22 +153,27 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["insert"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["kill"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -152,15 +182,18 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["replace"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: ["entity"],
+          signatureValue: "<entity>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: [
@@ -179,26 +212,32 @@ const loot: CommandInfo = {
             "slot.chest",
             "slot.equippable",
           ],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<count>",
           type: ParamType.keyword,
         },
         {
           value: ["loot"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
+          signatureValue: "<loot_table>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -207,15 +246,18 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["replace"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: ["entity"],
+          signatureValue: "<entity>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: [
@@ -234,22 +276,27 @@ const loot: CommandInfo = {
             "slot.chest",
             "slot.equippable",
           ],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: ["loot"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
+          signatureValue: "<loot_table>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -258,15 +305,18 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["replace"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: ["entity"],
+          signatureValue: "<entity>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: [
@@ -285,26 +335,32 @@ const loot: CommandInfo = {
             "slot.chest",
             "slot.equippable",
           ],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<count>",
           type: ParamType.keyword,
         },
         {
           value: ["kill"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -313,15 +369,18 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["replace"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: ["entity"],
+          signatureValue: "<entity>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: [
@@ -340,22 +399,27 @@ const loot: CommandInfo = {
             "slot.chest",
             "slot.equippable",
           ],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: ["kill"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -364,38 +428,47 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["replace"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: ["block"],
+          signatureValue: "<block>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["slot.container"],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<count>",
           type: ParamType.keyword,
         },
         {
           value: ["loot"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
+          signatureValue: "<loot_table>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -404,34 +477,42 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["replace"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: ["block"],
+          signatureValue: "<block>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["slot.container"],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: ["loot"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
+          signatureValue: "<loot_table>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -440,38 +521,47 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["replace"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: ["block"],
+          signatureValue: "<block>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["slot.container"],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<count>",
           type: ParamType.keyword,
         },
         {
           value: ["kill"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],
@@ -480,34 +570,42 @@ const loot: CommandInfo = {
       params: [
         {
           value: ["replace"],
+          signatureValue: "<target>",
           type: ParamType.keyword,
         },
         {
           value: ["block"],
+          signatureValue: "<block>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["slot.container"],
+          signatureValue: "<slotType>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<slotId>",
           type: ParamType.keyword,
         },
         {
           value: ["kill"],
+          signatureValue: "<source>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<entity>",
+          type: ParamType.selector,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "[<tool>|mainhand|offhand]",
           type: ParamType.keyword,
         },
       ],

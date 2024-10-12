@@ -8,11 +8,13 @@ const xp: CommandInfo = {
       params: [
         {
           value: "int",
+          signatureValue: "<amount>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "[player]",
+          type: ParamType.selector,
         },
       ],
     },
@@ -20,11 +22,13 @@ const xp: CommandInfo = {
       params: [
         {
           value: ["20", "20L"],
+          signatureValue: "<amount>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "[player]",
+          type: ParamType.selector,
         },
       ],
     },

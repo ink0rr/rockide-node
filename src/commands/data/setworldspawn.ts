@@ -8,6 +8,7 @@ const setworldspawn: CommandInfo = {
       params: [
         {
           value: "position",
+          signatureValue: "[spawnPoint]",
           type: ParamType.keyword,
         },
       ],

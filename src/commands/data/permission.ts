@@ -8,6 +8,7 @@ const permission: CommandInfo = {
       params: [
         {
           value: ["list", "reload"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
       ],

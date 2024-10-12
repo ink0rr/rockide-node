@@ -8,10 +8,12 @@ const spawnpoint: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "[player]",
+          type: ParamType.selector,
         },
         {
           value: "position",
+          signatureValue: "[spawnPos]",
           type: ParamType.keyword,
         },
       ],

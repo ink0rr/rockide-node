@@ -8,10 +8,12 @@ const hud: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<target>",
+          type: ParamType.selector,
         },
         {
           value: ["hide", "reset"],
+          signatureValue: "<visible>",
           type: ParamType.keyword,
         },
         {
@@ -31,6 +33,7 @@ const hud: CommandInfo = {
             "status_effects",
             "item_text",
           ],
+          signatureValue: "[hud_element]",
           type: ParamType.keyword,
         },
       ],

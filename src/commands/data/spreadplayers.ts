@@ -8,26 +8,32 @@ const spreadplayers: CommandInfo = {
       params: [
         {
           value: "rot",
+          signatureValue: "<x>",
           type: ParamType.keyword,
         },
         {
           value: "rot",
+          signatureValue: "<z>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<spreadDistance>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<maxRange>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<victim>",
+          type: ParamType.selector,
         },
         {
           value: "rot",
+          signatureValue: "[maxHeight]",
           type: ParamType.keyword,
         },
       ],

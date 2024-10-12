@@ -8,10 +8,12 @@ const kick: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<name>",
+          type: ParamType.selector,
         },
         {
           value: "string",
+          signatureValue: "<reason>",
           type: ParamType.keyword,
         },
       ],

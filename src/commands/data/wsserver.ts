@@ -8,6 +8,7 @@ const wsserver: CommandInfo = {
       params: [
         {
           value: ["unknown_RAWTEXT"],
+          signatureValue: "<serverUri>",
           type: ParamType.keyword,
         },
       ],

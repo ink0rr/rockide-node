@@ -8,18 +8,22 @@ const setblock: CommandInfo = {
       params: [
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "<tileName>",
           type: ParamType.keyword,
         },
         {
           value: "blockState",
+          signatureValue: "<blockStates>",
           type: ParamType.keyword,
         },
         {
           value: ["replace", "destroy", "keep"],
+          signatureValue: "[oldBlockHandling]",
           type: ParamType.keyword,
         },
       ],
@@ -28,14 +32,17 @@ const setblock: CommandInfo = {
       params: [
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "<tileName>",
           type: ParamType.keyword,
         },
         {
           value: ["replace", "destroy", "keep"],
+          signatureValue: "[oldBlockHandling]",
           type: ParamType.keyword,
         },
       ],

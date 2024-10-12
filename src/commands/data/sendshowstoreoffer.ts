@@ -8,14 +8,17 @@ const sendshowstoreoffer: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: ["marketplace", "character"],
+          signatureValue: "<redirectType>",
           type: ParamType.keyword,
         },
         {
           value: "todo",
+          signatureValue: "<offerId>",
           type: ParamType.keyword,
         },
       ],
@@ -24,10 +27,12 @@ const sendshowstoreoffer: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: ["server"],
+          signatureValue: "<redirectType>",
           type: ParamType.keyword,
         },
       ],

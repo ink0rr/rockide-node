@@ -8,10 +8,12 @@ const time: CommandInfo = {
       params: [
         {
           value: ["add"],
+          signatureValue: "<mode>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<amount>",
           type: ParamType.keyword,
         },
       ],
@@ -20,10 +22,12 @@ const time: CommandInfo = {
       params: [
         {
           value: ["set"],
+          signatureValue: "<mode>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<amount>",
           type: ParamType.keyword,
         },
       ],
@@ -32,10 +36,12 @@ const time: CommandInfo = {
       params: [
         {
           value: ["set"],
+          signatureValue: "<mode>",
           type: ParamType.keyword,
         },
         {
           value: ["day", "sunrise", "noon", "sunset", "night", "midnight"],
+          signatureValue: "<time>",
           type: ParamType.keyword,
         },
       ],
@@ -44,10 +50,12 @@ const time: CommandInfo = {
       params: [
         {
           value: ["query"],
+          signatureValue: "<mode>",
           type: ParamType.keyword,
         },
         {
           value: ["daytime", "gametime", "day"],
+          signatureValue: "<time>",
           type: ParamType.keyword,
         },
       ],

@@ -13,10 +13,12 @@ const mobevent: CommandInfo = {
             "minecraft:ender_dragon_event",
             "events_enabled",
           ],
+          signatureValue: "<event>",
           type: ParamType.keyword,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[value]",
           type: ParamType.keyword,
         },
       ],

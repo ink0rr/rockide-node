@@ -8,26 +8,32 @@ const playsound: CommandInfo = {
       params: [
         {
           value: "todo",
+          signatureValue: "<sound>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "[player]",
+          type: ParamType.selector,
         },
         {
           value: "position",
+          signatureValue: "[position]",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[volume]",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[pitch]",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "[minimumVolume]",
           type: ParamType.keyword,
         },
       ],

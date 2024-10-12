@@ -8,28 +8,28 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["objectives"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
-          documentation: "Manages objectives.",
         },
         {
           value: ["add"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
-          documentation: "Adds a new objective to the scoreboard.",
         },
         {
-          value: "<name>",
-          type: ParamType.string,
-          documentation: "The unique name of the objective.",
+          value: [],
+          signatureValue: "<objective>",
+          type: ParamType.keyword,
         },
         {
           value: ["dummy"],
+          signatureValue: "<criteria>",
           type: ParamType.keyword,
-          documentation: "The type of the objective.",
         },
         {
-          value: "[displayName]",
-          type: ParamType.string,
-          documentation: "The display name of the objective.",
+          value: "todo",
+          signatureValue: "[displayName]",
+          type: ParamType.keyword,
         },
       ],
     },
@@ -37,18 +37,18 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["objectives"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
-          documentation: "Manages objectives.",
         },
         {
           value: ["remove"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
-          documentation: "Removes an objective from the scoreboard.",
         },
         {
-          value: "<name>",
-          type: ParamType.string,
-          documentation: "The unique name of the objective.",
+          value: [],
+          signatureValue: "<objective>",
+          type: ParamType.keyword,
         },
       ],
     },
@@ -56,13 +56,13 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["objectives"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
-          documentation: "Manages objectives.",
         },
         {
           value: ["list"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
-          documentation: "Lists all objectives on the scoreboard.",
         },
       ],
     },
@@ -70,28 +70,28 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["objectives"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
-          documentation: "Manages objectives.",
         },
         {
           value: ["setdisplay"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
-          documentation: "Sets the display of an objective.",
         },
         {
           value: ["list", "sidebar"],
+          signatureValue: "<displaySlot>",
           type: ParamType.keyword,
-          documentation: "The display type of the objective.",
         },
         {
-          value: "<name>",
-          type: ParamType.string,
-          documentation: "The unique name of the objective.",
+          value: [],
+          signatureValue: "[objective]",
+          type: ParamType.keyword,
         },
         {
           value: ["ascending", "descending"],
+          signatureValue: "[sortOrder]",
           type: ParamType.keyword,
-          documentation: "The order of the objective.",
         },
       ],
     },
@@ -99,23 +99,23 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["objectives"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
-          documentation: "Manages objectives.",
         },
         {
           value: ["setdisplay"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
-          documentation: "Sets the display of an objective.",
         },
         {
           value: ["belowname"],
+          signatureValue: "<displaySlot>",
           type: ParamType.keyword,
-          documentation: "The display type of the objective.",
         },
         {
-          value: "<name>",
-          type: ParamType.string,
-          documentation: "The unique name of the objective.",
+          value: [],
+          signatureValue: "[objective]",
+          type: ParamType.keyword,
         },
       ],
     },
@@ -123,18 +123,18 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["players"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
-          documentation: "Manages player scores.",
         },
         {
           value: ["list"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
-          documentation: "Lists all scores for the player.",
         },
         {
-          value: "<selector>",
-          type: ParamType.selectorWildcard,
-          documentation: "The player to list the scores for.",
+          value: "*",
+          signatureValue: "[playername]",
+          type: ParamType.keyword,
         },
       ],
     },
@@ -142,19 +142,23 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["players"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
         },
         {
           value: ["reset"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
         {
-          value: "<selector>",
-          type: ParamType.selectorWildcard,
+          value: "*",
+          signatureValue: "<player>",
+          type: ParamType.keyword,
         },
         {
-          value: "<name>",
-          type: ParamType.string,
+          value: [],
+          signatureValue: "[objective]",
+          type: ParamType.keyword,
         },
       ],
     },
@@ -162,26 +166,32 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["players"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
         },
         {
           value: ["test"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
         {
-          value: "<selector>",
-          type: ParamType.selectorWildcard,
+          value: "*",
+          signatureValue: "<player>",
+          type: ParamType.keyword,
         },
         {
-          value: "<name>",
-          type: ParamType.string,
-        },
-        {
-          value: ["0", "1", "2"],
+          value: [],
+          signatureValue: "<objective>",
           type: ParamType.keyword,
         },
         {
           value: ["0", "1", "2"],
+          signatureValue: "<min>",
+          type: ParamType.keyword,
+        },
+        {
+          value: ["0", "1", "2"],
+          signatureValue: "[max]",
           type: ParamType.keyword,
         },
       ],
@@ -190,26 +200,32 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["players"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
         },
         {
           value: ["random"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
         {
-          value: "<selector>",
-          type: ParamType.selectorWildcard,
+          value: "*",
+          signatureValue: "<player>",
+          type: ParamType.keyword,
         },
         {
-          value: "<name>",
-          type: ParamType.string,
-        },
-        {
-          value: "int",
+          value: [],
+          signatureValue: "<objective>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<min>",
+          type: ParamType.keyword,
+        },
+        {
+          value: "int",
+          signatureValue: "<max>",
           type: ParamType.keyword,
         },
       ],
@@ -218,22 +234,27 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["players"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
         },
         {
           value: ["set", "add", "remove"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
         {
-          value: "<selector>",
-          type: ParamType.selectorWildcard,
+          value: "*",
+          signatureValue: "<player>",
+          type: ParamType.keyword,
         },
         {
-          value: "<name>",
-          type: ParamType.string,
+          value: [],
+          signatureValue: "<objective>",
+          type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<count>",
           type: ParamType.keyword,
         },
       ],
@@ -242,31 +263,38 @@ const scoreboard: CommandInfo = {
       params: [
         {
           value: ["players"],
+          signatureValue: "<category>",
           type: ParamType.keyword,
         },
         {
           value: ["operation"],
+          signatureValue: "<action>",
           type: ParamType.keyword,
         },
         {
-          value: "<selector>",
-          type: ParamType.selectorWildcard,
+          value: "*",
+          signatureValue: "<targetName>",
+          type: ParamType.keyword,
         },
         {
-          value: "<name>",
-          type: ParamType.string,
+          value: [],
+          signatureValue: "<targetObjective>",
+          type: ParamType.keyword,
         },
         {
           value: ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><"],
+          signatureValue: "<operation>",
           type: ParamType.keyword,
         },
         {
-          value: "<selector>",
-          type: ParamType.selectorWildcard,
+          value: "*",
+          signatureValue: "<selector>",
+          type: ParamType.keyword,
         },
         {
-          value: "<name>",
-          type: ParamType.string,
+          value: [],
+          signatureValue: "<objective>",
+          type: ParamType.keyword,
         },
       ],
     },

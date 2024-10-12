@@ -100,6 +100,7 @@ const help: CommandInfo = {
             "reloadconfig",
             "script",
           ],
+          signatureValue: "[command]",
           type: ParamType.keyword,
         },
       ],
@@ -108,6 +109,7 @@ const help: CommandInfo = {
       params: [
         {
           value: "int",
+          signatureValue: "<page>",
           type: ParamType.keyword,
         },
       ],

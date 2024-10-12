@@ -8,10 +8,12 @@ const titleraw: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: ["clear"],
+          signatureValue: "<clear>",
           type: ParamType.keyword,
         },
       ],
@@ -20,10 +22,12 @@ const titleraw: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: ["reset"],
+          signatureValue: "<reset>",
           type: ParamType.keyword,
         },
       ],
@@ -32,14 +36,17 @@ const titleraw: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: ["title", "subtitle", "actionbar"],
+          signatureValue: "<titleLocation>",
           type: ParamType.keyword,
         },
         {
           value: ["unknown_JSON_OBJECT"],
+          signatureValue: "<raw json titleText>",
           type: ParamType.keyword,
         },
       ],
@@ -48,22 +55,27 @@ const titleraw: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<player>",
+          type: ParamType.selector,
         },
         {
           value: ["times"],
+          signatureValue: "<times>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<fadeIn>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<stay>",
           type: ParamType.keyword,
         },
         {
           value: "int",
+          signatureValue: "<fadeOut>",
           type: ParamType.keyword,
         },
       ],

@@ -8,10 +8,12 @@ const particle: CommandInfo = {
       params: [
         {
           value: "todo",
+          signatureValue: "<effect>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "[position]",
           type: ParamType.keyword,
         },
       ],

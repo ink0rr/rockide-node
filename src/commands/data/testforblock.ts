@@ -8,14 +8,17 @@ const testforblock: CommandInfo = {
       params: [
         {
           value: "position",
+          signatureValue: "<position>",
           type: ParamType.keyword,
         },
         {
           value: ["minecraft:dirt", "dirt", "todo"],
+          signatureValue: "<tileName>",
           type: ParamType.keyword,
         },
         {
           value: "blockState",
+          signatureValue: "[blockStates]",
           type: ParamType.keyword,
         },
       ],

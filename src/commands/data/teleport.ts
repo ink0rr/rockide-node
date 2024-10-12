@@ -8,10 +8,12 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "position",
+          signatureValue: "<destination>",
           type: ParamType.keyword,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[checkForBlocks]",
           type: ParamType.keyword,
         },
       ],
@@ -20,18 +22,22 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "position",
+          signatureValue: "<destination>",
           type: ParamType.keyword,
         },
         {
           value: "rot",
+          signatureValue: "[yRot]",
           type: ParamType.keyword,
         },
         {
           value: "rot",
+          signatureValue: "[xRot]",
           type: ParamType.keyword,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[checkForBlocks]",
           type: ParamType.keyword,
         },
       ],
@@ -40,18 +46,22 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "position",
+          signatureValue: "<destination>",
           type: ParamType.keyword,
         },
         {
           value: ["facing"],
+          signatureValue: "<facing>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<lookAtPosition>",
           type: ParamType.keyword,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[checkForBlocks]",
           type: ParamType.keyword,
         },
       ],
@@ -60,18 +70,22 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "position",
+          signatureValue: "<destination>",
           type: ParamType.keyword,
         },
         {
           value: ["facing"],
+          signatureValue: "<facing>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<lookAtEntity>",
+          type: ParamType.selector,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[checkForBlocks]",
           type: ParamType.keyword,
         },
       ],
@@ -80,22 +94,27 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<victim>",
+          type: ParamType.selector,
         },
         {
           value: "position",
+          signatureValue: "<destination>",
           type: ParamType.keyword,
         },
         {
           value: "rot",
+          signatureValue: "[yRot]",
           type: ParamType.keyword,
         },
         {
           value: "rot",
+          signatureValue: "[xRot]",
           type: ParamType.keyword,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[checkForBlocks]",
           type: ParamType.keyword,
         },
       ],
@@ -104,14 +123,17 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<victim>",
+          type: ParamType.selector,
         },
         {
           value: "position",
+          signatureValue: "<destination>",
           type: ParamType.keyword,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[checkForBlocks]",
           type: ParamType.keyword,
         },
       ],
@@ -120,22 +142,27 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<victim>",
+          type: ParamType.selector,
         },
         {
           value: "position",
+          signatureValue: "<destination>",
           type: ParamType.keyword,
         },
         {
           value: ["facing"],
+          signatureValue: "<facing>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<lookAtPosition>",
           type: ParamType.keyword,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[checkForBlocks]",
           type: ParamType.keyword,
         },
       ],
@@ -144,22 +171,27 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<victim>",
+          type: ParamType.selector,
         },
         {
           value: "position",
+          signatureValue: "<destination>",
           type: ParamType.keyword,
         },
         {
           value: ["facing"],
+          signatureValue: "<facing>",
           type: ParamType.keyword,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<lookAtEntity>",
+          type: ParamType.selector,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[checkForBlocks]",
           type: ParamType.keyword,
         },
       ],
@@ -168,7 +200,8 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<destination>",
+          type: ParamType.selector,
         },
       ],
     },
@@ -176,14 +209,17 @@ const teleport: CommandInfo = {
       params: [
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<victim>",
+          type: ParamType.selector,
         },
         {
           value: "selector",
-          type: ParamType.playerSelector,
+          signatureValue: "<destination>",
+          type: ParamType.selector,
         },
         {
           value: ["true", "false"],
+          signatureValue: "[checkForBlocks]",
           type: ParamType.keyword,
         },
       ],

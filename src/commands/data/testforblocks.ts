@@ -8,18 +8,22 @@ const testforblocks: CommandInfo = {
       params: [
         {
           value: "position",
+          signatureValue: "<begin>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<end>",
           type: ParamType.keyword,
         },
         {
           value: "position",
+          signatureValue: "<destination>",
           type: ParamType.keyword,
         },
         {
           value: ["masked", "all"],
+          signatureValue: "[mode]",
           type: ParamType.keyword,
         },
       ],
