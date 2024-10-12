@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const playsound: CommandInfo = {
@@ -9,32 +10,28 @@ const playsound: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<sound>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "selector",
           signatureValue: "[player]",
           type: ParamType.playerSelector,
         },
-        {
-          value: "position",
-          signatureValue: "[position]",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("position"),
         {
           value: "int",
           signatureValue: "[volume]",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
         {
           value: "int",
           signatureValue: "[pitch]",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
         {
           value: "int",
           signatureValue: "[minimumVolume]",
-          type: ParamType.keyword,
+          type: ParamType.float,
         },
       ],
     },
