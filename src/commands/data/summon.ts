@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const summon: CommandInfo = {
@@ -7,68 +8,47 @@ const summon: CommandInfo = {
     {
       params: [
         {
-          value: ["entity_type", "minecraft:slime"],
+          value: ["todoentity_type", "minecraft:slime"],
           signatureValue: "<entityType>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
+        ...Parameter.createPosition("spawnPos"),
+        ...Parameter.rotYX,
         {
-          value: "position",
-          signatureValue: "[spawnPos]",
-          type: ParamType.keyword,
-        },
-        {
-          value: "rot",
-          signatureValue: "[yRot]",
-          type: ParamType.keyword,
-        },
-        {
-          value: "rot",
-          signatureValue: "[xRot]",
-          type: ParamType.keyword,
-        },
-        {
-          value: ["entity_events", "minecraft:on_spawned"],
+          value: ["todoentity_events", "minecraft:on_spawned"],
           signatureValue: "[spawnEvent]",
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "nameTag",
           signatureValue: "[nameTag]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
     {
       params: [
         {
-          value: ["entity_type", "minecraft:slime"],
+          value: ["todoentity_type", "minecraft:slime"],
           signatureValue: "<entityType>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
         {
-          value: "todo",
+          value: "nameTag",
           signatureValue: "<nameTag>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
-        {
-          value: "position",
-          signatureValue: "[spawnPos]",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("spawnPos"),
       ],
     },
     {
       params: [
         {
-          value: ["entity_type", "minecraft:slime"],
+          value: ["todoentity_type", "minecraft:slime"],
           signatureValue: "<entityType>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
-        {
-          value: "position",
-          signatureValue: "[spawnPos]",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("spawnPos"),
         {
           value: ["facing"],
           signatureValue: "<facing>",
@@ -80,29 +60,25 @@ const summon: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["entity_events", "minecraft:on_spawned"],
+          value: ["todoentity_events", "minecraft:on_spawned"],
           signatureValue: "[spawnEvent]",
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "nameTag",
           signatureValue: "[nameTag]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
     {
       params: [
         {
-          value: ["entity_type", "minecraft:slime"],
+          value: ["todoentity_type", "minecraft:slime"],
           signatureValue: "<entityType>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
-        {
-          value: "position",
-          signatureValue: "[spawnPos]",
-          type: ParamType.keyword,
-        },
+        ...Parameter.createPosition("spawnPos"),
         {
           value: ["facing"],
           signatureValue: "<facing>",
@@ -111,17 +87,17 @@ const summon: CommandInfo = {
         {
           value: "selector",
           signatureValue: "<lookAtEntity>",
-          type: ParamType.playerSelector,
+          type: ParamType.entitySelector,
         },
         {
-          value: ["entity_events", "minecraft:on_spawned"],
+          value: ["todoentity_events", "minecraft:on_spawned"],
           signatureValue: "[spawnEvent]",
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "nameTag",
           signatureValue: "[nameTag]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
