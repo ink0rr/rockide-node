@@ -27,8 +27,12 @@ function getParamValue(info: ParamInfo) {
       return ["@a", "@e", "@s", "@p", "@r", "*"];
     case ParamType.string:
       return '""';
-    case ParamType.number:
+    case ParamType.number: {
+      if (Array.isArray(info.value)) {
+        return info.value;
+      }
       return "0";
+    }
     case ParamType.float:
       return "0.0";
     case ParamType.location:
@@ -142,6 +146,9 @@ function getParamCompletion(info: ParamInfo, opts?: CompletionOpts): CompletionI
         }
         const completion = new CompletionItem(v, getKind(info.type));
         completion.documentation = documentation;
+        if (info.type === ParamType.number) {
+          completion.sortText = v.length + v;
+        }
         return completion;
       });
     }
@@ -263,7 +270,7 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
           }),
         )
         .flat()
-        .filter((v, i, s) => s.findIndex((obj) => JSON.stringify(obj) === JSON.stringify(v)) === i);
+        .filter((v, i, s) => s.findIndex((obj) => obj.label === v.label) === i);
       return completions;
     }
   }
