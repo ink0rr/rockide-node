@@ -17,9 +17,9 @@ const recipe: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["unlockablerecipevalues", "minecraft:bundle", "*"],
+          value: ["unlockablerecipevalues", "minecraft:bundle", "*", "todo:recip"],
           signatureValue: "<recipe>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
@@ -36,9 +36,9 @@ const recipe: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ["unlockablerecipevalues", "minecraft:bundle", "*"],
+          value: ["unlockablerecipevalues", "minecraft:bundle", "*", "todo:recip"],
           signatureValue: "<recipe>",
-          type: ParamType.keyword,
+          type: ParamType.enum,
         },
       ],
     },
