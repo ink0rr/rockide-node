@@ -402,7 +402,7 @@ export function signatureHelper(ctx: RockideContext, overLine?: string): Signatu
         const params = overload.params.map((param) => {
           let label = param.signatureValue ?? param.value;
           if (Array.isArray(label)) {
-            label = label.join("|");
+            label = "";
           }
           return {
             label,
