@@ -25,6 +25,8 @@ function getParamValue(info: ParamInfo) {
       return ["@a", "@s", "@p", "@r", "@e"];
     case ParamType.selectorWildcard:
       return ["@a", "@e", "@s", "@p", "@r", "*"];
+    case ParamType.scoreboardSelector:
+      return ["@a", "@e", "@s", "@p", "@r", "*", '"#var"'];
     case ParamType.string:
       return '""';
     case ParamType.number: {
@@ -57,6 +59,8 @@ function getParamRegex(info: ParamInfo): RegExp {
       return /(@a|@e|@s|@p|@r)(\[(.*?)\])?/g;
     case ParamType.selectorWildcard:
       return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*)/g;
+    case ParamType.scoreboardSelector:
+      return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*|("[^"]*"))/g;
     case ParamType.string:
       return /("[^"]*"|\w+)/g;
     case ParamType.number:
@@ -112,7 +116,11 @@ function getParamCompletion(info: ParamInfo, opts?: CompletionOpts): CompletionI
     switch (type) {
       case ParamType.playerSelector:
       case ParamType.selectorWildcard:
+      case ParamType.scoreboardSelector:
         {
+          if (value.startsWith('"')) {
+            return "Player name or fake player.";
+          }
           switch (value) {
             case "@a":
               return "All players.";

@@ -25,6 +25,7 @@ export enum ParamType {
   playerSelector = "playerSelector",
   entitySelector = "entitySelector",
   selectorWildcard = "selectorWildcard",
+  scoreboardSelector = "scoreboardSelector",
   location = "location",
   tag = "tag",
   string = "string",

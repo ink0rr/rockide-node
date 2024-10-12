@@ -19,7 +19,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: ["dummy"],
@@ -29,7 +29,7 @@ const scoreboard: CommandInfo = {
         {
           value: "todo",
           signatureValue: "[displayName]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -48,7 +48,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -86,7 +86,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "[objective]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: ["ascending", "descending"],
@@ -115,7 +115,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "[objective]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -134,7 +134,7 @@ const scoreboard: CommandInfo = {
         {
           value: "*",
           signatureValue: "[playername]",
-          type: ParamType.keyword,
+          type: ParamType.scoreboardSelector,
         },
       ],
     },
@@ -153,12 +153,12 @@ const scoreboard: CommandInfo = {
         {
           value: "*",
           signatureValue: "<player>",
-          type: ParamType.keyword,
+          type: ParamType.scoreboardSelector,
         },
         {
           value: [],
           signatureValue: "[objective]",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
@@ -177,22 +177,22 @@ const scoreboard: CommandInfo = {
         {
           value: "*",
           signatureValue: "<player>",
-          type: ParamType.keyword,
+          type: ParamType.scoreboardSelector,
         },
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: ["0", "1", "2"],
           signatureValue: "<min>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
           value: ["0", "1", "2"],
           signatureValue: "[max]",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
       ],
     },
@@ -211,22 +211,22 @@ const scoreboard: CommandInfo = {
         {
           value: "*",
           signatureValue: "<player>",
-          type: ParamType.keyword,
+          type: ParamType.scoreboardSelector,
         },
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
-          value: "int",
+          value: ["0"],
           signatureValue: "<min>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
         {
-          value: "int",
+          value: ["10"],
           signatureValue: "<max>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
       ],
     },
@@ -245,17 +245,17 @@ const scoreboard: CommandInfo = {
         {
           value: "*",
           signatureValue: "<player>",
-          type: ParamType.keyword,
+          type: ParamType.scoreboardSelector,
         },
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: "int",
           signatureValue: "<count>",
-          type: ParamType.keyword,
+          type: ParamType.number,
         },
       ],
     },
@@ -274,12 +274,12 @@ const scoreboard: CommandInfo = {
         {
           value: "*",
           signatureValue: "<targetName>",
-          type: ParamType.keyword,
+          type: ParamType.scoreboardSelector,
         },
         {
           value: [],
           signatureValue: "<targetObjective>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
         {
           value: ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><"],
@@ -289,12 +289,12 @@ const scoreboard: CommandInfo = {
         {
           value: "*",
           signatureValue: "<selector>",
-          type: ParamType.keyword,
+          type: ParamType.scoreboardSelector,
         },
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
