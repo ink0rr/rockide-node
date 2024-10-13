@@ -1,7 +1,7 @@
 import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
-import { baseGlob, projectGlob } from "../constants";
+import { baseGlob, NullNode, projectGlob } from "../constants";
 import { Rockide } from "../rockide";
 import { createJsonContext } from "./json_context";
 import { jsonHandlers } from "./json_handlers";
@@ -39,7 +39,7 @@ export class JsonProvider implements vscode.CompletionItemProvider, vscode.Defin
   onDidChangeTextDocument({ document }: vscode.TextDocumentChangeEvent) {
     if (this.rockide.jsonFiles.has(document.uri.fsPath)) {
       const text = document.getText();
-      const json = JSONC.parse(text);
+      const json = JSONC.parseTree(text) ?? NullNode;
       this.rockide.jsonFiles.set(document.uri.fsPath, json);
     }
   }
