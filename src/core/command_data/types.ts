@@ -39,4 +39,8 @@ export const enum ParamType {
   itemNBT = "itemNBT",
   rawJsonMessage = "rawJsonMessage",
   xpLevel = "xpLevel",
+  // rockide specific
+  RockideLootTable = "RockideLootTable",
+  RockideParticle = "RockideParticle",
+  RockideClientAnimation = "RockideAnimation",
 }

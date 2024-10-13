@@ -1,5 +1,6 @@
 import { CompletionItem, CompletionItemKind, MarkdownString, SignatureHelp } from "vscode";
 import { commands } from ".";
+import { Rockide } from "../../rockide";
 import { CommandContext } from "../command_context";
 import execute from "./data/execute";
 import { ParamInfo, ParamType } from "./types";
@@ -18,7 +19,7 @@ import { ParamInfo, ParamType } from "./types";
  * @param info
  * @returns
  */
-function getParamValue(info: ParamInfo) {
+function getParamValue(info: ParamInfo, rockide: Rockide) {
   switch (info.type) {
     case ParamType.playerSelector:
       return ["@a", "@s", "@p", "@r"];
@@ -52,6 +53,18 @@ function getParamValue(info: ParamInfo) {
       return ["0.0", "-90.0", "90.0"];
     case ParamType.executeChainedOption:
       return execute.overloads!.map((overload) => overload.params[0].value).flat();
+    // rockide specific
+    case ParamType.RockideLootTable:
+      return rockide
+        .getLootTables()
+        .map(({ bedrockPath }) => (bedrockPath.endsWith(".json") ? bedrockPath.slice(0, -5) : bedrockPath));
+    case ParamType.RockideParticle:
+      return rockide.getParticles().map(({ values }) => values[0]);
+    case ParamType.RockideClientAnimation:
+      return rockide
+        .getClientAnimations()
+        .map(({ values }) => values)
+        .flat();
     default:
       return info.value;
   }
@@ -62,7 +75,7 @@ function getParamValue(info: ParamInfo) {
  * @param info
  * @returns
  */
-function getParamRegex(info: ParamInfo): RegExp {
+function getParamRegex(info: ParamInfo, rockide: Rockide): RegExp {
   switch (info.type) {
     case ParamType.playerSelector:
       return /(@a|@s|@p|@r)(\[(.*?)\])?/g;
@@ -75,7 +88,9 @@ function getParamRegex(info: ParamInfo): RegExp {
     case ParamType.string:
       return /("[^"]*"|\w+)/g;
     case ParamType.number:
-      return /\d+/g;
+      return /-?\d+/g;
+    case ParamType.float:
+      return /-?\d+(\.\d+)?/g;
     case ParamType.yaw:
       return /-?(180|1[0-7][0-9]|[1-9]?[0-9])/g;
     case ParamType.pitch:
@@ -87,6 +102,17 @@ function getParamRegex(info: ParamInfo): RegExp {
     case ParamType.itemNBT:
     case ParamType.rawJsonMessage:
       return /{[^]*?}/g;
+    // rockide specific
+    case ParamType.RockideLootTable:
+    case ParamType.RockideParticle: {
+      const value = getParamValue(info, rockide);
+      if (Array.isArray(value)) {
+        return new RegExp(`\\b${value.join("|")}\\b`, "g");
+      }
+      return new RegExp(`\\b${value}\\b`, "g");
+    }
+    case ParamType.RockideClientAnimation:
+      return /("[^"]*"|[\w.]+)/g;
     default: {
       if (Array.isArray(info.value)) {
         return new RegExp(`\\b${info.value.join("|")}\\b`, "g");
@@ -106,7 +132,11 @@ type CompletionOpts = {
  * @param info
  * @returns
  */
-function getParamCompletion(info: ParamInfo, opts?: CompletionOpts): CompletionItem | CompletionItem[] {
+function getParamCompletion(
+  info: ParamInfo,
+  rockide: Rockide,
+  opts?: CompletionOpts,
+): CompletionItem | CompletionItem[] {
   const getKind = (type: ParamType) => {
     switch (type) {
       case ParamType.keyword:
@@ -159,7 +189,7 @@ function getParamCompletion(info: ParamInfo, opts?: CompletionOpts): CompletionI
         return;
     }
   };
-  const label = getParamValue(info);
+  const label = getParamValue(info, rockide);
   const createCompletionItem = (value: string[] | string) => {
     if (Array.isArray(value)) {
       return value.map((v, i) => {
@@ -191,7 +221,7 @@ function getParamCompletion(info: ParamInfo, opts?: CompletionOpts): CompletionI
   return createCompletionItem(label);
 }
 
-export function commandCompletion(ctx: CommandContext, overLine?: string): CompletionItem[] {
+export function commandCompletion(ctx: CommandContext, rockide: Rockide, overLine?: string): CompletionItem[] {
   const { document, position } = ctx;
   console.log(JSON.stringify(ctx.getCommands()));
   const line = overLine ?? document.lineAt(position.line).text;
@@ -227,7 +257,7 @@ export function commandCompletion(ctx: CommandContext, overLine?: string): Compl
         .flat();
       if (args.length === 1) {
         return overloads
-          .map((overload) => getParamCompletion(overload.params[0]))
+          .map((overload) => getParamCompletion(overload.params[0], rockide))
           .flat()
           .filter((v, i, s) => s.findIndex((obj) => obj.label === v.label) === i);
       }
@@ -240,7 +270,7 @@ export function commandCompletion(ctx: CommandContext, overLine?: string): Compl
         // Reset tempOverloads for exeucte index
         if (executeIndex !== 0 && i === executeIndex + 1) {
           tempOverloads = tempOverloads.filter((overload) =>
-            getParamRegex(overload.params[i - executeIndex - 1]).test(args[i - 1]),
+            getParamRegex(overload.params[i - executeIndex - 1], rockide).test(args[i - 1]),
           );
         }
         tempOverloads = tempOverloads.filter((overload) => {
@@ -272,7 +302,7 @@ export function commandCompletion(ctx: CommandContext, overLine?: string): Compl
             if (runIndex !== 0) {
               return true;
             }
-            const regex = getParamRegex(param);
+            const regex = getParamRegex(param, rockide);
             if (i === args.length - 1) {
               return !regex.test(arg);
             }
@@ -286,18 +316,18 @@ export function commandCompletion(ctx: CommandContext, overLine?: string): Compl
         }
         if (runIndex !== 0 && i === runIndex) {
           const line = args.slice(runIndex).join(" ");
-          return commandCompletion(ctx, line);
+          return commandCompletion(ctx, rockide, line);
         }
       }
       console.log(executeIndex, runIndex);
       // console.log(tempOverloads);
       if (runIndex !== 0) {
         const line = args.slice(runIndex).join(" ");
-        return commandCompletion(ctx, line);
+        return commandCompletion(ctx, rockide, line);
       }
       const completions = tempOverloads
         .map((overload) =>
-          getParamCompletion(overload.params[args.length - 1 - executeIndex], {
+          getParamCompletion(overload.params[args.length - 1 - executeIndex], rockide, {
             skipCurly,
           }),
         )
@@ -314,7 +344,7 @@ export function commandCompletion(ctx: CommandContext, overLine?: string): Compl
   });
 }
 
-export function signatureHelper(ctx: CommandContext, overLine?: string): SignatureHelp | undefined {
+export function signatureHelper(ctx: CommandContext, rockide: Rockide, overLine?: string): SignatureHelp | undefined {
   const { document, position } = ctx;
   const line = overLine ?? document.lineAt(position.line).text;
   const signature: SignatureHelp = new SignatureHelp();
@@ -356,7 +386,7 @@ export function signatureHelper(ctx: CommandContext, overLine?: string): Signatu
         // Reset tempOverloads for exeucte index
         if (executeIndex !== 0 && i === executeIndex + 1) {
           tempOverloads = tempOverloads.filter((overload) =>
-            getParamRegex(overload.params[i - executeIndex - 1]).test(args[i - 1]),
+            getParamRegex(overload.params[i - executeIndex - 1], rockide).test(args[i - 1]),
           );
         }
         tempOverloads = tempOverloads.filter((overload) => {
@@ -385,7 +415,7 @@ export function signatureHelper(ctx: CommandContext, overLine?: string): Signatu
             if (runIndex !== 0) {
               return true;
             }
-            const regex = getParamRegex(param);
+            const regex = getParamRegex(param, rockide);
             if (i === args.length - 1) {
               return !regex.test(arg);
             }
@@ -399,7 +429,7 @@ export function signatureHelper(ctx: CommandContext, overLine?: string): Signatu
         }
         if (runIndex !== 0 && i === runIndex) {
           const line = args.slice(runIndex).join(" ");
-          return signatureHelper(ctx, line);
+          return signatureHelper(ctx, rockide, line);
         }
       }
       const sigs = tempOverloads.map((overload) => {

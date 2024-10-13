@@ -8,9 +8,9 @@ const particle: CommandInfo = {
     {
       params: [
         {
-          value: "todo",
+          value: "particle",
           signatureValue: "<effect>",
-          type: ParamType.string,
+          type: ParamType.RockideParticle,
         },
         ...Parameter.createPosition("position"),
       ],

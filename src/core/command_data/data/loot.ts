@@ -21,9 +21,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "loot_table",
           signatureValue: "<loot_table>",
-          type: ParamType.keyword,
+          type: ParamType.RockideLootTable,
         },
         {
           value: blockIdentifier.concat("mainhand", "offhand"),
@@ -75,9 +75,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "loot_table",
           signatureValue: "<loot_table>",
-          type: ParamType.keyword,
+          type: ParamType.RockideLootTable,
         },
         {
           value: blockIdentifier.concat("mainhand", "offhand"),
@@ -129,9 +129,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "loot_table",
           signatureValue: "<loot_table>",
-          type: ParamType.keyword,
+          type: ParamType.RockideLootTable,
         },
         {
           value: blockIdentifier.concat("mainhand", "offhand"),
@@ -203,9 +203,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "loot_table",
           signatureValue: "<loot_table>",
-          type: ParamType.keyword,
+          type: ParamType.RockideLootTable,
         },
         {
           value: blockIdentifier.concat("mainhand", "offhand"),
@@ -247,9 +247,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "loot_table",
           signatureValue: "<loot_table>",
-          type: ParamType.keyword,
+          type: ParamType.RockideLootTable,
         },
         {
           value: blockIdentifier.concat("mainhand", "offhand"),
@@ -385,9 +385,9 @@ const loot: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "loot_table",
           signatureValue: "<loot_table>",
-          type: ParamType.keyword,
+          type: ParamType.RockideLootTable,
         },
         {
           value: blockIdentifier.concat("mainhand", "offhand"),
@@ -425,9 +425,9 @@ const loot: CommandInfo = {
           type: ParamType.number,
         },
         {
-          value: "todo",
+          value: "loot_table",
           signatureValue: "<loot_table>",
-          type: ParamType.keyword,
+          type: ParamType.RockideLootTable,
         },
         {
           value: blockIdentifier.concat("mainhand", "offhand"),

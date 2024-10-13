@@ -14,7 +14,7 @@ const playanimation: CommandInfo = {
         {
           value: "todo",
           signatureValue: "<animation>",
-          type: ParamType.string,
+          type: ParamType.RockideClientAnimation,
         },
         {
           value: "todo",

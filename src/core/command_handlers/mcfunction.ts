@@ -5,13 +5,13 @@ import { CommandHandler } from "./_types";
 export const mcfunctionHandler: CommandHandler = {
   pattern: `**/${bpGlob}/functions/**/*.mcfunction`,
   index: true,
-  process(ctx) {
+  process(ctx, rockide) {
     return {
       completions() {
-        return commandCompletion(ctx);
+        return commandCompletion(ctx, rockide);
       },
       signature() {
-        return signatureHelper(ctx);
+        return signatureHelper(ctx, rockide);
       },
     };
   },
