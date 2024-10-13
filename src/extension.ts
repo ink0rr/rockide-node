@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
 import { commandSelector, jsonSelector } from "./constants";
-import { CommandProvider } from "./providers/command";
-import { JsonProvider } from "./providers/json";
-import { MolangProvider } from "./providers/molang";
+import { JsonProvider } from "./core/json_provider";
+import { CommandProvider } from "./core/mcfunction_provider";
+import { MolangProvider } from "./core/molang_provider";
 import { Rockide } from "./rockide";
 import { legend } from "./semantics";
 

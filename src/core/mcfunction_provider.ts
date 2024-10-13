@@ -1,11 +1,11 @@
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
-import { commands } from "../commands";
 import { baseGlob, bpGlob } from "../constants";
-import { createContext } from "../context";
-import { mcfunctionHandler } from "../handlers/data/mcfunction";
 import { Rockide } from "../rockide";
 import { legend, SemanticToken } from "../semantics";
+import { createCommandContext } from "./command_context";
+import { commands } from "./command_data";
+import { commandHandlers } from "./command_handlers";
 
 /**
  * TODO:
@@ -28,7 +28,7 @@ const semantics: SemanticToken[] = [
   },
   {
     pattern: /"[^"]*"/g,
-    type: "variable",
+    type: "regexp",
   },
   {
     // Comment
@@ -76,11 +76,13 @@ export class CommandProvider
     document: vscode.TextDocument,
     position: vscode.Position,
   ): vscode.ProviderResult<vscode.SignatureHelp> {
-    if (isMatch(document.uri.fsPath, mcfunctionHandler.pattern)) {
-      if (mcfunctionHandler.process) {
-        const ctx = createContext(document, position);
-        const signature = mcfunctionHandler.process(ctx, this.rockide)?.signature?.();
-        return signature;
+    for (const handler of commandHandlers) {
+      if (isMatch(document.uri.fsPath, handler.pattern)) {
+        if (handler.process) {
+          const ctx = createCommandContext(document, position);
+          const signature = handler.process(ctx, this.rockide)?.signature?.();
+          return signature;
+        }
       }
     }
   }
@@ -100,14 +102,12 @@ export class CommandProvider
     return tokens.build();
   }
   provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-    if (isMatch(document.uri.fsPath, mcfunctionHandler.pattern)) {
-      if (mcfunctionHandler.process) {
-        try {
-          const ctx = createContext(document, position);
-          const completions = mcfunctionHandler.process(ctx, this.rockide)?.completions?.();
+    for (const handler of commandHandlers) {
+      if (isMatch(document.uri.fsPath, handler.pattern)) {
+        if (handler.process) {
+          const ctx = createCommandContext(document, position);
+          const completions = handler.process(ctx, this.rockide)?.completions?.();
           return completions?.map((value) => ctx.createCompletion(value));
-        } catch (e) {
-          console.error(e);
         }
       }
     }

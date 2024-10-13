@@ -1,4 +1,4 @@
-import { damageSource } from "../../literals/damage_source";
+import { damageSource } from "../../../literals/damage_source";
 import { CommandInfo, ParamType } from "../types";
 
 const damage: CommandInfo = {

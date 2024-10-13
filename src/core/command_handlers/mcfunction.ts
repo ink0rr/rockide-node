@@ -1,10 +1,10 @@
-import { commandCompletion, signatureHelper } from "../../commands/shared";
 import { bpGlob } from "../../constants";
-import { RockideHandler } from "../types";
+import { commandCompletion, signatureHelper } from "../command_data/shared";
+import { CommandHandler } from "./_types";
 
-export const mcfunctionHandler: RockideHandler = {
+export const mcfunctionHandler: CommandHandler = {
   pattern: `**/${bpGlob}/functions/**/*.mcfunction`,
-  index: "mcfunction",
+  index: true,
   process(ctx) {
     return {
       completions() {

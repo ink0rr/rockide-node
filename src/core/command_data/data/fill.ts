@@ -1,4 +1,4 @@
-import { blockIdentifier } from "../../literals/block_identifier";
+import { blockIdentifier } from "../../../literals/block_identifier";
 import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 

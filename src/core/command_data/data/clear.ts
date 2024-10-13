@@ -1,4 +1,4 @@
-import { itemIdentifier } from "../../literals/item_identifier";
+import { itemIdentifier } from "../../../literals/item_identifier";
 import { CommandInfo, ParamType } from "../types";
 
 const clear: CommandInfo = {

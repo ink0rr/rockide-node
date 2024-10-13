@@ -2,11 +2,11 @@ import { MarkdownString } from "vscode";
 
 export type CommandInfo = {
   command: string;
-  overloads?: Overload[];
+  overloads?: CommandSignature[];
   documentation?: string | MarkdownString;
 };
 
-export type Overload = {
+export type CommandSignature = {
   params: ParamInfo[];
   documentation?: string | MarkdownString;
 };
@@ -19,7 +19,7 @@ export type ParamInfo = {
   documentation?: string | MarkdownString | string[] | MarkdownString[];
 };
 
-export enum ParamType {
+export const enum ParamType {
   keyword = "keyword",
   enum = "enum",
   playerSelector = "playerSelector",

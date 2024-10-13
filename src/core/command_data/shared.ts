@@ -1,6 +1,6 @@
 import { CompletionItem, CompletionItemKind, MarkdownString, SignatureHelp } from "vscode";
 import { commands } from ".";
-import { RockideContext } from "../context";
+import { CommandContext } from "../command_context";
 import execute from "./data/execute";
 import { ParamInfo, ParamType } from "./types";
 
@@ -191,12 +191,10 @@ function getParamCompletion(info: ParamInfo, opts?: CompletionOpts): CompletionI
   return createCompletionItem(label);
 }
 
-export function commandCompletion(ctx: RockideContext, overLine?: string): CompletionItem[] {
+export function commandCompletion(ctx: CommandContext, overLine?: string): CompletionItem[] {
   const { document, position } = ctx;
+  console.log(JSON.stringify(ctx.getCommands()));
   const line = overLine ?? document.lineAt(position.line).text;
-  if (overLine) {
-    console.log("overLine", overLine);
-  }
   for (const { command, overloads } of commands) {
     if (line.startsWith("#")) {
       return [];
@@ -227,8 +225,6 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
           return arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [];
         })
         .flat();
-      console.log(line.split(/(\b|(?<=([~^"*])))\s+/g));
-      console.log(args);
       if (args.length === 1) {
         return overloads
           .map((overload) => getParamCompletion(overload.params[0]))
@@ -249,15 +245,12 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
         }
         tempOverloads = tempOverloads.filter((overload) => {
           try {
-            if (runIndex !== 0 || executeIndex !== 0) {
-              return true;
-            }
             const param = overload.params[i - executeIndex];
             if (!param) {
               return false;
             }
             // run subcommand check
-            if (param.type === ParamType.subcommand) {
+            if (param?.type === ParamType.subcommand) {
               runIndex = i;
               return true;
             }
@@ -274,6 +267,9 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
               if (param.type === ParamType.itemNBT) {
                 skipCurly = true;
               }
+              return true;
+            }
+            if (runIndex !== 0) {
               return true;
             }
             const regex = getParamRegex(param);
@@ -293,6 +289,8 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
           return commandCompletion(ctx, line);
         }
       }
+      console.log(executeIndex, runIndex);
+      // console.log(tempOverloads);
       if (runIndex !== 0) {
         const line = args.slice(runIndex).join(" ");
         return commandCompletion(ctx, line);
@@ -316,7 +314,7 @@ export function commandCompletion(ctx: RockideContext, overLine?: string): Compl
   });
 }
 
-export function signatureHelper(ctx: RockideContext, overLine?: string): SignatureHelp | undefined {
+export function signatureHelper(ctx: CommandContext, overLine?: string): SignatureHelp | undefined {
   const { document, position } = ctx;
   const line = overLine ?? document.lineAt(position.line).text;
   const signature: SignatureHelp = new SignatureHelp();
@@ -363,25 +361,29 @@ export function signatureHelper(ctx: RockideContext, overLine?: string): Signatu
         }
         tempOverloads = tempOverloads.filter((overload) => {
           try {
-            if (runIndex !== 0 || executeIndex !== 0) {
-              return true;
-            }
             const param = overload.params[i - executeIndex];
             if (!param) {
               return false;
             }
-            // execute check
             // run subcommand check
-            if (param.type === ParamType.subcommand) {
+            if (param?.type === ParamType.subcommand) {
               runIndex = i;
               return true;
             }
+            // execute check
             if (param.type === ParamType.executeChainedOption) {
               executeIndex = i;
               return true;
             }
-            if (!param) {
-              return false;
+            if (
+              [ParamType.itemNBT, ParamType.rawJsonMessage].includes(param.type) &&
+              arg.startsWith("{") &&
+              arg.endsWith("}")
+            ) {
+              return true;
+            }
+            if (runIndex !== 0) {
+              return true;
             }
             const regex = getParamRegex(param);
             if (i === args.length - 1) {

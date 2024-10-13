@@ -1,5 +1,5 @@
-import { blockIdentifier } from "../../literals/block_identifier";
-import { slot } from "../../literals/slot";
+import { blockIdentifier } from "../../../literals/block_identifier";
+import { slot } from "../../../literals/slot";
 import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 

@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
 import { molangMath, molangQueries } from "./molang_data";
 
+// todo: proper molang context and shared
+
 export function createMolangContext(document: vscode.TextDocument, position: vscode.Position) {
   let currentMolang: string;
   const getCurrentMolang = () => {

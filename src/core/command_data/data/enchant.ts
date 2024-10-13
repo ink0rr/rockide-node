@@ -1,4 +1,4 @@
-import { enchantments } from "../../literals/enchantments";
+import { enchantments } from "../../../literals/enchantments";
 import { CommandInfo, ParamType } from "../types";
 
 const enchant: CommandInfo = {

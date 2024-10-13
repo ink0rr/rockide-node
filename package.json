@@ -96,6 +96,14 @@
             "string.regexp"
           ]
         }
+      },
+      {
+        "language": "rockide-mcfunction",
+        "scopes": {
+          "regexp": [
+            "string.regexp"
+          ]
+        }
       }
     ],
     "jsonValidation": [

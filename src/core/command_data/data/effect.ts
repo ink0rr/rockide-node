@@ -1,4 +1,4 @@
-import { spellEffects } from "../../literals/spell_effects";
+import { spellEffects } from "../../../literals/spell_effects";
 import { CommandInfo, ParamType } from "../types";
 
 const effect: CommandInfo = {
