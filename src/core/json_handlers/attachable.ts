@@ -42,7 +42,7 @@ export const attachableHandler: JsonHandler = {
           rockide
             .getTextures()
             .filter(({ bedrockPath: path }) => path === ctx.nodeValue)
-            .map(({ bedrockPath: path }) => ctx.createDefinition(path)),
+            .map(({ uri }) => ctx.createDefinition(uri.fsPath)),
       };
     }
     if (ctx.matchProperty("particle_effects")) {
