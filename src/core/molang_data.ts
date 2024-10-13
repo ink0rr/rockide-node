@@ -66,8 +66,8 @@ export const molangQueries: MolangData[] = [
     description: "Returns if the item or block has any of the tags specified.",
   },
   {
-    name: "approx_eq(...argv: number[]): boolean",
-    signature: ": number",
+    name: "approx_eq",
+    signature: "(...argv: number[]): boolean",
     description: "Returns 1.0 if all of the arguments are within 0.000000 of each other, else 0.0.",
   },
   {
