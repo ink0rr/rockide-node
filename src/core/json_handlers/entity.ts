@@ -4,6 +4,7 @@ import { JsonHandler } from "./_type";
 
 export const entityHandler: JsonHandler = {
   pattern: `**/${bpGlob}/entities/**/*.json`,
+  index: "parse",
   process(ctx, rockide) {
     if (ctx.matchProperty("animations")) {
       return {

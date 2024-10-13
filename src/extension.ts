@@ -16,7 +16,7 @@ export async function activate(context: vscode.ExtensionContext) {
   await rockide.indexWorkspace();
 
   const jsonProvider = new JsonProvider(rockide);
-  const molangProvider = new MolangProvider();
+  const molangProvider = new MolangProvider(rockide);
 
   context.subscriptions.push(
     vscode.commands.registerCommand("rockide.reloadWorkspace", () => rockide.indexWorkspace()),

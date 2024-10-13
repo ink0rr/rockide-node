@@ -4,6 +4,7 @@ import { JsonHandler } from "./_type";
 
 export const clientEntityHandler: JsonHandler = {
   pattern: `**/${rpGlob}/entity/**/*.json`,
+  index: "parse",
   process(ctx, rockide) {
     if (ctx.matchProperty("animations")) {
       return {

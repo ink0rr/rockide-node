@@ -1,26 +1,56 @@
+import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
 import { projectGlob } from "../constants";
+import { Rockide } from "../rockide";
 import { legend, SemanticToken } from "../semantics";
 import { createMolangContext } from "./molang_context";
 
 export class MolangProvider implements vscode.DocumentSemanticTokensProvider, vscode.SignatureHelpProvider {
+  constructor(private rockide: Rockide) {}
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
-    if (!isMatch(document.uri.fsPath, `**/${projectGlob}/**/*.json`)) {
+    const root = this.rockide.jsonFiles.get(document.uri.fsPath);
+    if (!root) {
       return;
     }
-    const text = document.getText();
     const tokens = new vscode.SemanticTokensBuilder(legend);
-    for (const { pattern, type, modifiers } of semantics) {
-      let match;
-      while ((match = pattern.exec(text))) {
-        const start = match.index;
-        const length = match[0].length;
-        const position = document.positionAt(start);
-        const range = new vscode.Range(position, position.translate(0, length));
-        tokens.push(range, type, modifiers);
+    const assignTokens = (node: JSONC.Node) => {
+      const text = node.value;
+      if (typeof text !== "string" || text.startsWith("@") || text.startsWith("/")) {
+        return;
       }
-    }
+      if (
+        !text.match(/[0-9*/+-]/) &&
+        !text.match(/\b(q|v|t|c|query|variable|temp|context|math|array|geometry|material|texture)(?=\.)/i)
+      ) {
+        return;
+      }
+      const basePos = document.positionAt(node.offset + 1);
+      for (const { pattern, type, modifiers } of semantics) {
+        let match;
+        while ((match = pattern.exec(text))) {
+          const start = basePos.translate(0, match.index);
+          const length = match[0].length;
+          const range = new vscode.Range(start, start.translate(0, length));
+          tokens.push(range, type, modifiers);
+        }
+      }
+    };
+    const scan = (node: JSONC.Node) => {
+      if (node.type === "string" && node.parent?.type === "array") {
+        return assignTokens(node);
+      }
+      if (node.type === "property") {
+        const child = node.children?.at(1);
+        if (child?.type === "string") {
+          return assignTokens(child);
+        }
+      }
+      for (const child of node.children ?? []) {
+        scan(child);
+      }
+    };
+    scan(root);
     return tokens.build();
   }
   provideSignatureHelp(
