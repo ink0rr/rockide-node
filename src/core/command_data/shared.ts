@@ -221,9 +221,129 @@ function getParamCompletion(
   return createCompletionItem(label);
 }
 
+function selectorCompletion(): CompletionItem[] {
+  const data = [
+    { name: "x", insertText: "x", documentation: "X coordinate." },
+    { name: "y", insertText: "y", documentation: "Y coordinate." },
+    { name: "z", insertText: "z", documentation: "Z coordinate." },
+    { name: "c", insertText: "c", documentation: "Count." },
+    { name: "dx", insertText: "dx", documentation: "X range." },
+    { name: "dy", insertText: "dy", documentation: "Y range." },
+    { name: "dz", insertText: "dz", documentation: "Z range." },
+    { name: "family", insertText: "family", documentation: "Family." },
+    { name: "has_property", insertText: "has_property", documentation: "Has property." },
+    { name: "has_item", insertText: "has_item", documentation: "Has item." },
+    { name: "l", insertText: "l", documentation: "Level." },
+    { name: "lm", insertText: "lm", documentation: "Level minimum." },
+    { name: "m", insertText: "m", documentation: "Gamemode." },
+    { name: "name", insertText: "name", documentation: "Name." },
+    { name: "r", insertText: "r", documentation: "Range." },
+    { name: "rm", insertText: "rm", documentation: "Range minimum." },
+    { name: "rxm", insertText: "rxm", documentation: "Rotation X minimum." },
+    { name: "rx", insertText: "rx", documentation: "Rotation X." },
+    { name: "rym", insertText: "rym", documentation: "Rotation Y minimum." },
+    { name: "ry", insertText: "ry", documentation: "Rotation Y." },
+    { name: "scores", insertText: "scores", documentation: "Scores." },
+    { name: "tag", insertText: "tag", documentation: "Tag." },
+    { name: "type", insertText: "type", documentation: "Entity typeid." },
+  ];
+  return data.map(({ name, insertText, documentation }) => {
+    const completion = new CompletionItem(name, CompletionItemKind.TypeParameter);
+    completion.documentation = documentation;
+    completion.insertText = insertText;
+    return completion;
+  });
+}
+
+function selectorDataCompletion(param: string, rockide: Rockide): CompletionItem[] {
+  // todo: get family from rockide
+  rockide;
+  const data = [
+    { param: "x", name: "1", insertText: "1" },
+    { param: "x", name: "-1", insertText: "-1" },
+    { param: "x", name: "~1", insertText: "~1" },
+    { param: "x", name: "~-1", insertText: "~-1" },
+    { param: "y", name: "1", insertText: "1" },
+    { param: "y", name: "-1", insertText: "-1" },
+    { param: "y", name: "~1", insertText: "~1" },
+    { param: "y", name: "~-1", insertText: "~-1" },
+    { param: "z", name: "1", insertText: "1" },
+    { param: "z", name: "-1", insertText: "-1" },
+    { param: "z", name: "~1", insertText: "~1" },
+    { param: "z", name: "~-1", insertText: "~-1" },
+    { param: "c", name: "1", insertText: "1" },
+    { param: "c", name: "2", insertText: "2" },
+    { param: "dx", name: "5", insertText: "5" },
+    { param: "dx", name: "10", insertText: "10" },
+    { param: "dy", name: "5", insertText: "5" },
+    { param: "dy", name: "10", insertText: "10" },
+    { param: "dz", name: "5", insertText: "5" },
+    { param: "dz", name: "10", insertText: "10" },
+    { param: "family", name: "player", insertText: "player" },
+    { param: "family", name: "!player", insertText: "!player" },
+    // todo: has property
+    { param: "has_property", name: "minecraft:armadillo_state", insertText: "minecraft:armadillo_state" },
+    // todo: has item
+    { param: "has_item", name: "{}", insertText: "{}" },
+    { param: "has_item", name: "[]", insertText: "[]" },
+    { param: "l", name: "1", insertText: "1" },
+    { param: "l", name: "5", insertText: "5" },
+    { param: "lm", name: "1", insertText: "1" },
+    { param: "lm", name: "5", insertText: "5" },
+    { param: "m", name: "spectator", insertText: "spectator" },
+    { param: "m", name: "creative", insertText: "creative" },
+    { param: "m", name: "adventure", insertText: "adventure" },
+    { param: "m", name: "survival", insertText: "survival" },
+    { param: "m", name: "0", insertText: "0" },
+    { param: "m", name: "1", insertText: "1" },
+    { param: "m", name: "2", insertText: "2" },
+    { param: "name", name: "playerName", insertText: "playerName" },
+    { param: "r", name: "5", insertText: "5" },
+    { param: "rm", name: "5", insertText: "5" },
+    { param: "rx", name: "90", insertText: "90" },
+    { param: "rxm", name: "0", insertText: "0" },
+    { param: "rxm", name: "-90", insertText: "-90" },
+    { param: "rxm", name: "90", insertText: "90" },
+    { param: "ry", name: "0", insertText: "0" },
+    { param: "ry", name: "-90", insertText: "-90" },
+    { param: "ry", name: "90", insertText: "90" },
+    { param: "ry", name: "-180", insertText: "180" },
+    { param: "rym", name: "0", insertText: "0" },
+    { param: "rym", name: "-90", insertText: "-90" },
+    { param: "rym", name: "90", insertText: "90" },
+    { param: "rym", name: "-180", insertText: "180" },
+    // todo: scores
+    { param: "scores", name: "{}", insertText: "{}" },
+    { param: "scores", name: "{objName=1}", insertText: "{objName=1}" },
+    { param: "scores", name: "{objName=1..10}", insertText: "{objName=1..10}" },
+    // todo: tag
+    { param: "tag", name: "tag1", insertText: "tag1" },
+    { param: "tag", name: "!tag1", insertText: "!tag1" },
+    // todo: identifier
+    { param: "type", name: "minecraft:player", insertText: "minecraft:player" },
+    { param: "type", name: "minecraft:cow", insertText: "minecraft:cow" },
+    { param: "type", name: "!minecraft:player", insertText: "!minecraft:player" },
+    { param: "type", name: "!minecraft:cow", insertText: "!minecraft:cow" },
+  ];
+  return data
+    .filter(({ param: p }) => p === param)
+    .map(({ name, insertText }) => {
+      const completion = new CompletionItem(name, CompletionItemKind.Enum);
+      completion.insertText = insertText;
+      return completion;
+    });
+}
+
 export function commandCompletion(ctx: CommandContext, rockide: Rockide, overLine?: string): CompletionItem[] {
   const { document, position } = ctx;
-  console.log(JSON.stringify(ctx.getCommands()));
+  const selector = ctx.getSelector();
+  if (selector) {
+    console.log(selector.currentData);
+    if (!selector.currentData.value && selector.currentData.param) {
+      return selectorDataCompletion(selector.currentData.param, rockide);
+    }
+    return selectorCompletion();
+  }
   const line = overLine ?? document.lineAt(position.line).text;
   for (const { command, overloads } of commands) {
     if (line.startsWith("#")) {
@@ -234,27 +354,23 @@ export function commandCompletion(ctx: CommandContext, rockide: Rockide, overLin
       if (!overloads) {
         return [];
       }
-      // const [, ...args] = line
-      //   .split(/\b\s+/g)
-      //   .map((arg) => {
-      //     const ok = new RegExp(/((~|\^)-?(\d+)?())/g).test(arg);
-      //     if (!ok) {
-      //       return arg;
-      //     }
-      //     return arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [];
-      //   })
-      //   .flat();
       const [, ...args] = line
-        .split(/(\b|(?<=([~^"*])))\s+/g)
+        .split(/(\b|(?<=([~^"*\]])))\s+/g)
         .filter((_, i) => i % 3 === 0)
-        .map((arg) => {
-          const ok = new RegExp(/((~|\^)-?(\d+)?())/g).test(arg);
-          if (!ok) {
+        .map((arg, i, self) => {
+          const isSelector = /\[(.*?)\]/g.test(arg);
+          if (isSelector && /(@\w+)/g.test(self[i - 1])) {
+            return undefined;
+          }
+          const isPosition = /((~|\^)-?(\d+)?())/g.test(arg);
+          if (!isPosition) {
             return arg;
           }
           return arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [];
         })
-        .flat();
+        .flat()
+        .filter((arg) => arg !== undefined);
+      console.log(args);
       if (args.length === 1) {
         return overloads
           .map((overload) => getParamCompletion(overload.params[0], rockide))
@@ -319,7 +435,6 @@ export function commandCompletion(ctx: CommandContext, rockide: Rockide, overLin
           return commandCompletion(ctx, rockide, line);
         }
       }
-      console.log(executeIndex, runIndex);
       // console.log(tempOverloads);
       if (runIndex !== 0) {
         const line = args.slice(runIndex).join(" ");
@@ -368,16 +483,21 @@ export function signatureHelper(ctx: CommandContext, rockide: Rockide, overLine?
         return signature;
       }
       const [, ...args] = line
-        .split(/(\b|(?<=([~^"*])))\s+/g)
+        .split(/(\b|(?<=([~^"*\]])))\s+/g)
         .filter((_, i) => i % 3 === 0)
-        .map((arg) => {
-          const ok = new RegExp(/((~|\^)-?(\d+)?())/g).test(arg);
-          if (!ok) {
+        .map((arg, i, self) => {
+          const isSelector = /\[(.*?)\]/g.test(arg);
+          if (isSelector && /(@\w+)/g.test(self[i - 1])) {
+            return undefined;
+          }
+          const isPosition = /((~|\^)-?(\d+)?())/g.test(arg);
+          if (!isPosition) {
             return arg;
           }
           return arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [];
         })
-        .flat();
+        .flat()
+        .filter((arg) => arg !== undefined);
       let tempOverloads = [...overloads];
       let executeIndex = 0;
       let runIndex = 0;

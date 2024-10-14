@@ -230,11 +230,42 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
     }
     return { k: 0, retVal: [] };
   };
+
+  type CommandSequence = {
+    command: string;
+    args: Array<ParamInfo>;
+  };
   return {
     document,
     position,
     text: getCurrentText(),
     getParamCompletion,
+    getSelector() {
+      const range = document.getWordRangeAtPosition(position, /(@\w+)\s*(\[(.*?)\])?/);
+      if (!range) {
+        return;
+      }
+      const selector = document.getText(range);
+      const exec = selector.match(/\[(.*?)\]/);
+      if (!exec) {
+        return;
+      }
+      const data = exec[1].split(",");
+      const dataRange = document.getWordRangeAtPosition(position, /\w+=(.+?(?=[,\]]))?/);
+      let currentData: string | undefined;
+      if (dataRange) {
+        currentData = document.getText(dataRange);
+      }
+      return {
+        selector,
+        data,
+        currentData: {
+          data: currentData,
+          param: currentData?.split("=")[0],
+          value: currentData?.split("=")[1] || undefined,
+        },
+      };
+    },
     isCommment() {
       return getCurrentText().startsWith("#");
     },
@@ -312,6 +343,60 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
       }
       return result;
     },
+    getCommandsV2(): Array<CommandSequence> {
+      const result: CommandSequence[] = [];
+      const text = getCurrentText();
+      if (!text) {
+        return result;
+      }
+      const [...words] = text
+        .split(/(\b|(?<=([~^"*])))\s+/g)
+        .filter((_, i) => i % 3 === 0)
+        .map((arg) => {
+          return new RegExp(/((~|\^)-?(\d+)?(\.\d+)?)/g).test(arg) ? arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [] : arg;
+        })
+        .flat();
+      while (words.length) {
+        const word = words.shift();
+        const command = commands.find(({ command }) => command === word);
+        if (!command) {
+          break;
+        }
+        const { overloads, command: c } = command;
+        const args: ParamInfo[] = [];
+        result.push({ command: c, args });
+        if (!overloads) {
+          break;
+        }
+        for (const overload of overloads) {
+          const { params } = overload;
+          const arg = words.shift();
+          if (arg === undefined) {
+            break;
+          }
+          if (arg === "") {
+            args.push({
+              type: ParamType.keyword,
+              value: "",
+            });
+            break;
+          }
+          for (let i = 0; i < params.length; i++) {
+            if (!arg) {
+              break;
+            }
+            const param = params[i];
+            const regex = getParamRegex(param);
+            const match = regex.exec(arg);
+            if (!match) {
+              break;
+            }
+            args.push(param);
+          }
+        }
+      }
+      return result;
+    },
     createCompletion(value: string | vscode.CompletionItem) {
       const completion =
         typeof value === "string" ? new vscode.CompletionItem(value, vscode.CompletionItemKind.Function) : value;
@@ -322,7 +407,6 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
       return completion;
     },
     getCompletionFromCommand(command: CommandInfo, args: string[]) {
-      console.log(args);
       const { overloads } = command;
       if (!overloads) {
         return [];
@@ -376,7 +460,6 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
           });
         }
       }
-      console.log(tempOverloads);
       return tempOverloads
         .map(({ params }) => getParamCompletion(params[args.length - executeIndex]))
         .flat()

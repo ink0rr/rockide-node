@@ -38,7 +38,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // molang
     vscode.languages.registerDocumentSemanticTokensProvider(jsonSelector, molangProvider, legend),
     // mcfunction
-    vscode.languages.registerCompletionItemProvider(commandSelector, commandProvider),
+    vscode.languages.registerCompletionItemProvider(commandSelector, commandProvider, " ", "=", ","),
     vscode.workspace.onDidChangeTextDocument((e) => commandProvider.onDidChangeTextDocument(e)),
     vscode.workspace.onDidCreateFiles((e) => commandProvider.onDidCreateFiles(e)),
     vscode.workspace.onDidRenameFiles((e) => commandProvider.onDidRenameFiles(e)),
