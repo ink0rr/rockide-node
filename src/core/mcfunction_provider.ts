@@ -140,7 +140,7 @@ export class CommandProvider
       if (!isMatch(uri.fsPath, `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`)) {
         continue;
       }
-      await this.rockide.indexMcfunction(uri);
+      this.rockide.indexMcfunction(uri);
     }
   }
   async onDidRenameFiles({ files }: vscode.FileRenameEvent) {
@@ -151,7 +151,7 @@ export class CommandProvider
         continue;
       }
       this.rockide.mcfunctions.delete(oldUri.fsPath);
-      await this.rockide.indexMcfunction(newUri);
+      this.rockide.indexMcfunction(newUri);
     }
   }
   onDidDeleteFiles({ files }: vscode.FileDeleteEvent) {

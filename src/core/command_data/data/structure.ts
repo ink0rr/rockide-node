@@ -13,9 +13,9 @@ const structure: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "mcstructure",
           signatureValue: "<name>",
-          type: ParamType.string,
+          type: ParamType.RockideMcstructure,
         },
         ...Parameter.createPosition("from"),
         ...Parameter.createPosition("to"),
@@ -34,9 +34,9 @@ const structure: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "mcstructure",
           signatureValue: "<name>",
-          type: ParamType.string,
+          type: ParamType.RockideMcstructure,
         },
         ...Parameter.createPosition("from"),
         ...Parameter.createPosition("to"),
@@ -65,9 +65,9 @@ const structure: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "mcstructure",
           signatureValue: "<name>",
-          type: ParamType.string,
+          type: ParamType.RockideMcstructure,
         },
       ],
     },
@@ -79,9 +79,9 @@ const structure: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "mcstructure",
           signatureValue: "<name>",
-          type: ParamType.string,
+          type: ParamType.RockideMcstructure,
         },
         ...Parameter.createPosition("to"),
         {
@@ -129,9 +129,9 @@ const structure: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "mcstructure",
           signatureValue: "<name>",
-          type: ParamType.string,
+          type: ParamType.RockideMcstructure,
         },
         ...Parameter.createPosition("to"),
         {

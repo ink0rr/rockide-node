@@ -22,6 +22,7 @@ export class Rockide {
   assets: AssetData[] = [];
   jsonAssets: AssetData[] = [];
   mcfunctions = new Set<string>(); // path
+  structures = new Set<string>(); // path
 
   async checkWorkspace() {
     for (const path of await vscode.workspace.findFiles("**/manifest.json")) {
@@ -61,7 +62,14 @@ export class Rockide {
         "{.*,build}/**",
       );
       for (const uri of mcfunctionList) {
-        await this.indexMcfunction(uri);
+        this.indexMcfunction(uri);
+      }
+      const structureList = await vscode.workspace.findFiles(
+        `**/${bpGlob}/structures/**/*.mcstructure`,
+        "{.*,build}/**",
+      );
+      for (const uri of structureList) {
+        this.indexMcstructure(uri);
       }
     });
   }
@@ -88,8 +96,12 @@ export class Rockide {
     }
   }
 
-  async indexMcfunction(uri: vscode.Uri) {
+  indexMcfunction(uri: vscode.Uri) {
     this.mcfunctions.add(uri.fsPath.replace(/\\/g, "/"));
+  }
+
+  indexMcstructure(uri: vscode.Uri) {
+    this.structures.add(uri.fsPath.replace(/\\/g, "/"));
   }
 
   indexAsset(uri: vscode.Uri) {
