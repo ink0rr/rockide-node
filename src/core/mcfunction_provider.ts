@@ -107,17 +107,22 @@ export class CommandProvider
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
     const text = document.getText();
     const tokens = new vscode.SemanticTokensBuilder(legend);
-    for (const { pattern, type, modifiers } of semantics) {
-      let match;
-      while ((match = pattern.exec(text))) {
-        const start = match.index;
-        const length = match[0].length;
-        const position = document.positionAt(start);
-        const range = new vscode.Range(position, position.translate(0, length));
-        tokens.push(range, type, modifiers);
+    for (const handler of commandHandlers) {
+      if (!isMatch(document.uri.fsPath, handler.pattern)) {
+        continue;
       }
+      for (const { pattern, type, modifiers } of semantics) {
+        let match;
+        while ((match = pattern.exec(text))) {
+          const start = match.index;
+          const length = match[0].length;
+          const position = document.positionAt(start);
+          const range = new vscode.Range(position, position.translate(0, length));
+          tokens.push(range, type, modifiers);
+        }
+      }
+      return tokens.build();
     }
-    return tokens.build();
   }
   provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
     for (const handler of commandHandlers) {
