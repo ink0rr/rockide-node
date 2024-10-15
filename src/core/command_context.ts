@@ -478,9 +478,6 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
       // return tempOverloads;
     },
     async createDefinition(path: string, originSelectionRange: vscode.Range): Promise<vscode.LocationLink> {
-      // const originSelectionRange = document.getWordRangeAtPosition(position, /\b\w+\b|\"[^\"]+\"|\b[\d\.]+\b|[~^*]/);
-      const testText = document.getText(originSelectionRange);
-      console.log(testText);
       const targetDocument = await vscode.workspace.openTextDocument(path);
       const targetRange = new vscode.Range(
         new vscode.Position(0, 0),

@@ -72,7 +72,6 @@ export function commandCompletion(ctx: CommandContext, rockide: Rockide): vscode
       return completion;
     });
   }
-  console.log(commandSequences);
   const lastSeq = commandSequences[commandSequences.length - 1];
   const lastArg = lastSeq.args[lastSeq.args.length - 1];
   if (lastArg.value === "") {
