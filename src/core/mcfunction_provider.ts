@@ -69,9 +69,27 @@ const semantics: SemanticToken[] = [
 ];
 
 export class CommandProvider
-  implements vscode.CompletionItemProvider, vscode.DocumentSemanticTokensProvider, vscode.SignatureHelpProvider
+  implements
+    vscode.CompletionItemProvider,
+    vscode.DocumentSemanticTokensProvider,
+    vscode.SignatureHelpProvider,
+    vscode.DefinitionProvider
 {
   constructor(private rockide: Rockide) {}
+  provideDefinition(
+    document: vscode.TextDocument,
+    position: vscode.Position,
+  ): vscode.ProviderResult<vscode.Definition | vscode.DefinitionLink[]> {
+    for (const handler of commandHandlers) {
+      if (isMatch(document.uri.fsPath, handler.pattern)) {
+        if (handler.process) {
+          const ctx = createCommandContext(document, position);
+          const definitions = handler.process(ctx, this.rockide)?.definitions?.();
+          return Promise.all(definitions ?? []);
+        }
+      }
+    }
+  }
   provideSignatureHelp(
     document: vscode.TextDocument,
     position: vscode.Position,
@@ -112,15 +130,9 @@ export class CommandProvider
       }
     }
   }
-  onDidChangeTextDocument({ document }: vscode.TextDocumentChangeEvent) {
-    if (this.rockide.mcfunctions.has(document.uri.fsPath)) {
-      const text = document.getText();
-      this.rockide.mcfunctions.set(document.uri.fsPath, text);
-    }
-  }
   async onDidCreateFiles({ files }: vscode.FileCreateEvent) {
     for (const uri of files) {
-      if (!isMatch(uri.fsPath, `${baseGlob}/${bpGlob}/**/*.mcfunction`)) {
+      if (!isMatch(uri.fsPath, `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`)) {
         continue;
       }
       await this.rockide.indexMcfunction(uri);
@@ -129,7 +141,7 @@ export class CommandProvider
   async onDidRenameFiles({ files }: vscode.FileRenameEvent) {
     for (const { newUri, oldUri } of files) {
       // If moved to outside project directory
-      if (!isMatch(newUri.fsPath, `${baseGlob}/${bpGlob}/**/*.mcfunction`)) {
+      if (!isMatch(newUri.fsPath, `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`)) {
         this.rockide.mcfunctions.delete(oldUri.fsPath);
         continue;
       }
@@ -139,7 +151,7 @@ export class CommandProvider
   }
   onDidDeleteFiles({ files }: vscode.FileDeleteEvent) {
     for (const uri of files) {
-      if (!isMatch(uri.fsPath, `${baseGlob}/${bpGlob}/**/*.mcfunction`)) {
+      if (!isMatch(uri.fsPath, `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`)) {
         continue;
       }
       this.rockide.mcfunctions.delete(uri.fsPath);

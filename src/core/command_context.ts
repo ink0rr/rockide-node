@@ -21,13 +21,13 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
   function getParamRegex(info: ParamInfo): RegExp {
     switch (info.type) {
       case ParamType.playerSelector:
-        return /(@a|@s|@p|@r)(\[(.*?)\])?/g;
+        return /@[aprs](\[(.*?)\])?/g;
       case ParamType.entitySelector:
-        return /(@a|@e|@s|@p|@r)(\[(.*?)\])?/g;
+        return /@[aeprs](\[(.*?)\])?/g;
       case ParamType.selectorWildcard:
-        return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*)/g;
+        return /((@[aeprs](\[(.*?)\])?)|\*)/g;
       case ParamType.scoreboardSelector:
-        return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*|("[^"]*"))/g;
+        return /((@[aeprs](\[(.*?)\])?)|\*|("[^"]*"))/g;
       case ParamType.string:
         return /("[^"]*"|\w+)/g;
       case ParamType.number:
@@ -43,6 +43,8 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
       case ParamType.itemNBT:
       case ParamType.rawJsonMessage:
         return /{[^]*?}/g;
+      case ParamType.RockideMcfunction:
+        return /[\/"\w]+/g;
       default: {
         if (Array.isArray(info.value)) {
           return new RegExp(`\\b${info.value.join("|")}\\b`, "g");
@@ -239,6 +241,17 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
     document,
     position,
     text: getCurrentText(),
+    getCurrentWord() {
+      // const range = document.getWordRangeAtPosition(position, /"([^"]*)"|\S+/);
+      const range = document.getWordRangeAtPosition(position, /\b\w+\b|\"[^\"]+\"|\b[\d\.]+\b|[~^*]/);
+      if (!range) {
+        return;
+      }
+      return {
+        text: document.getText(range),
+        range,
+      };
+    },
     getParamCompletion,
     getSelector() {
       const range = document.getWordRangeAtPosition(position, /(@\w+)\s*(\[(.*?)\])?/);
@@ -349,7 +362,7 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
       if (!text) {
         return result;
       }
-      const [...words] = text
+      let [...words] = text
         .split(/(\b|(?<=([~^"*])))\s+/g)
         .filter((_, i) => i % 3 === 0)
         .map((arg) => {
@@ -370,18 +383,10 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
         }
         for (const overload of overloads) {
           const { params } = overload;
-          const arg = words.shift();
-          if (arg === undefined) {
-            break;
-          }
-          if (arg === "") {
-            args.push({
-              type: ParamType.keyword,
-              value: "",
-            });
-            break;
-          }
+          let k = 0;
+          let temp: ParamInfo[] = [];
           for (let i = 0; i < params.length; i++) {
+            const arg = words[k];
             if (!arg) {
               break;
             }
@@ -389,9 +394,15 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
             const regex = getParamRegex(param);
             const match = regex.exec(arg);
             if (!match) {
+              temp = [];
               break;
             }
-            args.push(param);
+            temp.push(param);
+            k++;
+          }
+          if (temp.length) {
+            args.push(...temp);
+            words = words.slice(k);
           }
         }
       }
@@ -465,6 +476,25 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
         .flat()
         .filter((v, i, s) => i === s.findIndex((obj) => obj.label === v.label));
       // return tempOverloads;
+    },
+    async createDefinition(path: string, originSelectionRange: vscode.Range): Promise<vscode.LocationLink> {
+      // const originSelectionRange = document.getWordRangeAtPosition(position, /\b\w+\b|\"[^\"]+\"|\b[\d\.]+\b|[~^*]/);
+      const testText = document.getText(originSelectionRange);
+      console.log(testText);
+      const targetDocument = await vscode.workspace.openTextDocument(path);
+      const targetRange = new vscode.Range(
+        new vscode.Position(0, 0),
+        new vscode.Position(
+          targetDocument.lineCount - 1,
+          targetDocument.lineAt(targetDocument.lineCount - 1).text.length,
+        ),
+      );
+      const targetUri = targetDocument.uri;
+      return {
+        originSelectionRange,
+        targetRange,
+        targetUri,
+      };
     },
   };
 }

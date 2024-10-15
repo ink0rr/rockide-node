@@ -7,9 +7,8 @@ const functionCommand: CommandInfo = {
     {
       params: [
         {
-          // todo: provide defnied function paths
           value: "<name>",
-          type: ParamType.string,
+          type: ParamType.RockideMcfunction,
         },
       ],
     },

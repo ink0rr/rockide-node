@@ -21,7 +21,7 @@ export class Rockide {
   jsonFiles = new Map<string, JSONC.Node>();
   assets: AssetData[] = [];
   jsonAssets: AssetData[] = [];
-  mcfunctions = new Map<string, string>(); // path, content
+  mcfunctions = new Set<string>(); // path
 
   async checkWorkspace() {
     for (const path of await vscode.workspace.findFiles("**/manifest.json")) {
@@ -56,6 +56,13 @@ export class Rockide {
       for (const uri of assetList) {
         this.indexAsset(uri);
       }
+      const mcfunctionList = await vscode.workspace.findFiles(
+        `**/${bpGlob}/functions/**/*.mcfunction`,
+        "{.*,build}/**",
+      );
+      for (const uri of mcfunctionList) {
+        await this.indexMcfunction(uri);
+      }
     });
   }
 
@@ -82,8 +89,7 @@ export class Rockide {
   }
 
   async indexMcfunction(uri: vscode.Uri) {
-    const document = await vscode.workspace.openTextDocument(uri);
-    this.mcfunctions.set(uri.fsPath, document.getText());
+    this.mcfunctions.add(uri.fsPath.replace(/\\/g, "/"));
   }
 
   indexAsset(uri: vscode.Uri) {
@@ -198,5 +204,9 @@ export class Rockide {
 
   getTradeTables() {
     return this.jsonAssets.filter(({ bedrockPath: path }) => path.startsWith("trading/"));
+  }
+
+  getMcfunctions() {
+    return this.mcfunctions;
   }
 }

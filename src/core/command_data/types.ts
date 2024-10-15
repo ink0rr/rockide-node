@@ -43,4 +43,5 @@ export const enum ParamType {
   RockideLootTable = "RockideLootTable",
   RockideParticle = "RockideParticle",
   RockideClientAnimation = "RockideAnimation",
+  RockideMcfunction = "RockideMcfunction",
 }

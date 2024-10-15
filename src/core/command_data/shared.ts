@@ -65,6 +65,11 @@ function getParamValue(info: ParamInfo, rockide: Rockide) {
         .getClientAnimations()
         .map(({ values }) => values)
         .flat();
+    case ParamType.RockideMcfunction: {
+      return Array.from(rockide.mcfunctions.keys()).map(
+        (key) => key.replace(/\\/g, "/").split("functions/")[1].split(".")[0],
+      );
+    }
     default:
       return info.value;
   }
@@ -113,6 +118,8 @@ function getParamRegex(info: ParamInfo, rockide: Rockide): RegExp {
     }
     case ParamType.RockideClientAnimation:
       return /("[^"]*"|[\w.]+)/g;
+    case ParamType.RockideMcfunction:
+      return /[\/"\w]+/g;
     default: {
       if (Array.isArray(info.value)) {
         return new RegExp(`\\b${info.value.join("|")}\\b`, "g");
@@ -200,6 +207,9 @@ function getParamCompletion(
         if (opts?.skipCurly) {
           v = v.slice(1, v.length - 1);
         }
+        if (v.includes(" ")) {
+          v = `"${v}"`;
+        }
         const completion = new CompletionItem(v, getKind(info.type));
         completion.documentation = documentation;
         if (info.type === ParamType.number) {
@@ -209,6 +219,12 @@ function getParamCompletion(
       });
     }
     let documentation = getDocs(info.type, value) ?? info.documentation;
+    if (opts?.skipCurly) {
+      value = value.slice(1, value.length - 1);
+    }
+    if (value.includes(" ")) {
+      value = `"${value}"`;
+    }
     const completion = new CompletionItem(value, getKind(info.type));
     if (Array.isArray(documentation)) {
       documentation = documentation[0];
@@ -370,7 +386,7 @@ export function commandCompletion(ctx: CommandContext, rockide: Rockide, overLin
         })
         .flat()
         .filter((arg) => arg !== undefined);
-      console.log(args);
+      // console.log(args);
       if (args.length === 1) {
         return overloads
           .map((overload) => getParamCompletion(overload.params[0], rockide))
