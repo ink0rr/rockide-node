@@ -9,7 +9,7 @@ import { createMolangContext } from "./molang_context";
 export class MolangProvider implements vscode.DocumentSemanticTokensProvider, vscode.SignatureHelpProvider {
   constructor(private rockide: Rockide) {}
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
-    const root = this.rockide.jsonFiles.get(document.uri.fsPath);
+    const root = this.rockide.jsonFiles.get(document.uri.fsPath) ?? JSONC.parseTree(document.getText());
     if (!root) {
       return;
     }
@@ -72,18 +72,21 @@ export class MolangProvider implements vscode.DocumentSemanticTokensProvider, vs
     if (!molang?.signature) {
       return;
     }
-    const activeParam = ctx.getActiveParam();
-    if (activeParam === undefined) {
+    let activeParameter = ctx.getActiveParam();
+    if (activeParameter === undefined) {
       return;
     }
     const parameters = molang.signature
-      .replace(/[\(\)]/g, "")
-      .split(",")
+      .replace(/(^\(|\):.*$)/g, "")
+      .split(", ")
       .map((label) => ({ label }));
+    if (parameters.at(-1)?.label.startsWith("...")) {
+      activeParameter = Math.min(activeParameter, parameters.length - 1);
+    }
     signatureHelp.signatures = [
       {
         label: `${prefix}.${molang.name}${molang.signature}`,
-        activeParameter: Math.min(activeParam, parameters.length - 1),
+        activeParameter,
         parameters,
         documentation: molang.description,
       },
