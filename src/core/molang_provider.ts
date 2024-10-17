@@ -9,7 +9,7 @@ import { createMolangContext } from "./molang_context";
 export class MolangProvider implements vscode.DocumentSemanticTokensProvider, vscode.SignatureHelpProvider {
   constructor(private rockide: Rockide) {}
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
-    const root = this.rockide.jsonFiles.get(document.uri.fsPath) ?? JSONC.parseTree(document.getText());
+    const root = this.rockide.jsonFiles.get(document.uri.fsPath);
     if (!root) {
       return;
     }
