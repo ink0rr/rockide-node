@@ -4,7 +4,17 @@ import { JsonHandler } from "./_type";
 
 export const attachableHandler: JsonHandler = {
   pattern: `**/${rpGlob}/attachables/**/*.json`,
+  index: "parse",
   process(ctx, rockide) {
+    if (ctx.matchField("identifier")) {
+      return {
+        definitions: () =>
+          rockide
+            .getItems()
+            .filter(({ values }) => values.includes(ctx.nodeValue))
+            .map(({ path, root }) => ctx.createDefinition(path, root)),
+      };
+    }
     if (ctx.matchProperty("animations")) {
       return {
         completions: () => rockide.getClientAnimations().flatMap(({ values }) => values),

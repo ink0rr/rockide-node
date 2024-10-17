@@ -4,7 +4,17 @@ import { JsonHandler } from "./_type";
 
 export const itemHandler: JsonHandler = {
   pattern: `**/${bpGlob}/items/**/*.json`,
+  index: "parse",
   process(ctx, rockide) {
+    if (ctx.matchField("identifier")) {
+      return {
+        definitions: () =>
+          rockide
+            .getAttachables()
+            .filter(({ values }) => values.includes(ctx.nodeValue))
+            .map(({ path, root }) => ctx.createDefinition(path, root)),
+      };
+    }
     if (ctx.matchField("minecraft:icon") || ctx.matchProperty("textures")) {
       return {
         completions: () => rockide.getItemIcons().flatMap(({ values }) => values),

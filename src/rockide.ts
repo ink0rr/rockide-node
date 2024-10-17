@@ -111,6 +111,16 @@ export class Rockide {
       });
   }
 
+  getAttachables(): IndexedData[] {
+    return [...this.jsonFiles]
+      .filter(([path]) => isMatch(path, `**/${rpGlob}/attachables/**/*.json`))
+      .map(([path, root]) => {
+        const json = JSONC.getNodeValue(root);
+        const identifier = json["minecraft:attachable"]?.description?.identifier;
+        return { path, root, values: identifier ? [identifier] : [] };
+      });
+  }
+
   getEntities(): IndexedData[] {
     return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${bpGlob}/entities/**/*.json`))
@@ -127,6 +137,16 @@ export class Rockide {
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);
         const identifier = json["minecraft:client_entity"]?.description?.identifier;
+        return { path, root, values: identifier ? [identifier] : [] };
+      });
+  }
+
+  getItems(): IndexedData[] {
+    return [...this.jsonFiles]
+      .filter(([path]) => isMatch(path, `**/${bpGlob}/items/**/*.json`))
+      .map(([path, root]) => {
+        const json = JSONC.getNodeValue(root);
+        const identifier = json["minecraft:item"]?.description?.identifier;
         return { path, root, values: identifier ? [identifier] : [] };
       });
   }
