@@ -111,6 +111,26 @@ export class Rockide {
       });
   }
 
+  getEntities(): IndexedData[] {
+    return [...this.jsonFiles]
+      .filter(([path]) => isMatch(path, `**/${bpGlob}/entities/**/*.json`))
+      .map(([path, root]) => {
+        const json = JSONC.getNodeValue(root);
+        const identifier = json["minecraft:entity"]?.description?.identifier;
+        return { path, root, values: identifier ? [identifier] : [] };
+      });
+  }
+
+  getClientEntities(): IndexedData[] {
+    return [...this.jsonFiles]
+      .filter(([path]) => isMatch(path, `**/${rpGlob}/entity/**/*.json`))
+      .map(([path, root]) => {
+        const json = JSONC.getNodeValue(root);
+        const identifier = json["minecraft:client_entity"]?.description?.identifier;
+        return { path, root, values: identifier ? [identifier] : [] };
+      });
+  }
+
   getGeometries(): IndexedData[] {
     return [...this.jsonFiles]
       .filter(([path]) => isMatch(path, `**/${rpGlob}/models/**/*.json`))
