@@ -10,7 +10,7 @@ export function getMolangCompletions(document: vscode.TextDocument, position: vs
     return molangData.map(({ name, signature, description }) => {
       const completion = new vscode.CompletionItem(`${prefix}.${name}`, vscode.CompletionItemKind.Method);
       completion.documentation = description;
-      completion.detail = `${completion.label}${signature}`;
+      completion.detail = `${name}${signature}`;
       if (signature[0] !== ":") {
         completion.insertText = `${completion.label}()`;
         completion.command = {
