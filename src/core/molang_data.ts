@@ -132,7 +132,7 @@ export const molangQueries: MolangData[] = [
   },
   {
     name: "block_property",
-    signature: ": string | number | boolean",
+    signature: "(identifier: string): string | number | boolean",
     description:
       "(No longer available in pack min_engine_version 1.20.40.) Returns the value of the associated block's Block State.",
     deprecated: true,
