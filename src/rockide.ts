@@ -19,8 +19,8 @@ export type AssetData = {
 export class Rockide {
   diagnostics = vscode.languages.createDiagnosticCollection("rockide");
   jsonFiles = new Map<string, JSONC.Node>();
-  assets: AssetData[] = [];
   jsonAssets: AssetData[] = [];
+  assets: AssetData[] = [];
 
   async checkWorkspace() {
     for (const path of await vscode.workspace.findFiles("**/manifest.json")) {
@@ -84,6 +84,9 @@ export class Rockide {
   }
 
   indexAsset(uri: vscode.Uri) {
+    if (!uri.fsPath.match(/\.(png|tga|fsb|ogg|wav)$/)) {
+      return;
+    }
     const path = uri.fsPath.replaceAll("\\", "/").split(/(resource_pack|[^\\/]*?rp|rp_[^\\/]*?)\//i)[2];
     if (path) {
       this.assets.push({

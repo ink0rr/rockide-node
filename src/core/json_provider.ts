@@ -45,45 +45,39 @@ export class JsonProvider implements vscode.CompletionItemProvider, vscode.Defin
   }
   async onDidCreateFiles({ files }: vscode.FileCreateEvent) {
     for (const uri of files) {
-      if (!isMatch(uri.fsPath, `${baseGlob}/${projectGlob}/**/*.json`)) {
+      if (!isMatch(uri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
         continue;
       }
       if (uri.fsPath.endsWith(".json")) {
         await this.rockide.indexJson(uri);
-        continue;
-      }
-      if (uri.fsPath.match(/\.(png|tga|fsb|ogg|wav)$/)) {
+      } else {
         this.rockide.indexAsset(uri);
-        continue;
       }
     }
   }
   async onDidRenameFiles({ files }: vscode.FileRenameEvent) {
     for (const { oldUri, newUri } of files) {
-      // If moved to outside project directory
-      if (!isMatch(newUri.fsPath, `${baseGlob}/${projectGlob}/**/*.json`)) {
+      if (isMatch(oldUri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
         this.rockide.jsonFiles.delete(oldUri.fsPath);
-        this.rockide.assets = this.rockide.assets.filter((v) => v.uri.fsPath === oldUri.fsPath);
+        this.rockide.jsonAssets = this.rockide.jsonAssets.filter((v) => v.uri.fsPath !== oldUri.fsPath);
+        this.rockide.assets = this.rockide.assets.filter((v) => v.uri.fsPath !== oldUri.fsPath);
+      }
+      if (!isMatch(newUri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
         continue;
       }
-      if (oldUri.fsPath.endsWith(".json")) {
-        this.rockide.jsonFiles.delete(oldUri.fsPath);
-        this.rockide.jsonAssets = this.rockide.jsonAssets.filter((v) => v.uri.fsPath === oldUri.fsPath);
+      if (newUri.fsPath.endsWith(".json")) {
         await this.rockide.indexJson(newUri);
-        continue;
-      }
-      this.rockide.assets = this.rockide.assets.filter((v) => v.uri.fsPath === oldUri.fsPath);
-      if (newUri.fsPath.match(/\.(png|tga|fsb|ogg|wav)$/)) {
+      } else {
         this.rockide.indexAsset(newUri);
       }
     }
   }
   onDidDeleteFiles({ files }: vscode.FileDeleteEvent) {
     for (const uri of files) {
-      if (isMatch(uri.fsPath, `${baseGlob}/${projectGlob}/**/*.json`)) {
+      if (isMatch(uri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
         this.rockide.jsonFiles.delete(uri.fsPath);
-        this.rockide.assets = this.rockide.assets.filter((v) => v.uri.fsPath === uri.fsPath);
-        this.rockide.jsonAssets = this.rockide.jsonAssets.filter((v) => v.uri.fsPath === uri.fsPath);
+        this.rockide.jsonAssets = this.rockide.jsonAssets.filter((v) => v.uri.fsPath !== uri.fsPath);
+        this.rockide.assets = this.rockide.assets.filter((v) => v.uri.fsPath !== uri.fsPath);
       }
     }
   }
