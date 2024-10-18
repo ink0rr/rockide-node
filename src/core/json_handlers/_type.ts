@@ -11,4 +11,5 @@ export type JsonHandler = {
 export type JsonHandlerResult = {
   completions?(): Array<string | vscode.CompletionItem>;
   definitions?(): Promise<vscode.LocationLink>[] | vscode.LocationLink[] | void;
+  signature?(): vscode.SignatureHelp | undefined;
 };
