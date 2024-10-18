@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { createMolangContext } from "./molang_context";
-import { molangPrefixes } from "./molang_data";
+import { createMolangContext } from "./context";
+import { molangPrefixes } from "./data";
 
 export function getMolangCompletions(document: vscode.TextDocument, position: vscode.Position) {
   const ctx = createMolangContext(document, position);

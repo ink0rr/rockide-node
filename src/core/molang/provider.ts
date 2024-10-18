@@ -1,10 +1,10 @@
 import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
-import { projectGlob } from "../constants";
-import { Rockide } from "../rockide";
-import { legend, SemanticToken } from "../semantics";
-import { createMolangContext } from "./molang_context";
+import { projectGlob } from "../../constants";
+import { Rockide } from "../../rockide";
+import { legend, SemanticToken } from "../../semantics";
+import { createMolangContext } from "./context";
 
 export class MolangProvider implements vscode.DocumentSemanticTokensProvider, vscode.SignatureHelpProvider {
   constructor(private rockide: Rockide) {}

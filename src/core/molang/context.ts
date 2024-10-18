@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { molangMath, molangQueries } from "./molang_data";
+import { molangMath, molangQueries } from "./data";
 
 // todo: proper molang context and shared
 

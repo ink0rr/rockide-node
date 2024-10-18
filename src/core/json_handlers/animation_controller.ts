@@ -1,5 +1,5 @@
 import { bpGlob } from "../../constants";
-import { getMolangCompletions } from "../molang_handlers";
+import { getMolangCompletions } from "../molang/handlers";
 import { JsonHandler } from "./_type";
 
 export const animationControllerHandler: JsonHandler = {
