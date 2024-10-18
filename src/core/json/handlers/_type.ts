@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { Rockide } from "../../rockide";
-import { JsonContext } from "../json_context";
+import { Rockide } from "../../../rockide";
+import { JsonContext } from "../context";
 
 export type JsonHandler = {
   pattern: string | string[];

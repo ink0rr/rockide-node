@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { commandSelector, jsonSelector } from "./constants";
-import { JsonProvider } from "./core/json_provider";
+import { JsonProvider } from "./core/json/provider";
 import { CommandProvider } from "./core/mcfunction_provider";
 import { McstructureProvider } from "./core/mcstructure_provider";
 import { MolangProvider } from "./core/molang/provider";

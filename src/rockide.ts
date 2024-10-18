@@ -3,7 +3,7 @@ import { isMatch } from "micromatch";
 import { relative } from "path";
 import * as vscode from "vscode";
 import { bpGlob, NullNode, projectGlob, rpGlob } from "./constants";
-import { jsonHandlers } from "./core/json_handlers";
+import { jsonHandlers } from "./core/json/handlers";
 
 export type IndexedData = {
   path: string;

@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import * as vscode from "vscode";
-import { projectGlob } from "../../constants";
+import { projectGlob } from "../../../constants";
 import { JsonHandler } from "./_type";
 
 export const manifest: JsonHandler = {

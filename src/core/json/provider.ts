@@ -1,10 +1,10 @@
 import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
-import { baseGlob, NullNode, projectGlob } from "../constants";
-import { Rockide } from "../rockide";
-import { createJsonContext } from "./json_context";
-import { jsonHandlers } from "./json_handlers";
+import { baseGlob, NullNode, projectGlob } from "../../constants";
+import { Rockide } from "../../rockide";
+import { createJsonContext } from "./context";
+import { jsonHandlers } from "./handlers";
 
 export class JsonProvider implements vscode.CompletionItemProvider, vscode.DefinitionProvider {
   constructor(private rockide: Rockide) {}

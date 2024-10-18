@@ -1,4 +1,4 @@
-import { rpGlob } from "../../constants";
+import { rpGlob } from "../../../constants";
 import { JsonHandler } from "./_type";
 
 export const soundDefinitionsHandler: JsonHandler = {

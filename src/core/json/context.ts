@@ -1,7 +1,7 @@
 import * as JSONC from "jsonc-parser";
 import * as vscode from "vscode";
-import { NullNode } from "../constants";
-import { JsonHandlerResult } from "./json_handlers/_type";
+import { NullNode } from "../../constants";
+import { JsonHandlerResult } from "./handlers/_type";
 
 export function createJsonContext(document: vscode.TextDocument, position: vscode.Position) {
   const text = document.getText();

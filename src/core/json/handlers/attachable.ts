@@ -1,5 +1,5 @@
 import * as JSONC from "jsonc-parser";
-import { rpGlob } from "../../constants";
+import { rpGlob } from "../../../constants";
 import { JsonHandler } from "./_type";
 
 export const attachableHandler: JsonHandler = {
