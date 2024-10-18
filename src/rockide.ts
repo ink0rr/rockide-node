@@ -111,8 +111,9 @@ export class Rockide {
     const regex = /tag\s(@\w+|\*)((\s)?(\[\])?)?\sadd\s(\w+|\"\w+\")/g;
     const document = await vscode.workspace.openTextDocument(uri);
     if (uri.fsPath.endsWith(".json")) {
-      const json = JSONC.parseTree(document.getText()) ?? NullNode;
+      // const json = JSONC.parseTree(document.getText()) ?? NullNode;
       // matchproperty
+      // todo: handle json
       return;
     }
     if (uri.fsPath.endsWith(".mcfunction")) {
