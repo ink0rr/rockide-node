@@ -4,7 +4,7 @@ import { JsonProvider } from "./core/json/provider";
 import { CommandProvider } from "./core/mcfunction_provider";
 import { McstructureProvider } from "./core/mcstructure_provider";
 import { MolangProvider } from "./core/molang/provider";
-import { TagProvider } from "./core/tag_provider";
+import { TagProvider } from "./core/tag/provider";
 import { Rockide } from "./rockide";
 import { legend } from "./semantics";
 
