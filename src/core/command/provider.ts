@@ -1,11 +1,11 @@
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
-import { baseGlob, bpGlob } from "../constants";
-import { Rockide } from "../rockide";
-import { legend, SemanticToken } from "../semantics";
-import { createCommandContext } from "./command_context";
-import { commands } from "./command_data";
-import { commandHandlers } from "./command_handlers";
+import { baseGlob, bpGlob } from "../../constants";
+import { Rockide } from "../../rockide";
+import { legend, SemanticToken } from "../../semantics";
+import { createCommandContext } from "./context";
+import { commands } from "./data";
+import { commandHandlers } from "./handlers";
 
 /**
  * TODO:

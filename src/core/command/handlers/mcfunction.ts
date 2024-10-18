@@ -1,6 +1,6 @@
-import { bpGlob } from "../../constants";
-import { commandCompletion, signatureHelper } from "../command_data/shared";
-import { ParamType } from "../command_data/types";
+import { bpGlob } from "../../../constants";
+import { commandCompletion, signatureHelper } from "../shared";
+import { ParamType } from "../types";
 import { CommandHandler } from "./_types";
 
 export const mcfunctionHandler: CommandHandler = {

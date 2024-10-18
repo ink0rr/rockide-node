@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
-import { Rockide } from "../../rockide";
-import { CommandContext } from "../command_context";
-import { commands } from "../command_data";
+import { Rockide } from "../../../rockide";
+import { CommandContext } from "../context";
+import { commands } from "../data";
 
 export function commandCompletion(ctx: CommandContext, rockide: Rockide): vscode.CompletionItem[] {
   // if (ctx.isCommment()) {

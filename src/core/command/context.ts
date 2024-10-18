@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
-import { commands } from "./command_data";
-import execute from "./command_data/data/execute";
-import { CommandInfo, CommandSignature, ParamInfo, ParamType } from "./command_data/types";
+import { commands } from "./data";
+import execute from "./data/execute";
+import { CommandInfo, CommandSignature, ParamInfo, ParamType } from "./types";
 
 export function createCommandContext(document: vscode.TextDocument, position: vscode.Position) {
   // const range = document.getWordRangeAtPosition(position, /\/\w+/);

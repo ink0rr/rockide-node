@@ -1,7 +1,7 @@
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
-import { baseGlob, bpGlob } from "../constants";
-import { Rockide } from "../rockide";
+import { baseGlob, bpGlob } from "../../constants";
+import { Rockide } from "../../rockide";
 
 const mcstructureGlob = `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`;
 

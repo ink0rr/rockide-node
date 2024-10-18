@@ -1,7 +1,7 @@
 import { CompletionItem, CompletionItemKind, MarkdownString, SignatureHelp } from "vscode";
-import { commands } from ".";
 import { Rockide } from "../../rockide";
-import { CommandContext } from "../command_context";
+import { CommandContext } from "./context";
+import { commands } from "./data";
 import execute from "./data/execute";
 import { ParamInfo, ParamType } from "./types";
 
