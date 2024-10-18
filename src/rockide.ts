@@ -23,6 +23,7 @@ export class Rockide {
   jsonAssets: AssetData[] = [];
   mcfunctions = new Set<string>(); // path
   structures = new Set<string>(); // path
+  #tags = new Map<string, string[]>(); // path -> tags
 
   async checkWorkspace() {
     for (const path of await vscode.workspace.findFiles("**/manifest.json")) {
@@ -52,6 +53,7 @@ export class Rockide {
       for (const uri of fileList) {
         progress.report({ message: relative(workspace.uri.fsPath, uri.fsPath), increment });
         await this.indexJson(uri);
+        await this.indexTags(uri);
       }
       const assetList = await vscode.workspace.findFiles(`**/${rpGlob}/**/*.{png,tga,fsb,ogg,wav}`, "{.*,build}/**");
       for (const uri of assetList) {
@@ -63,6 +65,7 @@ export class Rockide {
       );
       for (const uri of mcfunctionList) {
         this.indexMcfunction(uri);
+        await this.indexTags(uri);
       }
       const structureList = await vscode.workspace.findFiles(
         `**/${bpGlob}/structures/**/*.mcstructure`,
@@ -104,6 +107,28 @@ export class Rockide {
     this.structures.add(uri.fsPath.replace(/\\/g, "/"));
   }
 
+  async indexTags(uri: vscode.Uri) {
+    const regex = /tag\s(@\w+|\*)((\s)?(\[\])?)?\sadd\s(\w+|\"\w+\")/g;
+    const document = await vscode.workspace.openTextDocument(uri);
+    if (uri.fsPath.endsWith(".json")) {
+      const json = JSONC.parseTree(document.getText()) ?? NullNode;
+      // matchproperty
+      return;
+    }
+    if (uri.fsPath.endsWith(".mcfunction")) {
+      const matches = Array.from(document.getText().matchAll(regex));
+      const tagName = matches[0]?.[5];
+      if (!tagName) {
+        return;
+      }
+      const path = uri.fsPath;
+      const old = this.#tags.get(path) ?? [];
+      this.#tags.set(path, old.concat(tagName));
+      return;
+    }
+    console.error("Unknown file passed to indexTags:", uri.fsPath);
+  }
+
   indexAsset(uri: vscode.Uri) {
     const path = uri.fsPath.replaceAll("\\", "/").split(/(resource_pack|[^\\/]*?rp|rp_[^\\/]*?)\//i)[2];
     if (path) {
@@ -112,6 +137,27 @@ export class Rockide {
         bedrockPath: path.replace(/\.\w+$/, ""),
       });
     }
+  }
+
+  get tags() {
+    const tags = Array.from(this.#tags.values());
+    return {
+      has: (name: string) => {
+        for (const values of tags) {
+          const ok = values.find((v) => v === name);
+          if (ok) {
+            return true;
+          }
+        }
+        return false;
+      },
+      deleteByPath: (path: string) => {
+        this.#tags.delete(path);
+      },
+      values: () => {
+        return tags.flat().filter((v, i, s) => s.findIndex((v2) => v2 === v) === i);
+      },
+    };
   }
 
   getAnimations(): IndexedData[] {

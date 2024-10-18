@@ -70,6 +70,8 @@ function getParamValue(info: ParamInfo, rockide: Rockide) {
     }
     case ParamType.RockideMcstructure:
       return Array.from(rockide.structures.keys()).map((key) => `"${key.split("structures/")[1].split(".")[0]}"`);
+    case ParamType.RockideTag:
+      return rockide.tags.values().concat('""');
     default:
       return info.value;
   }
@@ -122,6 +124,8 @@ function getParamRegex(info: ParamInfo, rockide: Rockide): RegExp {
       return /\b\w+\b|\"[^\"]+\"/g;
     case ParamType.RockideMcstructure:
       return /\b\w+:\w+\b|\"[^\"]+\"/g;
+    case ParamType.RockideTag:
+      return /\w+|"[^"]*"/g;
     default: {
       if (Array.isArray(info.value)) {
         return new RegExp(`\\b${info.value.join("|")}\\b`, "g");

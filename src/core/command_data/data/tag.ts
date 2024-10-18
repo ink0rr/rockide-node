@@ -17,9 +17,9 @@ const tag: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["todotag"],
+          value: ["tag"],
           signatureValue: "<name>",
-          type: ParamType.string,
+          type: ParamType.RockideTag,
         },
       ],
     },

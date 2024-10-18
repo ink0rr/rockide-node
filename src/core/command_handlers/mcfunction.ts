@@ -9,7 +9,7 @@ export const mcfunctionHandler: CommandHandler = {
   process(ctx, rockide) {
     return {
       completions() {
-        console.log(ctx.getCommandsV2());
+        // console.log(ctx.getCommandsV2());
         return commandCompletion(ctx, rockide);
       },
       signature() {
