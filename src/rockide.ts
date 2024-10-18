@@ -19,11 +19,11 @@ export type AssetData = {
 export class Rockide {
   diagnostics = vscode.languages.createDiagnosticCollection("rockide");
   jsonFiles = new Map<string, JSONC.Node>();
-  assets: AssetData[] = [];
   jsonAssets: AssetData[] = [];
   mcfunctions = new Set<string>(); // path
   structures = new Set<string>(); // path
   #tags = new Map<string, string[]>(); // path -> tags
+  assets: AssetData[] = [];
 
   async checkWorkspace() {
     for (const path of await vscode.workspace.findFiles("**/manifest.json")) {
@@ -130,6 +130,9 @@ export class Rockide {
   }
 
   indexAsset(uri: vscode.Uri) {
+    if (!uri.fsPath.match(/\.(png|tga|fsb|ogg|wav)$/)) {
+      return;
+    }
     const path = uri.fsPath.replaceAll("\\", "/").split(/(resource_pack|[^\\/]*?rp|rp_[^\\/]*?)\//i)[2];
     if (path) {
       this.assets.push({
@@ -175,6 +178,46 @@ export class Rockide {
       .map(([path, root]) => {
         const json = JSONC.getNodeValue(root);
         return { path, root, values: Object.keys(json.animations ?? json.animation_controllers ?? {}) };
+      });
+  }
+
+  getAttachables(): IndexedData[] {
+    return [...this.jsonFiles]
+      .filter(([path]) => isMatch(path, `**/${rpGlob}/attachables/**/*.json`))
+      .map(([path, root]) => {
+        const json = JSONC.getNodeValue(root);
+        const identifier = json["minecraft:attachable"]?.description?.identifier;
+        return { path, root, values: identifier ? [identifier] : [] };
+      });
+  }
+
+  getEntities(): IndexedData[] {
+    return [...this.jsonFiles]
+      .filter(([path]) => isMatch(path, `**/${bpGlob}/entities/**/*.json`))
+      .map(([path, root]) => {
+        const json = JSONC.getNodeValue(root);
+        const identifier = json["minecraft:entity"]?.description?.identifier;
+        return { path, root, values: identifier ? [identifier] : [] };
+      });
+  }
+
+  getClientEntities(): IndexedData[] {
+    return [...this.jsonFiles]
+      .filter(([path]) => isMatch(path, `**/${rpGlob}/entity/**/*.json`))
+      .map(([path, root]) => {
+        const json = JSONC.getNodeValue(root);
+        const identifier = json["minecraft:client_entity"]?.description?.identifier;
+        return { path, root, values: identifier ? [identifier] : [] };
+      });
+  }
+
+  getItems(): IndexedData[] {
+    return [...this.jsonFiles]
+      .filter(([path]) => isMatch(path, `**/${bpGlob}/items/**/*.json`))
+      .map(([path, root]) => {
+        const json = JSONC.getNodeValue(root);
+        const identifier = json["minecraft:item"]?.description?.identifier;
+        return { path, root, values: identifier ? [identifier] : [] };
       });
   }
 

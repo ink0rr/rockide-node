@@ -1,9 +1,9 @@
-import { bpGlob } from "../../constants";
+import { rpGlob } from "../../constants";
 import { getMolangCompletions } from "../molang_handlers";
 import { JsonHandler } from "./_type";
 
-export const animationControllerHandler: JsonHandler = {
-  pattern: `**/${bpGlob}/animation_controllers/**/*.json`,
+export const clientAnimationControllerHandler: JsonHandler = {
+  pattern: `**/${rpGlob}/animation_controllers/**/*.json`,
   index: "parse",
   process(ctx) {
     const id = ctx.path[1];

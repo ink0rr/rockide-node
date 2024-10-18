@@ -30,12 +30,15 @@ export function createMolangContext(document: vscode.TextDocument, position: vsc
       }
     },
     getActiveParam() {
-      const range = document.getWordRangeAtPosition(position, /(?<!\\)\((.*?)(?<!\\)\)/);
+      let range = document.getWordRangeAtPosition(position, /(?<!\\)\((.*?)(?<!\\)\)/);
       if (!range) {
         return;
       }
-      let text = document.getText(range);
-      text = text.substring(1, text.length - 1);
+      range = range.with(range.start.translate(0, 1), range.end.translate(0, -1));
+      if (!range.contains(position)) {
+        return;
+      }
+      const text = document.getText(range);
       const regex = /(?:'[^']*'|[^,]+)/g;
       let index = 0;
       let match;

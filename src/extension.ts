@@ -19,7 +19,7 @@ export async function activate(context: vscode.ExtensionContext) {
   await rockide.indexWorkspace();
 
   const jsonProvider = new JsonProvider(rockide);
-  const molangProvider = new MolangProvider();
+  const molangProvider = new MolangProvider(rockide);
   const commandProvider = new CommandProvider(rockide);
   const mcstructureProvider = new McstructureProvider(rockide);
   const tagProvider = new TagProvider(rockide);
