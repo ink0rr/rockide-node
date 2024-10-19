@@ -1,9 +1,22 @@
 import * as vscode from "vscode";
+import { Rockide } from "../../rockide";
 import { CommandContext } from "./context_n";
+import { selectorCompletion, selectorDataCompletion } from "./selector/completion";
 
-export function commandCompletion(ctx: CommandContext) {
+export function commandCompletion(ctx: CommandContext, rockide: Rockide) {
   if (ctx.isCommment()) {
     return [];
+  }
+
+  // Handle selector
+  const selector = ctx.getSelector();
+  if (selector) {
+    const { currentData } = selector;
+    console.log(selector);
+    if (!currentData.value && currentData.param) {
+      return selectorDataCompletion(currentData.param, rockide);
+    }
+    return selectorCompletion();
   }
 
   let completions: vscode.CompletionItem[] = [];

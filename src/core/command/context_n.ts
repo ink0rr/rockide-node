@@ -314,13 +314,15 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
       if (dataRange) {
         currentData = document.getText(dataRange);
       }
+      const param = currentData?.split("=")[0];
+      const value = currentData?.split("=").slice(1).join("=") || undefined;
       return {
         selector,
         data,
         currentData: {
           data: currentData,
-          param: currentData?.split("=")[0],
-          value: currentData?.split("=")[1] || undefined,
+          param,
+          value,
         },
       };
     },
