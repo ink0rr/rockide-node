@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { Rockide } from "../../../rockide";
-import { CommandContext } from "../context";
+import { CommandContext } from "../context_n";
 
 export type CommandHandler = {
   pattern: string | string[];

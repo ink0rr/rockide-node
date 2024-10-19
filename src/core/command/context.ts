@@ -3,7 +3,7 @@ import { commands } from "./data";
 import execute from "./data/execute";
 import { CommandInfo, CommandSignature, ParamInfo, ParamType } from "./types";
 
-export function createCommandContext(document: vscode.TextDocument, position: vscode.Position) {
+export function createOldCommandContext(document: vscode.TextDocument, position: vscode.Position) {
   // const range = document.getWordRangeAtPosition(position, /\/\w+/);
   let currentText: string;
   const getCurrentText = () => {
@@ -496,4 +496,4 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
   };
 }
 
-export type CommandContext = NonNullable<ReturnType<typeof createCommandContext>>;
+export type OldCommandContext = NonNullable<ReturnType<typeof createOldCommandContext>>;

@@ -1,6 +1,6 @@
 import { CompletionItem, CompletionItemKind, MarkdownString, SignatureHelp } from "vscode";
 import { Rockide } from "../../rockide";
-import { CommandContext } from "./context";
+import { OldCommandContext } from "./context";
 import { commands } from "./data";
 import execute from "./data/execute";
 import { ParamInfo, ParamType } from "./types";
@@ -356,7 +356,7 @@ function selectorDataCompletion(param: string, rockide: Rockide): CompletionItem
     });
 }
 
-export function commandCompletion(ctx: CommandContext, rockide: Rockide, overLine?: string): CompletionItem[] {
+export function commandCompletion(ctx: OldCommandContext, rockide: Rockide, overLine?: string): CompletionItem[] {
   const { document, position } = ctx;
   const selector = ctx.getSelector();
   if (selector) {
@@ -481,7 +481,11 @@ export function commandCompletion(ctx: CommandContext, rockide: Rockide, overLin
   });
 }
 
-export function signatureHelper(ctx: CommandContext, rockide: Rockide, overLine?: string): SignatureHelp | undefined {
+export function signatureHelper(
+  ctx: OldCommandContext,
+  rockide: Rockide,
+  overLine?: string,
+): SignatureHelp | undefined {
   const { document, position } = ctx;
   const line = overLine ?? document.lineAt(position.line).text;
   const signature: SignatureHelp = new SignatureHelp();
