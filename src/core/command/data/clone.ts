@@ -8,9 +8,9 @@ const clone: CommandInfo = {
   overloads: [
     {
       params: [
-        ...Parameter.position,
-        ...Parameter.position,
-        ...Parameter.position,
+        ...Parameter.createPosition("begin"),
+        ...Parameter.createPosition("end"),
+        ...Parameter.createPosition("destination"),
         {
           value: ["replace", "masked"],
           type: ParamType.keyword,
@@ -23,9 +23,9 @@ const clone: CommandInfo = {
     },
     {
       params: [
-        ...Parameter.position,
-        ...Parameter.position,
-        ...Parameter.position,
+        ...Parameter.createPosition("begin"),
+        ...Parameter.createPosition("end"),
+        ...Parameter.createPosition("destination"),
         {
           value: ["filtered"],
           type: ParamType.keyword,

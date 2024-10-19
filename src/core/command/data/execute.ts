@@ -61,7 +61,7 @@ const execute: CommandInfo = {
           value: ["positioned"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("position"),
         {
           value: ["<chainedCommand>"],
           type: ParamType.executeChainedOption,
@@ -127,7 +127,7 @@ const execute: CommandInfo = {
           value: ["facing"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("lookAtPosition"),
         {
           value: ["<chainedCommand>"],
           type: ParamType.executeChainedOption,
@@ -203,7 +203,7 @@ const execute: CommandInfo = {
           value: ["block"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("position"),
         {
           value: blockIdentifier,
           signatureValue: "<block>",
@@ -229,7 +229,7 @@ const execute: CommandInfo = {
           value: ["block"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("position"),
         {
           value: blockIdentifier,
           signatureValue: "<block>",
@@ -251,7 +251,7 @@ const execute: CommandInfo = {
           value: ["blocks"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("position"),
         {
           value: ["masked", "all"],
           signatureValue: "<scanMode>",

@@ -1,20 +1,6 @@
 import { ParamInfo, ParamType } from "./types";
 
 export namespace Parameter {
-  export const position: ParamInfo[] = [
-    {
-      value: "<x>",
-      type: ParamType.location,
-    },
-    {
-      value: "<y>",
-      type: ParamType.location,
-    },
-    {
-      value: "<z>",
-      type: ParamType.location,
-    },
-  ];
   export const createPosition = (name: string): ParamInfo[] => [
     {
       value: `<${name}:x>`,
