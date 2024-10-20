@@ -298,20 +298,23 @@ const execute: CommandInfo = {
           type: ParamType.selectorWildcard,
         },
         {
-          value: ["todo:objective name"],
-          type: ParamType.string,
+          value: [],
+          signatureValue: "<targetObjective>",
+          type: ParamType.RockideScoreboardObjective,
         },
         {
-          value: ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><", "matches"],
-          type: ParamType.keyword,
+          value: ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><"],
+          signatureValue: "<operation>",
+          type: ParamType.scoreboardOperation,
         },
         {
           value: "<source>",
           type: ParamType.selectorWildcard,
         },
         {
-          value: ["todo:objective name"],
-          type: ParamType.string,
+          value: [],
+          signatureValue: "<targetObjective>",
+          type: ParamType.RockideScoreboardObjective,
         },
         {
           value: ["<chainedCommand>"],
@@ -334,8 +337,9 @@ const execute: CommandInfo = {
           type: ParamType.selectorWildcard,
         },
         {
-          value: ["todo:objective name"],
-          type: ParamType.string,
+          value: [],
+          signatureValue: "<targetObjective>",
+          type: ParamType.RockideScoreboardObjective,
         },
         {
           value: ["matches"],
@@ -343,7 +347,8 @@ const execute: CommandInfo = {
         },
         {
           value: "0..10",
-          type: ParamType.keyword,
+          signatureValue: "<value>",
+          type: ParamType.range,
         },
         {
           value: ["<chainedCommand>"],

@@ -19,7 +19,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
         {
           value: ["dummy"],
@@ -48,7 +48,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
       ],
     },
@@ -86,7 +86,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "[objective]",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
         {
           value: ["ascending", "descending"],
@@ -115,7 +115,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "[objective]",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
       ],
     },
@@ -158,7 +158,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "[objective]",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
       ],
     },
@@ -182,7 +182,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
         {
           value: ["0", "1", "2"],
@@ -216,7 +216,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
         {
           value: ["0"],
@@ -250,7 +250,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
         {
           value: "int",
@@ -279,12 +279,12 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "<targetObjective>",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
         {
           value: ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><"],
           signatureValue: "<operation>",
-          type: ParamType.keyword,
+          type: ParamType.scoreboardOperation,
         },
         {
           value: "*",
@@ -294,7 +294,7 @@ const scoreboard: CommandInfo = {
         {
           value: [],
           signatureValue: "<objective>",
-          type: ParamType.string,
+          type: ParamType.RockideScoreboardObjective,
         },
       ],
     },

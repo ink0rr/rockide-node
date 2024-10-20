@@ -39,6 +39,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         }
         return "0";
       }
+      case ParamType.range:
+        return ["0..10", "0..", "..10", "0", "10"];
       case ParamType.float:
         if (Array.isArray(info.value)) {
           return info.value;
@@ -52,6 +54,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return ["0.0", "-90.0", "90.0"];
       case ParamType.executeChainedOption:
         return execute.overloads!.map((overload) => overload.params[0].value).flat();
+      case ParamType.scoreboardOperation:
+        return ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><"];
       // rockide specific
       case ParamType.RockideLootTable:
         return rockide
@@ -71,6 +75,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return Array.from(rockide.structures.keys()).map((key) => `"${key.split("structures/")[1].split(".")[0]}"`);
       case ParamType.RockideTag:
         return rockide.tags.values().concat('""');
+      case ParamType.RockideScoreboardObjective:
+        return rockide.objectives.values().concat('""', "objectiveName");
       default:
         return info.value;
     }
@@ -94,6 +100,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return /("[^"]*"|\w+)/g;
       case ParamType.number:
         return /-?\d+/g;
+      case ParamType.range:
+        return /(\d+\.\.\d+|\d+\.\.|..\d+|\d+|\.\.\d+)/g;
       case ParamType.float:
         return /-?\d+(\.\d+)?/g;
       case ParamType.yaw:
@@ -117,6 +125,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         });
         return new RegExp(`\\b${values.join("|")}\\b`, "g");
       }
+      case ParamType.scoreboardOperation:
+        return /(%=|\*=|\+=|-=|\/=|<|=|>|><)/g;
       // rockide specific
       case ParamType.RockideLootTable:
       case ParamType.RockideParticle: {
@@ -133,6 +143,7 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
       case ParamType.RockideMcstructure:
         return /\b\w+:\w+\b|\"[^\"]+\"/g;
       case ParamType.RockideTag:
+      case ParamType.RockideScoreboardObjective:
         return /\w+|"[^"]*"/g;
       default: {
         if (Array.isArray(info.value)) {
@@ -176,7 +187,7 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return result;
       }
       let [...words] = text
-        .split(/(\b|(?<=([~^"*])))\s+/g)
+        .split(/(\b|(?<=([~^"*=<>])))\s+/g)
         .filter((_, i) => i % 3 === 0)
         .map((arg) => {
           return new RegExp(/((~|\^)-?(\d+)?(\.\d+)?)/g).test(arg) ? arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [] : arg;

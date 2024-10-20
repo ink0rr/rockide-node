@@ -23,6 +23,7 @@ export class Rockide {
   mcfunctions = new Set<string>(); // path
   structures = new Set<string>(); // path
   #tags = new Map<string, string[]>(); // path -> tags
+  #objectives = new Map<string, string[]>(); // path -> objectives
   assets: AssetData[] = [];
 
   async checkWorkspace() {
@@ -54,6 +55,7 @@ export class Rockide {
         progress.report({ message: relative(workspace.uri.fsPath, uri.fsPath), increment });
         await this.indexJson(uri);
         await this.indexTags(uri);
+        await this.indexObjective(uri);
       }
       const assetList = await vscode.workspace.findFiles(`**/${rpGlob}/**/*.{png,tga,fsb,ogg,wav}`, "{.*,build}/**");
       for (const uri of assetList) {
@@ -66,6 +68,7 @@ export class Rockide {
       for (const uri of mcfunctionList) {
         this.indexMcfunction(uri);
         await this.indexTags(uri);
+        await this.indexObjective(uri);
       }
       const structureList = await vscode.workspace.findFiles(
         `**/${bpGlob}/structures/**/*.mcstructure`,
@@ -130,6 +133,29 @@ export class Rockide {
     console.error("Unknown file passed to indexTags:", uri.fsPath);
   }
 
+  async indexObjective(uri: vscode.Uri) {
+    const regex = /scoreboard\sobjectives\sadd\s(\w+|\"[^\"]+\")/g;
+    const document = await vscode.workspace.openTextDocument(uri);
+    if (uri.fsPath.endsWith(".json")) {
+      // const json = JSONC.parseTree(document.getText()) ?? NullNode;
+      // matchproperty
+      // todo: handle json
+      return;
+    }
+    if (uri.fsPath.endsWith(".mcfunction")) {
+      const matches = Array.from(document.getText().matchAll(regex));
+      const objectiveName = matches[0]?.[1];
+      if (!objectiveName) {
+        return;
+      }
+      const path = uri.fsPath;
+      const old = this.#objectives.get(path) ?? [];
+      this.#objectives.set(path, old.concat(objectiveName));
+      return;
+    }
+    console.error("Unknown file passed to indexObjectives:", uri.fsPath);
+  }
+
   indexAsset(uri: vscode.Uri) {
     if (!uri.fsPath.match(/\.(png|tga|fsb|ogg|wav)$/)) {
       return;
@@ -160,6 +186,27 @@ export class Rockide {
       },
       values: () => {
         return tags.flat().filter((v, i, s) => s.findIndex((v2) => v2 === v) === i);
+      },
+    };
+  }
+
+  get objectives() {
+    const objectives = Array.from(this.#objectives.values());
+    return {
+      has: (name: string) => {
+        for (const values of objectives) {
+          const ok = values.find((v) => v === name);
+          if (ok) {
+            return true;
+          }
+        }
+        return false;
+      },
+      deleteByPath: (path: string) => {
+        this.#objectives.delete(path);
+      },
+      values: () => {
+        return objectives.flat().filter((v, i, s) => s.findIndex((v2) => v2 === v) === i);
       },
     };
   }

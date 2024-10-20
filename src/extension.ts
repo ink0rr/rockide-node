@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { commandSelector, jsonSelector } from "./constants";
+import { ObjectiveProvider } from "./core/command/objective/provider";
 import { CommandProvider } from "./core/command/provider";
 import { JsonProvider } from "./core/json/provider";
 import { McstructureProvider } from "./core/mcstructure/provider";
@@ -23,6 +24,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const commandProvider = new CommandProvider(rockide);
   const mcstructureProvider = new McstructureProvider(rockide);
   const tagProvider = new TagProvider(rockide);
+  const objectiveProvider = new ObjectiveProvider(rockide);
 
   context.subscriptions.push(
     vscode.commands.registerCommand("rockide.reloadWorkspace", () => rockide.indexWorkspace()),
@@ -58,6 +60,11 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidRenameFiles((e) => tagProvider.onDidRenameFiles(e)),
     vscode.workspace.onDidDeleteFiles((e) => tagProvider.onDidDeleteFiles(e)),
     vscode.workspace.onDidChangeTextDocument((e) => tagProvider.onDidChangeTextDocument(e)),
+    // objectives
+    vscode.workspace.onDidCreateFiles((e) => objectiveProvider.onDidCreateFiles(e)),
+    vscode.workspace.onDidRenameFiles((e) => objectiveProvider.onDidRenameFiles(e)),
+    vscode.workspace.onDidDeleteFiles((e) => objectiveProvider.onDidDeleteFiles(e)),
+    vscode.workspace.onDidChangeTextDocument((e) => objectiveProvider.onDidChangeTextDocument(e)),
   );
 }
 

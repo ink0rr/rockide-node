@@ -30,6 +30,7 @@ export const enum ParamType {
   tag = "tag",
   string = "string",
   number = "number",
+  range = "range",
   float = "float",
   vector3 = "vector3",
   yaw = "yaw",
@@ -39,6 +40,7 @@ export const enum ParamType {
   itemNBT = "itemNBT",
   rawJsonMessage = "rawJsonMessage",
   xpLevel = "xpLevel",
+  scoreboardOperation = "scoreboardOperation",
   // rockide specific
   RockideLootTable = "RockideLootTable",
   RockideParticle = "RockideParticle",
@@ -46,4 +48,5 @@ export const enum ParamType {
   RockideMcfunction = "RockideMcfunction",
   RockideMcstructure = "RockideMcstructure",
   RockideTag = "RockideTag",
+  RockideScoreboardObjective = "RockideScoreboardObjective",
 }
