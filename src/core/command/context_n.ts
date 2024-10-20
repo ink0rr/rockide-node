@@ -236,16 +236,14 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
               end = true;
             }
 
-            const { type, documentation } = param;
-
             const value = getParamValue(rockide, param);
             if (end) {
               // Provide completion for next param
               return new ArgInfo({
-                type,
+                ...param,
                 value,
                 isMatch: false,
-                documentation,
+                originalValue: param.value,
               });
             }
 
@@ -255,10 +253,10 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
               // Failed to match
               end = true;
               return new ArgInfo({
-                type,
+                ...param,
                 value,
                 isMatch: false,
-                documentation,
+                originalValue: param.value,
               });
             }
 
@@ -268,10 +266,10 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
 
             return new ArgInfo({
               // Provide completion for next param
-              type,
+              ...param,
               value: match[0],
               isMatch: true,
-              documentation,
+              originalValue: param.value,
             });
           });
           return {
@@ -293,6 +291,7 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
 
         result.push({
           command: command.command,
+          documentation: command.documentation,
           overloads: overloadInfo,
         });
       }
@@ -366,6 +365,7 @@ export type CommandContext = NonNullable<ReturnType<typeof createCommandContext>
 
 type CommandSequence = {
   command: string;
+  documentation?: string | vscode.MarkdownString;
   overloads: Array<OverloadInfo>;
 };
 
@@ -382,6 +382,7 @@ type CompletionOpts = {
 type ArgInfoData = ParamInfo & {
   isMatch: boolean;
   opts?: CompletionOpts;
+  originalValue: string | string[];
 };
 
 class ArgInfo implements ArgInfoData {
@@ -392,12 +393,16 @@ class ArgInfo implements ArgInfoData {
   signatureValue?: string | undefined;
   type: ParamType;
   value: string | string[];
+  originalValue: string | string[];
   constructor(data: ArgInfoData) {
     this.type = data.type;
     this.value = data.value;
     this.isMatch = data.isMatch;
     this.documentation = data.documentation;
     this.opts = data.opts;
+    this.signatureValue = data.signatureValue;
+    this.required = data.required;
+    this.originalValue = data.originalValue;
   }
   private getKind() {
     switch (this.type) {

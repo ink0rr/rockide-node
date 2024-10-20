@@ -1,5 +1,6 @@
 import { bpGlob } from "../../../constants";
 import { commandCompletion } from "../completion";
+import { commandSignature } from "../signature";
 import { CommandHandler } from "./_types";
 
 export const mcfunctionHandler: CommandHandler = {
@@ -9,6 +10,9 @@ export const mcfunctionHandler: CommandHandler = {
     return {
       completions() {
         return commandCompletion(ctx, rockide);
+      },
+      signature() {
+        return commandSignature(ctx);
       },
       // signature() {
       //   return signatureHelper(ctx, rockide);
