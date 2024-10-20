@@ -149,6 +149,16 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
       return getCurrentText().startsWith("#");
     },
     getCurrentText,
+    getCurrentWord() {
+      const range = document.getWordRangeAtPosition(position, /\b\w+\b|\"[^\"]+\"|\b[\d\.]+\b|[~^*]/);
+      if (!range) {
+        return;
+      }
+      return {
+        text: document.getText(range),
+        range,
+      };
+    },
     getCurrentArg: () => {
       const range = document.getWordRangeAtPosition(position, /\b\w+\b|\"[^\"]+\"|\b[\d\.]+\b|[~^*]/);
       if (!range) {
@@ -363,29 +373,29 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
 
 export type CommandContext = NonNullable<ReturnType<typeof createCommandContext>>;
 
-type CommandSequence = {
+export type CommandSequence = {
   command: string;
   documentation?: string | vscode.MarkdownString;
   overloads: Array<OverloadInfo>;
 };
 
-type OverloadInfo = {
+export type OverloadInfo = {
   isMatch: boolean;
   args: Array<ArgInfo>;
 };
 
-type CompletionOpts = {
+export type CompletionOpts = {
   skipCurly?: boolean;
   isInQuote?: boolean;
 };
 
-type ArgInfoData = ParamInfo & {
+export type ArgInfoData = ParamInfo & {
   isMatch: boolean;
   opts?: CompletionOpts;
   originalValue: string | string[];
 };
 
-class ArgInfo implements ArgInfoData {
+export class ArgInfo implements ArgInfoData {
   documentation?: string | string[] | vscode.MarkdownString | vscode.MarkdownString[] | undefined;
   isMatch: boolean;
   opts?: CompletionOpts | undefined;
