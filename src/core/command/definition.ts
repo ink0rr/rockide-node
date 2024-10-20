@@ -35,6 +35,6 @@ export function commandDefinitions(ctx: CommandContext, rockide: Rockide) {
     return;
   }
 
-  const functionDefs = mcfunction({ commandSequences, rockide, ctx });
-  return functionDefs;
+  const functionDefs = mcfunction({ commandSequences, rockide, ctx }) ?? [];
+  return [...functionDefs];
 }
