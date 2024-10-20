@@ -2,10 +2,10 @@ import * as vscode from "vscode";
 import { commandSelector, jsonSelector } from "./constants";
 import { ObjectiveProvider } from "./core/command/objective/provider";
 import { CommandProvider } from "./core/command/provider";
+import { TagProvider } from "./core/command/tag/provider";
 import { JsonProvider } from "./core/json/provider";
 import { McstructureProvider } from "./core/mcstructure/provider";
 import { MolangProvider } from "./core/molang/provider";
-import { TagProvider } from "./core/tag/provider";
 import { Rockide } from "./rockide";
 import { legend } from "./semantics";
 
