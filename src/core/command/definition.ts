@@ -20,7 +20,7 @@ function mcfunction({ commandSequences, rockide, ctx }: DefinitionParameter) {
     return;
   }
   const { range, text } = word;
-  const path = mcfunctions.find((path) => path.endsWith(`${text}.mcfunction`));
+  const path = mcfunctions.find((path) => path.endsWith(`${text.replace(/"/g, "")}.mcfunction`));
   if (!path) {
     return;
   }
