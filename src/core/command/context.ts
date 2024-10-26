@@ -14,6 +14,16 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
     currentText = document.lineAt(position.line).text.slice(0, position.character);
     return currentText;
   };
+  const getCurrentWord = () => {
+    const range = document.getWordRangeAtPosition(position, /"[^"]*"|{.*?}|\[.*?\]|\S+/);
+    if (!range) {
+      return;
+    }
+    return {
+      text: document.getText(range),
+      range,
+    };
+  };
   /**
    * Convert ParamInfo to value
    * @param info
@@ -57,6 +67,18 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return execute.overloads!.map((overload) => overload.params[0].value).flat();
       case ParamType.scoreboardOperation:
         return ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><"];
+      case ParamType.itemNBT:
+        const word = getCurrentWord();
+        if (!word) {
+          return info.value;
+        }
+        if (word.text.startsWith("{") && word.text.endsWith("}")) {
+          if (Array.isArray(info.value)) {
+            return info.value.map((v) => v.slice(1, -1));
+          }
+          return info.value.slice(1, -1);
+        }
+        return info.value;
       // rockide specific
       case ParamType.RockideLootTable:
         return rockide
@@ -86,40 +108,42 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return info.value;
     }
   }
-  /**
-   * Convert ParamInfo to regex
-   * @param info
-   * @returns
-   */
-  function getParamRegex(rockide: Rockide, info: ParamInfo): RegExp {
-    switch (info.type) {
+  function testParam(str: string, rockide: Rockide, info: ParamInfo): boolean {
+    const { type, value } = info;
+    switch (type) {
       case ParamType.playerSelector:
-        return /(@a|@s|@p|@r)(\[(.*?)\])?/g;
+        return /(@a|@s|@p|@r)(\[(.*?)\])?/g.test(str);
       case ParamType.entitySelector:
-        return /(@a|@e|@s|@p|@r)(\[(.*?)\])?/g;
+        return /(@a|@e|@s|@p|@r)(\[(.*?)\])?/.test(str);
       case ParamType.selectorWildcard:
-        return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*)/g;
+        return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*)/.test(str);
       case ParamType.scoreboardSelector:
-        return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*|("[^"]*"))/g;
+        return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*|("[^"]*"))/.test(str);
       case ParamType.string:
-        return /("[^"]*"|\w+)/g;
+        return /("[^"]*"|\w+)/.test(str);
       case ParamType.number:
-        return /-?\d+/g;
+        return /-?\d+/.test(str);
       case ParamType.range:
-        return /(\d+\.\.\d+|\d+\.\.|..\d+|\d+|\.\.\d+)/g;
+        return /(\d+\.\.\d+|\d+\.\.|..\d+|\d+|\.\.\d+)/.test(str);
       case ParamType.float:
-        return /-?\d+(\.\d+)?/g;
+        return /-?\d+(\.\d+)?/.test(str);
       case ParamType.yaw:
-        return /-?(180|1[0-7][0-9]|[1-9]?[0-9])/g;
+        return /-?(180|1[0-7][0-9]|[1-9]?[0-9])/.test(str);
       case ParamType.pitch:
-        return /-?(90|[1-8]?[0-9])/g;
+        return /-?(90|[1-8]?[0-9])/.test(str);
       case ParamType.location:
-        return /((~|\^|\d+)\.?)/g;
+        return /((~|\^|\d+)\.?)/.test(str);
       case ParamType.xpLevel:
-        return /-?(\d+)L?/g;
+        return /-?(\d+)L?/.test(str);
       case ParamType.itemNBT:
       case ParamType.rawJsonMessage:
-        return /{[^]*?}/g;
+        let ok = true;
+        try {
+          JSON.parse(str);
+        } catch {
+          ok = false;
+        }
+        return ok;
       case ParamType.executeChainedOption: {
         const values = execute.overloads!.map((overload) => {
           const value = overload.params[0].value;
@@ -128,37 +152,37 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
           }
           return value;
         });
-        return new RegExp(`\\b${values.join("|")}\\b`, "g");
+        return new RegExp(`\\b${values.join("|")}\\b`, "g").test(str);
       }
       case ParamType.scoreboardOperation:
-        return /(%=|\*=|\+=|-=|\/=|<|=|>|><)/g;
+        return /(%=|\*=|\+=|-=|\/=|<|=|>|><)/.test(str);
       // rockide specific
       case ParamType.RockideLootTable:
       case ParamType.RockideParticle: {
         const value = getParamValue(rockide, info);
         if (Array.isArray(value)) {
-          return new RegExp(`\\b${value.join("|")}\\b`, "g");
+          return new RegExp(`\\b${value.join("|")}\\b`, "g").test(str);
         }
-        return new RegExp(`\\b${value}\\b`, "g");
+        return new RegExp(`\\b${value}\\b`, "g").test(str);
       }
       case ParamType.RockideClientAnimation:
-        return /("[^"]*"|[\w.]+)/g;
+        return /("[^"]*"|[\w.]+)/.test(str);
       case ParamType.RockideMcfunction:
-        return /\b\w+\b|\"[^\"]+\"/g;
+        return /\b\w+\b|\"[^\"]+\"/.test(str);
       case ParamType.RockideMcstructure:
-        return /\b\w+:\w+\b|\"[^\"]+\"/g;
+        return /\b\w+:\w+\b|\"[^\"]+\"/.test(str);
       case ParamType.RockideTag:
       case ParamType.RockideScoreboardObjective:
-        return /\w+|"[^"]*"/g;
+        return /\w+|"[^"]*"/.test(str);
       case ParamType.RockideBlock:
-        return /(([\w\S]+:)?[\w\S]+)|("[^"]*")/g;
+        return /(([\w\S]+:)?[\w\S]+)|("[^"]*")/.test(str);
       case ParamType.RockideTickingarea:
-        return /\w/g;
+        return /\w/.test(str);
       default: {
-        if (Array.isArray(info.value)) {
-          return new RegExp(`\\b${info.value.join("|")}\\b`, "g");
+        if (Array.isArray(value)) {
+          return new RegExp(`\\b${value.join("|")}\\b`, "g").test(str);
         }
-        return new RegExp(`\\b${info.value}\\b`, "g");
+        return new RegExp(`\\b${value}\\b`, "g").test(str);
       }
     }
   }
@@ -168,17 +192,11 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
     isCommment() {
       return getCurrentText().startsWith("#");
     },
-    getCurrentText,
-    getCurrentWord() {
-      const range = document.getWordRangeAtPosition(position, /"[^"]*"|\S+/);
-      if (!range) {
-        return;
-      }
-      return {
-        text: document.getText(range),
-        range,
-      };
+    isInQuote() {
+      return getCurrentText().startsWith('"') && getCurrentText().endsWith('"');
     },
+    getCurrentText,
+    getCurrentWord,
     getCommandSequences: (): Array<CommandSequence> => {
       const result: Array<CommandSequence> = [];
       const text = getCurrentText();
@@ -267,9 +285,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
               });
             }
 
-            const regex = getParamRegex(rockide, param);
-            const match = arg.match(regex);
-            if (!match) {
+            const ok = testParam(arg, rockide, param);
+            if (!ok) {
               // Failed to match
               end = true;
               return new ArgInfo({
@@ -285,9 +302,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
             }
 
             return new ArgInfo({
-              // Provide completion for next param
               ...param,
-              value: match[0],
+              value: arg,
               isMatch: true,
               originalValue: param.value,
             });
@@ -394,21 +410,14 @@ export type OverloadInfo = {
   args: Array<ArgInfo>;
 };
 
-export type CompletionOpts = {
-  skipCurly?: boolean;
-  isInQuote?: boolean;
-};
-
 export type ArgInfoData = ParamInfo & {
   isMatch: boolean;
-  opts?: CompletionOpts;
   originalValue: string | string[];
 };
 
 export class ArgInfo implements ArgInfoData {
   documentation?: string | string[] | vscode.MarkdownString | vscode.MarkdownString[] | undefined;
   isMatch: boolean;
-  opts?: CompletionOpts | undefined;
   required?: boolean | undefined;
   signatureValue?: string | undefined;
   type: ParamType;
@@ -419,7 +428,6 @@ export class ArgInfo implements ArgInfoData {
     this.value = data.value;
     this.isMatch = data.isMatch;
     this.documentation = data.documentation;
-    this.opts = data.opts;
     this.signatureValue = data.signatureValue;
     this.required = data.required;
     this.originalValue = data.originalValue;
@@ -486,10 +494,7 @@ export class ArgInfo implements ArgInfoData {
         if (Array.isArray(documentation)) {
           documentation = documentation[i];
         }
-        if (this.opts?.skipCurly) {
-          v = v.slice(1, -1);
-        }
-        if (v.includes(" ")) {
+        if (v.includes(" ") && ![ParamType.itemNBT, ParamType.rawJsonMessage].includes(this.type)) {
           v = `"${v}"`;
         }
         const completion = new vscode.CompletionItem(v, this.getKind());
