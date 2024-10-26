@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { blockIdentifier } from "../../literals/block_identifier";
 import { Rockide } from "../../rockide";
 import { commands } from "./data";
 import execute from "./data/execute";
@@ -77,6 +78,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return rockide.tags.values().concat('""');
       case ParamType.RockideScoreboardObjective:
         return rockide.objectives.values().concat('""', "objectiveName");
+      case ParamType.RockideBlock:
+        return blockIdentifier;
       default:
         return info.value;
     }
@@ -145,6 +148,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
       case ParamType.RockideTag:
       case ParamType.RockideScoreboardObjective:
         return /\w+|"[^"]*"/g;
+      case ParamType.RockideBlock:
+        return /(([\w\S]+:)?[\w\S]+)|("[^"]*")/g;
       default: {
         if (Array.isArray(info.value)) {
           return new RegExp(`\\b${info.value.join("|")}\\b`, "g");

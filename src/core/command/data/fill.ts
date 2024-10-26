@@ -1,4 +1,3 @@
-import { blockIdentifier } from "../../../literals/block_identifier";
 import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
@@ -12,9 +11,9 @@ const fill: CommandInfo = {
         ...Parameter.createPosition("to"),
         {
           // todo: dynamic block identifier
-          value: blockIdentifier,
+          value: [],
           signatureValue: "<tileName>",
-          type: ParamType.enum,
+          type: ParamType.RockideBlock,
         },
         {
           value: "todo:blockState",
@@ -33,9 +32,9 @@ const fill: CommandInfo = {
         ...Parameter.createPosition("to"),
         {
           // todo: dynamic block identifier
-          value: blockIdentifier,
+          value: [],
           signatureValue: "<tileName>",
-          type: ParamType.enum,
+          type: ParamType.RockideBlock,
         },
         {
           value: ["outline", "hollow", "destroy", "keep"],
@@ -50,9 +49,9 @@ const fill: CommandInfo = {
         ...Parameter.createPosition("to"),
         {
           // todo: dynamic block identifier
-          value: blockIdentifier,
+          value: [],
           signatureValue: "<tileName>",
-          type: ParamType.enum,
+          type: ParamType.RockideBlock,
         },
         {
           value: "todo:blockState",
@@ -64,9 +63,9 @@ const fill: CommandInfo = {
         },
         {
           // todo: dynamic block identifier
-          value: blockIdentifier,
+          value: [],
           signatureValue: "<tileName>",
-          type: ParamType.enum,
+          type: ParamType.RockideBlock,
         },
         {
           value: "todo:blockState",
@@ -80,9 +79,9 @@ const fill: CommandInfo = {
         ...Parameter.createPosition("to"),
         {
           // todo: dynamic block identifier
-          value: blockIdentifier,
+          value: [],
           signatureValue: "<tileName>",
-          type: ParamType.enum,
+          type: ParamType.RockideBlock,
         },
         {
           value: ["replace"],
@@ -90,9 +89,9 @@ const fill: CommandInfo = {
         },
         {
           // todo: dynamic block identifier
-          value: blockIdentifier,
+          value: [],
           signatureValue: "<tileName>",
-          type: ParamType.enum,
+          type: ParamType.RockideBlock,
         },
         {
           value: "todo:blockState",

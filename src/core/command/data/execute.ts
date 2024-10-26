@@ -205,9 +205,8 @@ const execute: CommandInfo = {
         },
         ...Parameter.createPosition("position"),
         {
-          value: blockIdentifier,
-          signatureValue: "<block>",
-          type: ParamType.enum,
+          value: "block",
+          type: ParamType.RockideBlock,
         },
         {
           value: "blockState",

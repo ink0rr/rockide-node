@@ -49,4 +49,5 @@ export const enum ParamType {
   RockideMcstructure = "RockideMcstructure",
   RockideTag = "RockideTag",
   RockideScoreboardObjective = "RockideScoreboardObjective",
+  RockideBlock = "RockideBlock",
 }
