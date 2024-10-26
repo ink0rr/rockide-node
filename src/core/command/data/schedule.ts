@@ -74,9 +74,9 @@ const schedule: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "todo",
+          value: "name",
           signatureValue: "<name>",
-          type: ParamType.keyword,
+          type: ParamType.RockideTickingarea,
         },
         {
           value: "mcfunction",

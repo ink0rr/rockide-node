@@ -160,7 +160,7 @@ export class Rockide {
   }
 
   async indexTickingAreas(uri: vscode.Uri) {
-    const regex = /tickingarea\sadd\s(.*)(?<=([\d~^]))(\s)(\w+)/g;
+    const regex = /tickingarea\sadd\s(.*)(?<=([\d~^]))(\s)(\w+)|schedule\son_area_loaded\sadd\stickingarea\s(\w+)/g;
     const document = await vscode.workspace.openTextDocument(uri);
     if (uri.fsPath.endsWith(".json")) {
       // const json = JSONC.parseTree(document.getText()) ?? NullNode;
@@ -170,7 +170,7 @@ export class Rockide {
     }
     if (uri.fsPath.endsWith(".mcfunction")) {
       const matches = Array.from(document.getText().matchAll(regex));
-      const tickingAreaName = matches[0]?.[4];
+      const tickingAreaName = matches[0]?.[4] || matches[0]?.[5];
       if (!tickingAreaName) {
         return;
       }
