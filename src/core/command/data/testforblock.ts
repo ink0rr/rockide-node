@@ -1,3 +1,4 @@
+import { Parameter } from "../parameter";
 import { CommandInfo, ParamType } from "../types";
 
 const testforblock: CommandInfo = {
@@ -6,15 +7,12 @@ const testforblock: CommandInfo = {
   overloads: [
     {
       params: [
+        ...Parameter.createPosition("position"),
         {
-          value: "position",
-          signatureValue: "<position>",
-          type: ParamType.keyword,
-        },
-        {
-          value: ["minecraft:dirt", "dirt", "todo"],
+          // todo: dynamic block identifier
+          value: ["tileName"],
           signatureValue: "<tileName>",
-          type: ParamType.enum,
+          type: ParamType.RockideBlock,
         },
         {
           value: "todoblockState",
