@@ -166,17 +166,7 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
     },
     getCurrentText,
     getCurrentWord() {
-      const range = document.getWordRangeAtPosition(position, /\b\w+\b|\"[^\"]+\"|\b[\d\.]+\b|[~^*]/);
-      if (!range) {
-        return;
-      }
-      return {
-        text: document.getText(range),
-        range,
-      };
-    },
-    getCurrentArg: () => {
-      const range = document.getWordRangeAtPosition(position, /\b\w+\b|\"[^\"]+\"|\b[\d\.]+\b|[~^*]/);
+      const range = document.getWordRangeAtPosition(position, /"[^"]*"|\S+/);
       if (!range) {
         return;
       }
