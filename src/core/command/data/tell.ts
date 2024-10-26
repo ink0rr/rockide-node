@@ -12,7 +12,7 @@ const tell: CommandInfo = {
           type: ParamType.playerSelector,
         },
         {
-          value: ['"Hello world!"'],
+          value: ["Hello world!"],
           signatureValue: "<message>",
           type: ParamType.string,
         },
