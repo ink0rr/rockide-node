@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { Rockide } from "../../rockide";
-import { CommandContext } from "./context_n";
+import { CommandContext } from "./context";
 import { selectorCompletion, selectorDataCompletion } from "./selector/completion";
 
 export function commandCompletion(ctx: CommandContext, rockide: Rockide) {

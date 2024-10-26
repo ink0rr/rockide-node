@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 import { baseGlob, bpGlob } from "../../constants";
 import { Rockide } from "../../rockide";
 import { legend, SemanticToken } from "../../semantics";
-import { createCommandContext } from "./context_n";
+import { createCommandContext } from "./context";
 import { commands } from "./data";
 import { commandHandlers } from "./handlers";
 

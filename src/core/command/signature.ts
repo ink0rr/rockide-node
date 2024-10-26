@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { CommandContext } from "./context_n";
+import { CommandContext } from "./context";
 
 export function commandSignature(ctx: CommandContext): vscode.SignatureHelp | undefined {
   if (ctx.isCommment()) {

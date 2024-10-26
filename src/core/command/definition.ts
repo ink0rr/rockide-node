@@ -1,5 +1,5 @@
 import { Rockide } from "../../rockide";
-import { CommandContext, CommandSequence } from "./context_n";
+import { CommandContext, CommandSequence } from "./context";
 import { ParamType } from "./types";
 
 type DefinitionParameter = {
