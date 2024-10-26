@@ -72,7 +72,7 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         if (!word) {
           return info.value;
         }
-        if (word.text.startsWith("{") && word.text.endsWith("}")) {
+        if (word.text.startsWith("{")) {
           if (Array.isArray(info.value)) {
             return info.value.map((v) => v.slice(1, -1));
           }
