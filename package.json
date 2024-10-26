@@ -68,7 +68,24 @@
         "category": "Rockide"
       }
     ],
+    "grammars": [
+      {
+        "language": "rockide-lang",
+        "scopeName": "source.rockide.lang",
+        "path": "./syntaxes/lang.tmLanguage.json"
+      }
+    ],
     "languages": [
+      {
+        "id": "rockide-lang",
+        "aliases": [
+          "Minecraft Lang"
+        ],
+        "extensions": [
+          ".lang"
+        ],
+        "configuration": "./syntaxes/lang.config.json"
+      },
       {
         "id": "rockide-mcfunction",
         "aliases": [
