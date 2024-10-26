@@ -6,39 +6,32 @@ import { Rockide } from "../../../rockide";
 export class TickingareaProvider {
   constructor(private rockide: Rockide) {}
   async onDidCreateFiles({ files }: vscode.FileCreateEvent) {
-    for (const uri of files) {
-      for (const glob of commandGlobs) {
-        if (!isMatch(uri.fsPath, glob)) {
-          continue;
-        }
-        await this.rockide.indexTickingAreas(uri);
-      }
+    const matchingFiles = files.filter((uri) => commandGlobs.some((glob) => isMatch(uri.fsPath, glob)));
+    for (const uri of matchingFiles) {
+      const { fsPath } = uri;
+      const document = await vscode.workspace.openTextDocument(fsPath);
+      await this.rockide.indexTickingAreas(document, fsPath);
     }
   }
   async onDidRenameFiles({ files }: vscode.FileRenameEvent) {
     for (const { newUri, oldUri } of files) {
-      for (const glob of commandGlobs) {
-        if (!isMatch(newUri.fsPath, glob)) {
-          this.rockide.tickingareas.deleteByPath(oldUri.fsPath);
-          continue;
-        }
-        this.rockide.tickingareas.deleteByPath(oldUri.fsPath);
-        await this.rockide.indexTickingAreas(newUri);
+      if (commandGlobs.some((glob) => isMatch(newUri.fsPath, glob))) {
+        const document = await vscode.workspace.openTextDocument(newUri.fsPath);
+        await this.rockide.indexTickingAreas(document, newUri.fsPath);
       }
+      this.rockide.tickingareas.deleteByPath(oldUri.fsPath);
     }
   }
   onDidDeleteFiles({ files }: vscode.FileDeleteEvent) {
     for (const uri of files) {
-      for (const glob of commandGlobs) {
-        if (!isMatch(uri.fsPath, glob)) {
-          continue;
-        }
+      if (commandGlobs.some((glob) => isMatch(uri.fsPath, glob))) {
         this.rockide.tickingareas.deleteByPath(uri.fsPath);
       }
     }
   }
   async onDidChangeTextDocument({ document }: vscode.TextDocumentChangeEvent) {
     this.rockide.tickingareas.deleteByPath(document.uri.fsPath);
-    await this.rockide.indexTickingAreas(document.uri);
+    const { fsPath } = document.uri;
+    await this.rockide.indexTickingAreas(document, fsPath);
   }
 }
