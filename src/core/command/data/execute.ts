@@ -17,7 +17,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -33,7 +33,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -50,7 +50,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -63,7 +63,7 @@ const execute: CommandInfo = {
         },
         ...Parameter.createPosition("position"),
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -83,7 +83,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -96,7 +96,7 @@ const execute: CommandInfo = {
         },
         ...Parameter.rotYX,
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -116,7 +116,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -129,7 +129,7 @@ const execute: CommandInfo = {
         },
         ...Parameter.createPosition("lookAtPosition"),
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -154,7 +154,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -171,7 +171,7 @@ const execute: CommandInfo = {
           type: ParamType.enum,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -188,7 +188,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -205,7 +205,7 @@ const execute: CommandInfo = {
         },
         ...Parameter.createPosition("position"),
         {
-          value: "block",
+          value: "<blockIdentifier>",
           type: ParamType.RockideBlock,
         },
         {
@@ -213,7 +213,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -225,8 +225,8 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["block"],
-          type: ParamType.keyword,
+          value: "<blockIdentifier>",
+          type: ParamType.RockideBlock,
         },
         ...Parameter.createPosition("position"),
         {
@@ -235,7 +235,7 @@ const execute: CommandInfo = {
           type: ParamType.enum,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -247,8 +247,8 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["blocks"],
-          type: ParamType.keyword,
+          value: "<blockIdentifier>",
+          type: ParamType.RockideBlock,
         },
         ...Parameter.createPosition("position"),
         {
@@ -257,7 +257,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -277,7 +277,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -298,7 +298,7 @@ const execute: CommandInfo = {
         },
         {
           value: [],
-          signatureValue: "<targetObjective>",
+          signatureValue: "targetObjective",
           type: ParamType.RockideScoreboardObjective,
         },
         {
@@ -312,11 +312,11 @@ const execute: CommandInfo = {
         },
         {
           value: [],
-          signatureValue: "<targetObjective>",
+          signatureValue: "targetObjective",
           type: ParamType.RockideScoreboardObjective,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -337,7 +337,7 @@ const execute: CommandInfo = {
         },
         {
           value: [],
-          signatureValue: "<targetObjective>",
+          signatureValue: "targetObjective",
           type: ParamType.RockideScoreboardObjective,
         },
         {
@@ -350,7 +350,7 @@ const execute: CommandInfo = {
           type: ParamType.range,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -362,7 +362,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<subcommand>"],
+          value: ["subcommand"],
           type: ParamType.subcommand,
         },
       ],

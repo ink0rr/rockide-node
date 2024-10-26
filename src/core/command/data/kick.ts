@@ -14,7 +14,7 @@ const kick: CommandInfo = {
         {
           value: "string",
           signatureValue: "<reason>",
-          type: ParamType.keyword,
+          type: ParamType.string,
         },
       ],
     },
