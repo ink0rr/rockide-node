@@ -80,6 +80,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return rockide.objectives.values().concat('""', "objectiveName");
       case ParamType.RockideBlock:
         return blockIdentifier;
+      case ParamType.RockideTickingarea:
+        return rockide.tickingareas.values();
       default:
         return info.value;
     }
@@ -150,6 +152,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return /\w+|"[^"]*"/g;
       case ParamType.RockideBlock:
         return /(([\w\S]+:)?[\w\S]+)|("[^"]*")/g;
+      case ParamType.RockideTickingarea:
+        return /\w/g;
       default: {
         if (Array.isArray(info.value)) {
           return new RegExp(`\\b${info.value.join("|")}\\b`, "g");

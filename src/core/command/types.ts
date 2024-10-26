@@ -50,4 +50,5 @@ export const enum ParamType {
   RockideTag = "RockideTag",
   RockideScoreboardObjective = "RockideScoreboardObjective",
   RockideBlock = "RockideBlock",
+  RockideTickingarea = "RockideTickingarea",
 }

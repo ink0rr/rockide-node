@@ -15,10 +15,9 @@ const tickingarea: CommandInfo = {
         ...Parameter.createPosition("from"),
         ...Parameter.createPosition("to"),
         {
-          // todo: dynamic if possible
-          value: "todo",
+          value: "name",
           signatureValue: "[name]",
-          type: ParamType.string,
+          type: ParamType.RockideTickingarea,
         },
         {
           value: ["true", "false"],
@@ -46,10 +45,9 @@ const tickingarea: CommandInfo = {
           type: ParamType.number,
         },
         {
-          // todo: dynamic if possible
-          value: "todo",
+          value: "name",
           signatureValue: "[name]",
-          type: ParamType.string,
+          type: ParamType.RockideTickingarea,
         },
         {
           value: ["true", "false"],
@@ -76,10 +74,9 @@ const tickingarea: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          // todo: dynamic if possible
-          value: "todo",
-          signatureValue: "<name>",
-          type: ParamType.string,
+          value: "name",
+          signatureValue: "[name]",
+          type: ParamType.RockideTickingarea,
         },
       ],
     },
@@ -129,10 +126,9 @@ const tickingarea: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          // todo: dynamic if possible
-          value: "todo",
-          signatureValue: "<name>",
-          type: ParamType.string,
+          value: "name",
+          signatureValue: "[name]",
+          type: ParamType.RockideTickingarea,
         },
         {
           value: ["true", "false"],
