@@ -17,7 +17,7 @@ const testforblock: CommandInfo = {
         {
           value: "todoblockState",
           signatureValue: "[blockStates]",
-          type: ParamType.keyword,
+          type: ParamType.RockideBlockState,
         },
       ],
     },

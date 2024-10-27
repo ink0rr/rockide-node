@@ -17,7 +17,7 @@ const fill: CommandInfo = {
         },
         {
           value: "todo:blockState",
-          type: ParamType.keyword,
+          type: ParamType.RockideBlockState,
         },
         {
           value: ["outline", "hollow", "destroy", "keep"],
@@ -55,7 +55,7 @@ const fill: CommandInfo = {
         },
         {
           value: "todo:blockState",
-          type: ParamType.keyword,
+          type: ParamType.RockideBlockState,
         },
         {
           value: ["replace"],
@@ -69,7 +69,7 @@ const fill: CommandInfo = {
         },
         {
           value: "todo:blockState",
-          type: ParamType.keyword,
+          type: ParamType.RockideBlockState,
         },
       ],
     },
@@ -95,7 +95,7 @@ const fill: CommandInfo = {
         },
         {
           value: "todo:blockState",
-          type: ParamType.keyword,
+          type: ParamType.RockideBlockState,
         },
       ],
     },

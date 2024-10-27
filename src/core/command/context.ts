@@ -104,6 +104,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return blockIdentifier;
       case ParamType.RockideTickingarea:
         return rockide.tickingareas.values();
+      case ParamType.RockideBlockState:
+        return "[]";
       default:
         return info.value;
     }
@@ -178,6 +180,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
         return /(([\w\S]+:)?[\w\S]+)|("[^"]*")/.test(str);
       case ParamType.RockideTickingarea:
         return /\w/.test(str);
+      case ParamType.RockideBlockState:
+        return /\[.*\]/.test(str);
       default: {
         if (Array.isArray(value)) {
           return new RegExp(`\\b${value.join("|")}\\b`, "g").test(str);
@@ -210,6 +214,7 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
           return new RegExp(/((~|\^)-?(\d+)?(\.\d+)?)/g).test(arg) ? arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [] : arg;
         })
         .flat();
+      console.log(words);
       while (words.length) {
         // executeChain
         const lastCommand = result[result.length - 1];

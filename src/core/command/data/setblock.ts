@@ -16,7 +16,7 @@ const setblock: CommandInfo = {
         {
           value: "blockState",
           signatureValue: "<blockStates>",
-          type: ParamType.keyword,
+          type: ParamType.RockideBlockState,
         },
         {
           value: ["replace", "destroy", "keep"],

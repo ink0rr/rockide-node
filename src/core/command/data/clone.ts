@@ -42,7 +42,7 @@ const clone: CommandInfo = {
         {
           // todo: handle this
           value: "blockState",
-          type: ParamType.keyword,
+          type: ParamType.RockideBlockState,
         },
       ],
     },

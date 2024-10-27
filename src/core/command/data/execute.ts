@@ -210,7 +210,7 @@ const execute: CommandInfo = {
         },
         {
           value: "blockState",
-          type: ParamType.keyword,
+          type: ParamType.RockideBlockState,
         },
         {
           value: ["chainedCommand"],
