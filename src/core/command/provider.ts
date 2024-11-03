@@ -83,7 +83,7 @@ export class CommandProvider
     for (const handler of commandHandlers) {
       if (isMatch(document.uri.fsPath, handler.pattern)) {
         if (handler.process) {
-          const ctx = createCommandContext(document, position);
+          const ctx = createCommandContext(this.rockide, document, position);
           const definitions = handler.process(ctx, this.rockide)?.definitions?.();
           return Promise.all(definitions ?? []);
         }
@@ -97,7 +97,7 @@ export class CommandProvider
     for (const handler of commandHandlers) {
       if (isMatch(document.uri.fsPath, handler.pattern)) {
         if (handler.process) {
-          const ctx = createCommandContext(document, position);
+          const ctx = createCommandContext(this.rockide, document, position);
           const signature = handler.process(ctx, this.rockide)?.signature?.();
           return signature;
         }
@@ -128,7 +128,7 @@ export class CommandProvider
     for (const handler of commandHandlers) {
       if (isMatch(document.uri.fsPath, handler.pattern)) {
         if (handler.process) {
-          const ctx = createCommandContext(document, position);
+          const ctx = createCommandContext(this.rockide, document, position);
           const completions = handler.process(ctx, this.rockide)?.completions?.();
           return completions?.map((value) => ctx.createCompletion(value));
         }

@@ -80,7 +80,7 @@ const camera: CommandInfo = {
           value: ["pos"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("pos"),
         {
           value: ["rot"],
           type: ParamType.keyword,
@@ -112,7 +112,7 @@ const camera: CommandInfo = {
           value: ["pos"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("pos"),
         {
           value: ["facing"],
           type: ParamType.keyword,
@@ -147,7 +147,7 @@ const camera: CommandInfo = {
           value: ["pos"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("pos"),
         {
           value: ["facing"],
           type: ParamType.keyword,
@@ -182,7 +182,7 @@ const camera: CommandInfo = {
           value: ["pos"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("pos"),
       ],
     },
     {
@@ -266,7 +266,7 @@ const camera: CommandInfo = {
           value: ["facing"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("lookAtPosition"),
       ],
     },
     {
@@ -310,7 +310,7 @@ const camera: CommandInfo = {
           value: ["pos"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("pos"),
         {
           value: ["rot"],
           type: ParamType.keyword,
@@ -333,7 +333,7 @@ const camera: CommandInfo = {
           value: ["pos"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("pos"),
         {
           value: ["facing"],
           type: ParamType.keyword,
@@ -359,12 +359,12 @@ const camera: CommandInfo = {
           value: ["pos"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("pos"),
         {
           value: ["facing"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("lookAtPosition"),
       ],
     },
     {
@@ -401,7 +401,7 @@ const camera: CommandInfo = {
           value: ["target_center_offset"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("lookAtPosition"),
       ],
     },
     {
@@ -486,7 +486,7 @@ const camera: CommandInfo = {
           value: ["pos"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("pos"),
       ],
     },
     {
@@ -543,7 +543,7 @@ const camera: CommandInfo = {
           value: ["facing"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("lookAtPosition"),
       ],
     },
     {

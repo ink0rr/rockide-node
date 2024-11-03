@@ -42,7 +42,7 @@ const damage: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: "<target>",
+          value: "<damager>",
           type: ParamType.entitySelector,
         },
       ],

@@ -17,7 +17,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -33,7 +33,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -50,7 +50,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -61,9 +61,9 @@ const execute: CommandInfo = {
           value: ["positioned"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("position"),
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -83,7 +83,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -96,7 +96,7 @@ const execute: CommandInfo = {
         },
         ...Parameter.rotYX,
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -116,7 +116,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -127,9 +127,9 @@ const execute: CommandInfo = {
           value: ["facing"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("lookAtPosition"),
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -154,7 +154,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -171,7 +171,7 @@ const execute: CommandInfo = {
           type: ParamType.enum,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -188,7 +188,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -203,18 +203,17 @@ const execute: CommandInfo = {
           value: ["block"],
           type: ParamType.keyword,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("position"),
         {
-          value: blockIdentifier,
-          signatureValue: "<block>",
-          type: ParamType.enum,
+          value: "<blockIdentifier>",
+          type: ParamType.RockideBlock,
         },
         {
           value: "blockState",
-          type: ParamType.keyword,
+          type: ParamType.RockideBlockState,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -226,17 +225,17 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["block"],
-          type: ParamType.keyword,
+          value: "<blockIdentifier>",
+          type: ParamType.RockideBlock,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("position"),
         {
           value: blockIdentifier,
           signatureValue: "<block>",
           type: ParamType.enum,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -248,17 +247,17 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["blocks"],
-          type: ParamType.keyword,
+          value: "<blockIdentifier>",
+          type: ParamType.RockideBlock,
         },
-        ...Parameter.position,
+        ...Parameter.createPosition("position"),
         {
           value: ["masked", "all"],
           signatureValue: "<scanMode>",
           type: ParamType.keyword,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -278,7 +277,7 @@ const execute: CommandInfo = {
           type: ParamType.entitySelector,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -298,23 +297,26 @@ const execute: CommandInfo = {
           type: ParamType.selectorWildcard,
         },
         {
-          value: ["todo:objective name"],
-          type: ParamType.string,
+          value: [],
+          signatureValue: "targetObjective",
+          type: ParamType.RockideScoreboardObjective,
         },
         {
-          value: ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><", "matches"],
-          type: ParamType.keyword,
+          value: ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><"],
+          signatureValue: "<operation>",
+          type: ParamType.scoreboardOperation,
         },
         {
           value: "<source>",
           type: ParamType.selectorWildcard,
         },
         {
-          value: ["todo:objective name"],
-          type: ParamType.string,
+          value: [],
+          signatureValue: "targetObjective",
+          type: ParamType.RockideScoreboardObjective,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -334,8 +336,9 @@ const execute: CommandInfo = {
           type: ParamType.selectorWildcard,
         },
         {
-          value: ["todo:objective name"],
-          type: ParamType.string,
+          value: [],
+          signatureValue: "targetObjective",
+          type: ParamType.RockideScoreboardObjective,
         },
         {
           value: ["matches"],
@@ -343,10 +346,11 @@ const execute: CommandInfo = {
         },
         {
           value: "0..10",
-          type: ParamType.keyword,
+          signatureValue: "<value>",
+          type: ParamType.range,
         },
         {
-          value: ["<chainedCommand>"],
+          value: ["chainedCommand"],
           type: ParamType.executeChainedOption,
         },
       ],
@@ -358,7 +362,7 @@ const execute: CommandInfo = {
           type: ParamType.keyword,
         },
         {
-          value: ["<subcommand>"],
+          value: ["subcommand"],
           type: ParamType.subcommand,
         },
       ],

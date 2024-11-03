@@ -1,10 +1,11 @@
 import * as vscode from "vscode";
+import { blockIdentifier } from "../../literals/block_identifier";
+import { Rockide } from "../../rockide";
 import { commands } from "./data";
 import execute from "./data/execute";
-import { CommandInfo, CommandSignature, ParamInfo, ParamType } from "./types";
+import { ParamInfo, ParamType } from "./types";
 
-export function createCommandContext(document: vscode.TextDocument, position: vscode.Position) {
-  // const range = document.getWordRangeAtPosition(position, /\/\w+/);
+export function createCommandContext(rockide: Rockide, document: vscode.TextDocument, position: vscode.Position) {
   let currentText: string;
   const getCurrentText = () => {
     if (currentText) {
@@ -13,52 +14,22 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
     currentText = document.lineAt(position.line).text.slice(0, position.character);
     return currentText;
   };
-  /**
-   * Convert ParamInfo to regex
-   * @param info
-   * @returns
-   */
-  function getParamRegex(info: ParamInfo): RegExp {
-    switch (info.type) {
-      case ParamType.playerSelector:
-        return /@[aprs](\[(.*?)\])?/g;
-      case ParamType.entitySelector:
-        return /@[aeprs](\[(.*?)\])?/g;
-      case ParamType.selectorWildcard:
-        return /((@[aeprs](\[(.*?)\])?)|\*)/g;
-      case ParamType.scoreboardSelector:
-        return /((@[aeprs](\[(.*?)\])?)|\*|("[^"]*"))/g;
-      case ParamType.string:
-        return /("[^"]*"|\w+)/g;
-      case ParamType.number:
-        return /\d+/g;
-      case ParamType.yaw:
-        return /-?(180|1[0-7][0-9]|[1-9]?[0-9])/g;
-      case ParamType.pitch:
-        return /-?(90|[1-8]?[0-9])/g;
-      case ParamType.location:
-        return /((~|\^|\d+)\.?)/g;
-      case ParamType.xpLevel:
-        return /-?(\d+)L?/g;
-      case ParamType.itemNBT:
-      case ParamType.rawJsonMessage:
-        return /{[^]*?}/g;
-      case ParamType.RockideMcfunction:
-        return /[\/"\w]+/g;
-      default: {
-        if (Array.isArray(info.value)) {
-          return new RegExp(`\\b${info.value.join("|")}\\b`, "g");
-        }
-        return new RegExp(`\\b${info.value}\\b`, "g");
-      }
+  const getCurrentWord = () => {
+    const range = document.getWordRangeAtPosition(position, /"[^"]*"|{.*?}|\[.*?\]|\S+/);
+    if (!range) {
+      return;
     }
-  }
+    return {
+      text: document.getText(range),
+      range,
+    };
+  };
   /**
    * Convert ParamInfo to value
    * @param info
    * @returns
    */
-  function getParamValue(info: ParamInfo) {
+  function getParamValue(rockide: Rockide, info: ParamInfo) {
     switch (info.type) {
       case ParamType.playerSelector:
         return ["@a", "@s", "@p", "@r"];
@@ -79,6 +50,8 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
         }
         return "0";
       }
+      case ParamType.range:
+        return ["0..10", "0..", "..10", "0", "10"];
       case ParamType.float:
         if (Array.isArray(info.value)) {
           return info.value;
@@ -92,167 +65,279 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
         return ["0.0", "-90.0", "90.0"];
       case ParamType.executeChainedOption:
         return execute.overloads!.map((overload) => overload.params[0].value).flat();
+      case ParamType.scoreboardOperation:
+        return ["%=", "*=", "+=", "-=", "/=", "<", "=", ">", "><"];
+      case ParamType.itemNBT:
+        const word = getCurrentWord();
+        if (!word) {
+          return info.value;
+        }
+        if (word.text.startsWith("{")) {
+          if (Array.isArray(info.value)) {
+            return info.value.map((v) => v.slice(1, -1));
+          }
+          return info.value.slice(1, -1);
+        }
+        return info.value;
+      // rockide specific
+      case ParamType.RockideLootTable:
+        return rockide
+          .getLootTables()
+          .map(({ bedrockPath }) => (bedrockPath.endsWith(".json") ? bedrockPath.slice(0, -5) : bedrockPath));
+      case ParamType.RockideParticle:
+        return rockide.getParticles().map(({ values }) => values[0]);
+      case ParamType.RockideClientAnimation:
+        return rockide
+          .getClientAnimations()
+          .map(({ values }) => values)
+          .flat();
+      case ParamType.RockideMcfunction: {
+        return Array.from(rockide.mcfunctions.keys()).map((key) => key.split("functions/")[1].split(".")[0]);
+      }
+      case ParamType.RockideMcstructure:
+        return Array.from(rockide.structures.keys()).map((key) => `"${key.split("structures/")[1].split(".")[0]}"`);
+      case ParamType.RockideTag:
+        return rockide.tags.values().concat('""');
+      case ParamType.RockideScoreboardObjective:
+        return rockide.objectives.values().concat('""', "objectiveName");
+      case ParamType.RockideBlock:
+        return blockIdentifier;
+      case ParamType.RockideTickingarea:
+        return rockide.tickingareas.values();
+      case ParamType.RockideBlockState:
+        return "[]";
       default:
         return info.value;
     }
   }
-  type CompletionOpts = {
-    skipCurly?: boolean;
-    isInQuote?: boolean;
-  };
-  /**
-   * Convert ParamInfo to CompletionItem
-   * @param info
-   * @returns
-   */
-  function getParamCompletion(info: ParamInfo, opts?: CompletionOpts): vscode.CompletionItem | vscode.CompletionItem[] {
-    const getKind = (type: ParamType) => {
-      switch (type) {
-        case ParamType.keyword:
-          return vscode.CompletionItemKind.Keyword;
-        case ParamType.entitySelector:
-        case ParamType.playerSelector:
-        case ParamType.selectorWildcard:
-          return vscode.CompletionItemKind.TypeParameter;
-        case ParamType.tag:
-          return vscode.CompletionItemKind.EnumMember;
-        case ParamType.string:
-          return vscode.CompletionItemKind.Value;
-        case ParamType.number:
-        case ParamType.float:
-        case ParamType.yaw:
-        case ParamType.pitch:
-        case ParamType.vector3:
-        case ParamType.location:
-          return vscode.CompletionItemKind.Value;
-        default:
-          return vscode.CompletionItemKind.Keyword;
-      }
-    };
-    const getDocs = (type: ParamType, value: string) => {
-      switch (type) {
-        case ParamType.playerSelector:
-        case ParamType.selectorWildcard:
-        case ParamType.scoreboardSelector:
-          {
-            if (value.startsWith('"')) {
-              return "Player name or fake player.";
-            }
-            switch (value) {
-              case "@a":
-                return "All players.";
-              case "@e":
-                return "All entities.";
-              case "@s":
-                return "The entity running the command.";
-              case "@p":
-                return "The nearest player.";
-              case "@r":
-                return "A random player.";
-              case "*":
-                return "All players/entities.";
-            }
+  function testParam(str: string, rockide: Rockide, info: ParamInfo): boolean {
+    const { type, value } = info;
+    switch (type) {
+      case ParamType.playerSelector:
+        return /(@a|@s|@p|@r)(\[(.*?)\])?/g.test(str);
+      case ParamType.entitySelector:
+        return /(@a|@e|@s|@p|@r)(\[(.*?)\])?/.test(str);
+      case ParamType.selectorWildcard:
+        return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*)/.test(str);
+      case ParamType.scoreboardSelector:
+        return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*|("[^"]*"))/.test(str);
+      case ParamType.string:
+        return /("[^"]*"|\w+)/.test(str);
+      case ParamType.number:
+        return /-?\d+/.test(str);
+      case ParamType.range:
+        return /(\d+\.\.\d+|\d+\.\.|..\d+|\d+|\.\.\d+)/.test(str);
+      case ParamType.float:
+        return /-?\d+(\.\d+)?/.test(str);
+      case ParamType.yaw:
+        return /-?(180|1[0-7][0-9]|[1-9]?[0-9])/.test(str);
+      case ParamType.pitch:
+        return /-?(90|[1-8]?[0-9])/.test(str);
+      case ParamType.location:
+        return /((~|\^|\d+)\.?)/.test(str);
+      case ParamType.xpLevel:
+        return /-?(\d+)L?/.test(str);
+      case ParamType.itemNBT:
+      case ParamType.rawJsonMessage:
+        let ok = true;
+        try {
+          JSON.parse(str);
+        } catch {
+          ok = false;
+        }
+        return ok;
+      case ParamType.executeChainedOption: {
+        const values = execute.overloads!.map((overload) => {
+          const value = overload.params[0].value;
+          if (Array.isArray(value)) {
+            return value.join("|");
           }
-          break;
-        default:
-          return;
-      }
-    };
-    const label = getParamValue(info);
-    const createCompletionItem = (value: string[] | string) => {
-      if (Array.isArray(value)) {
-        return value.map((v, i) => {
-          let documentation = getDocs(info.type, v) ?? info.documentation;
-          if (Array.isArray(documentation)) {
-            documentation = documentation[i];
-          }
-          if (opts?.skipCurly) {
-            v = v.slice(1, v.length - 1);
-          }
-          const completion = new vscode.CompletionItem(v, getKind(info.type));
-          completion.documentation = documentation;
-          if (info.type === ParamType.number) {
-            completion.sortText = v.length + v;
-          }
-          return completion;
+          return value;
         });
+        return new RegExp(`\\b${values.join("|")}\\b`, "g").test(str);
       }
-      let documentation = getDocs(info.type, value) ?? info.documentation;
-      const completion = new vscode.CompletionItem(value, getKind(info.type));
-      if (Array.isArray(documentation)) {
-        documentation = documentation[0];
-      } else {
-        completion.documentation = documentation;
+      case ParamType.scoreboardOperation:
+        return /(%=|\*=|\+=|-=|\/=|<|=|>|><)/.test(str);
+      // rockide specific
+      case ParamType.RockideLootTable:
+      case ParamType.RockideParticle: {
+        const value = getParamValue(rockide, info);
+        if (Array.isArray(value)) {
+          return new RegExp(`\\b${value.join("|")}\\b`, "g").test(str);
+        }
+        return new RegExp(`\\b${value}\\b`, "g").test(str);
       }
-      return completion;
-    };
-
-    return createCompletionItem(label);
-  }
-  const parseParam = (overloads: CommandSignature[], args: string[]) => {
-    const retVal: string[] = [];
-    for (const overload of overloads) {
-      const { params } = overload;
-      let k = 0;
-      let temp: string[] = [];
-      for (let j = 0; j < params.length; j++) {
-        const arg = args[k];
-        if (!arg) {
-          break;
+      case ParamType.RockideClientAnimation:
+        return /("[^"]*"|[\w.]+)/.test(str);
+      case ParamType.RockideMcfunction:
+        return /\b\w+\b|\"[^\"]+\"/.test(str);
+      case ParamType.RockideMcstructure:
+        return /\b\w+:\w+\b|\"[^\"]+\"/.test(str);
+      case ParamType.RockideTag:
+      case ParamType.RockideScoreboardObjective:
+        return /\w+|"[^"]*"/.test(str);
+      case ParamType.RockideBlock:
+        return /(([\w\S]+:)?[\w\S]+)|("[^"]*")/.test(str);
+      case ParamType.RockideTickingarea:
+        return /\w/.test(str);
+      case ParamType.RockideBlockState:
+        return /\[.*\]/.test(str);
+      default: {
+        if (Array.isArray(value)) {
+          return new RegExp(`\\b${value.join("|")}\\b`, "g").test(str);
         }
-        const param = params[j];
-        if (param.type === ParamType.executeChainedOption) {
-          const { k: kk, retVal: r } = parseParam(overloads, args.slice(k));
-          if (r.length) {
-            temp.push(...r);
-            k += kk;
-          }
-          break;
-        }
-        // idiot solution
-        // todo: proper solution
-        if (Array.isArray(param.value) && param.value[0] === "run" && arg === "run") {
-          temp.push(arg);
-          k++;
-          break;
-        }
-        const regex = getParamRegex(param);
-        const match = regex.exec(arg);
-        if (!match) {
-          temp = [];
-          break;
-        }
-        temp.push(arg);
-        k++;
-      }
-      if (temp.length) {
-        retVal.push(...temp);
-        return { k, retVal };
+        return new RegExp(`\\b${value}\\b`, "g").test(str);
       }
     }
-    return { k: 0, retVal: [] };
-  };
-
-  type CommandSequence = {
-    command: string;
-    args: Array<ParamInfo>;
-  };
+  }
   return {
     document,
     position,
-    text: getCurrentText(),
-    getCurrentWord() {
-      // const range = document.getWordRangeAtPosition(position, /"([^"]*)"|\S+/);
-      const range = document.getWordRangeAtPosition(position, /\b\w+\b|\"[^\"]+\"|\b[\d\.]+\b|[~^*]/);
-      if (!range) {
-        return;
-      }
-      return {
-        text: document.getText(range),
-        range,
-      };
+    isCommment() {
+      return getCurrentText().startsWith("#");
     },
-    getParamCompletion,
+    isInQuote() {
+      return getCurrentText().startsWith('"') && getCurrentText().endsWith('"');
+    },
+    getCurrentText,
+    getCurrentWord,
+    getCommandSequences: (): Array<CommandSequence> => {
+      const result: Array<CommandSequence> = [];
+      const text = getCurrentText();
+      if (!text) {
+        return result;
+      }
+      let [...words] = text
+        .split(/(\b|(?<=([~^"*=<>])))\s+/g)
+        .filter((_, i) => i % 3 === 0)
+        .map((arg) => {
+          return new RegExp(/((~|\^)-?(\d+)?(\.\d+)?)/g).test(arg) ? arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [] : arg;
+        })
+        .flat();
+      console.log(words);
+      while (words.length) {
+        // executeChain
+        const lastCommand = result[result.length - 1];
+        if (lastCommand?.command === "execute") {
+          // Last command was execute
+          const overloads = lastCommand.overloads.filter(({ isMatch }) => isMatch);
+          if (overloads.length === 1) {
+            const overload = overloads[0];
+            const arg = overload.args[overload.args.length - 1];
+
+            // Handle execute chained option
+            if (arg.type === ParamType.executeChainedOption && arg.isMatch && arg.value !== "run") {
+              if (Array.isArray(arg.value)) {
+                console.error("Execute array value not supported", arg.value);
+                throw new Error("Execute array value not supported");
+              }
+              const word = words.shift();
+              if (!word) {
+                words.push("execute", arg.value);
+              } else {
+                words.unshift("execute", arg.value, word);
+              }
+            }
+
+            // Handle subcommand
+            if (arg.type === ParamType.executeChainedOption && arg.isMatch && arg.value === "run") {
+              const word = words.shift();
+              if (!word) {
+                words.push("execute", "run");
+              } else {
+                words.unshift("execute", "run", word);
+              }
+            }
+          }
+        }
+
+        const word = words.shift();
+        if (!word) {
+          break;
+        }
+
+        const command = commands.find(({ command }) => command === word);
+        if (!command) {
+          console.error("unrecognized command:", word);
+          break;
+        }
+        const { overloads } = command;
+        if (!overloads) {
+          break;
+        }
+
+        let highestIndex = -1;
+        const overloadInfo: OverloadInfo[] = overloads.map((overload) => {
+          let k = 0;
+          let end = false;
+          const args = overload.params.map((param) => {
+            const arg = words[k];
+            k++;
+
+            if (!arg) {
+              // End of args, but still have params
+              end = true;
+            }
+
+            const value = getParamValue(rockide, param);
+            if (end) {
+              // Provide completion for next param
+              return new ArgInfo({
+                ...param,
+                value,
+                isMatch: false,
+                originalValue: param.value,
+              });
+            }
+
+            const ok = testParam(arg, rockide, param);
+            if (!ok) {
+              // Failed to match
+              end = true;
+              return new ArgInfo({
+                ...param,
+                value,
+                isMatch: false,
+                originalValue: param.value,
+              });
+            }
+
+            if (highestIndex < k) {
+              highestIndex = k - 1;
+            }
+
+            return new ArgInfo({
+              ...param,
+              value: arg,
+              isMatch: true,
+              originalValue: param.value,
+            });
+          });
+          return {
+            args,
+            isMatch: true,
+          };
+        });
+
+        overloadInfo.forEach(({ args }, i) => {
+          if (highestIndex === -1) {
+            return;
+          }
+          if (!args[highestIndex]?.isMatch) {
+            overloadInfo[i].isMatch = false;
+          }
+        });
+
+        words = words.slice(highestIndex + 1);
+
+        result.push({
+          command: command.command,
+          documentation: command.documentation,
+          overloads: overloadInfo,
+        });
+      }
+      return result;
+    },
     getSelector() {
       const range = document.getWordRangeAtPosition(position, /(@\w+)\s*(\[(.*?)\])?/);
       if (!range) {
@@ -269,144 +354,25 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
       if (dataRange) {
         currentData = document.getText(dataRange);
       }
+      const param = currentData?.split("=")[0];
+      const value = currentData?.split("=").slice(1).join("=") || undefined;
       return {
         selector,
         data,
         currentData: {
           data: currentData,
-          param: currentData?.split("=")[0],
-          value: currentData?.split("=")[1] || undefined,
+          param,
+          value,
         },
       };
     },
-    isCommment() {
-      return getCurrentText().startsWith("#");
-    },
-    getCommands() {
-      const text = getCurrentText();
-      if (!text) {
-        return [];
-      }
-      const [...words] = text
-        .split(/(\b|(?<=([~^"*])))\s+/g)
-        .filter((_, i) => i % 3 === 0)
-        .map((arg) => {
-          return new RegExp(/((~|\^)-?(\d+)?(\.\d+)?)/g).test(arg) ? arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [] : arg;
-        })
-        .flat();
-      const result: string[][] = [];
-      let i = 0;
-      while (true) {
-        const word = words[i];
-        if (!word) {
-          break;
-        }
-        const command = commands.find(({ command }) => command === word);
-        if (!command) {
-          break;
-        }
-        const { overloads, command: c } = command;
-        result.push([c]);
-        const cmd = result[result.length - 1];
-        i++;
-        if (!overloads) {
-          continue;
-        }
-        const arg = words[i];
-        if (!arg) {
-          break;
-        }
-        // for (const overload of overloads) {
-        // const { params } = overload;
-        // let k = i;
-        // let temp: string[] = [];
-        // for (let j = 0; j < params.length; j++) {
-        //   const arg = words[k];
-        //   if (!arg) {
-        //     break;
-        //   }
-        //   const param = params[j];
-        //   if (param.type === ParamType.executeChainedOption) {
-        //     temp.push(arg);
-        //     break;
-        //   }
-        //   const regex = getParamRegex(param);
-        //   const match = regex.exec(arg);
-        //   if (!match) {
-        //     temp = [];
-        //     break;
-        //   }
-        //   temp.push(arg);
-        //   k++;
-        // }
-        // if (temp.length) {
-        //   cmd.push(...temp);
-        //   i = k;
-        //   break;
-        // }
-        // cmd.push(...parseParam(params, words.slice(i)));
-        // }
-        try {
-          const { k, retVal } = parseParam(overloads, words.slice(i));
-          cmd.push(...retVal);
-          i += k;
-        } catch (e) {
-          console.error(e);
-        }
-      }
-      return result;
-    },
-    getCommandsV2(): Array<CommandSequence> {
-      const result: CommandSequence[] = [];
-      const text = getCurrentText();
-      if (!text) {
-        return result;
-      }
-      let [...words] = text
-        .split(/(\b|(?<=([~^"*])))\s+/g)
-        .filter((_, i) => i % 3 === 0)
-        .map((arg) => {
-          return new RegExp(/((~|\^)-?(\d+)?(\.\d+)?)/g).test(arg) ? arg.match(/((~|\^)-?(\d+)?(\.\d+)?)/g) || [] : arg;
-        })
-        .flat();
-      while (words.length) {
-        const word = words.shift();
-        const command = commands.find(({ command }) => command === word);
-        if (!command) {
-          break;
-        }
-        const { overloads, command: c } = command;
-        const args: ParamInfo[] = [];
-        result.push({ command: c, args });
-        if (!overloads) {
-          break;
-        }
-        for (const overload of overloads) {
-          const { params } = overload;
-          let k = 0;
-          let temp: ParamInfo[] = [];
-          for (let i = 0; i < params.length; i++) {
-            const arg = words[k];
-            if (!arg) {
-              break;
-            }
-            const param = params[i];
-            const regex = getParamRegex(param);
-            const match = regex.exec(arg);
-            if (!match) {
-              temp = [];
-              break;
-            }
-            temp.push(param);
-            k++;
-          }
-          if (temp.length) {
-            args.push(...temp);
-            words = words.slice(k);
-          }
-        }
-      }
-      return result;
+    getDefaultCommandCompletions: (): vscode.CompletionItem[] => {
+      return commands.map(({ command, documentation }) => {
+        const completion = new vscode.CompletionItem(command, vscode.CompletionItemKind.Class);
+        const markdown = new vscode.MarkdownString(`## ${command}\n\n${documentation}`);
+        completion.documentation = markdown;
+        return completion;
+      });
     },
     createCompletion(value: string | vscode.CompletionItem) {
       const completion =
@@ -416,66 +382,6 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
         completion.insertText = value;
       }
       return completion;
-    },
-    getCompletionFromCommand(command: CommandInfo, args: string[]) {
-      const { overloads } = command;
-      if (!overloads) {
-        return [];
-      }
-      let tempOverloads = [...overloads];
-      let executeIndex = 0;
-      let runIndex = 0;
-      for (let i = 0; i < args.length; i++) {
-        const arg = args[i];
-
-        tempOverloads = tempOverloads.filter((overload) => {
-          const param = overload.params[i - executeIndex];
-          const nextIndex = i + 1 - executeIndex;
-          const nextParam = overload.params[nextIndex];
-          if (!param) {
-            return false;
-          }
-          const regex = getParamRegex(param);
-          const ok = regex.test(arg);
-          // run subcommand check
-          if (nextParam?.type === ParamType.subcommand && ok) {
-            runIndex = i + 1;
-            return true;
-          }
-          // execute check
-          if (nextParam?.type === ParamType.executeChainedOption && ok) {
-            executeIndex = i + 1;
-            return true;
-          }
-          // runindex
-          if (runIndex !== 0) {
-            return true;
-          }
-          // todo: json check
-          return ok;
-        });
-
-        if (executeIndex !== 0 && i + 1 === executeIndex) {
-          // tempOverloads = [...overloads].filter((overload) => {
-          //   const param = overload.params[0];
-          //   return getParamRegex(param).test(args[i]);
-          // });
-          tempOverloads = [...overloads];
-        }
-        if (runIndex !== 0 && i + 1 === runIndex) {
-          return commands.map(({ command, documentation }) => {
-            const completion = new vscode.CompletionItem(command, vscode.CompletionItemKind.Class);
-            const markdown = new vscode.MarkdownString(`## ${command}\n\n${documentation}`);
-            completion.documentation = markdown;
-            return completion;
-          });
-        }
-      }
-      return tempOverloads
-        .map(({ params }) => getParamCompletion(params[args.length - executeIndex]))
-        .flat()
-        .filter((v, i, s) => i === s.findIndex((obj) => obj.label === v.label));
-      // return tempOverloads;
     },
     async createDefinition(path: string, originSelectionRange: vscode.Range): Promise<vscode.LocationLink> {
       const targetDocument = await vscode.workspace.openTextDocument(path);
@@ -497,3 +403,119 @@ export function createCommandContext(document: vscode.TextDocument, position: vs
 }
 
 export type CommandContext = NonNullable<ReturnType<typeof createCommandContext>>;
+
+export type CommandSequence = {
+  command: string;
+  documentation?: string | vscode.MarkdownString;
+  overloads: Array<OverloadInfo>;
+};
+
+export type OverloadInfo = {
+  isMatch: boolean;
+  args: Array<ArgInfo>;
+};
+
+export type ArgInfoData = ParamInfo & {
+  isMatch: boolean;
+  originalValue: string | string[];
+};
+
+export class ArgInfo implements ArgInfoData {
+  documentation?: string | string[] | vscode.MarkdownString | vscode.MarkdownString[] | undefined;
+  isMatch: boolean;
+  required?: boolean | undefined;
+  signatureValue?: string | undefined;
+  type: ParamType;
+  value: string | string[];
+  originalValue: string | string[];
+  constructor(data: ArgInfoData) {
+    this.type = data.type;
+    this.value = data.value;
+    this.isMatch = data.isMatch;
+    this.documentation = data.documentation;
+    this.signatureValue = data.signatureValue;
+    this.required = data.required;
+    this.originalValue = data.originalValue;
+  }
+  private getKind() {
+    switch (this.type) {
+      case ParamType.keyword:
+        return vscode.CompletionItemKind.Keyword;
+      case ParamType.entitySelector:
+      case ParamType.playerSelector:
+      case ParamType.selectorWildcard:
+        return vscode.CompletionItemKind.TypeParameter;
+      case ParamType.tag:
+        return vscode.CompletionItemKind.EnumMember;
+      case ParamType.string:
+        return vscode.CompletionItemKind.Value;
+      case ParamType.number:
+      case ParamType.float:
+      case ParamType.yaw:
+      case ParamType.pitch:
+      case ParamType.vector3:
+      case ParamType.location:
+        return vscode.CompletionItemKind.Value;
+      default:
+        return vscode.CompletionItemKind.Keyword;
+    }
+  }
+  private getDocs() {
+    if (Array.isArray(this.value)) {
+      return "";
+    }
+    switch (this.type) {
+      case ParamType.playerSelector:
+      case ParamType.selectorWildcard:
+      case ParamType.scoreboardSelector:
+        {
+          if (this.value.startsWith('"')) {
+            return "Player name or fake player.";
+          }
+          switch (this.value) {
+            case "@a":
+              return "All players.";
+            case "@e":
+              return "All entities.";
+            case "@s":
+              return "The entity running the command.";
+            case "@p":
+              return "The nearest player.";
+            case "@r":
+              return "A random player.";
+            case "*":
+              return "All players/entities.";
+          }
+        }
+        break;
+      default:
+        return;
+    }
+  }
+  createCompletion() {
+    if (Array.isArray(this.value)) {
+      return this.value.map((v, i) => {
+        let documentation = this.getDocs() ?? this.documentation;
+        if (Array.isArray(documentation)) {
+          documentation = documentation[i];
+        }
+        if (v.includes(" ") && ![ParamType.itemNBT, ParamType.rawJsonMessage].includes(this.type)) {
+          v = `"${v}"`;
+        }
+        const completion = new vscode.CompletionItem(v, this.getKind());
+        completion.documentation = documentation;
+        if (this.type === ParamType.number) {
+          completion.sortText = i.toString().padStart(2, "0");
+        }
+        return completion;
+      });
+    }
+    const completion = new vscode.CompletionItem(this.value, this.getKind());
+    let documentation = this.getDocs() ?? this.documentation;
+    if (Array.isArray(documentation)) {
+      documentation = documentation[0];
+    }
+    completion.documentation = documentation;
+    return completion;
+  }
+}

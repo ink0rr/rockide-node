@@ -16,7 +16,7 @@ const tellraw: CommandInfo = {
             JSON.stringify({ rawtext: [] }),
             JSON.stringify({ translate: "" }),
             JSON.stringify({ text: "" }),
-            JSON.stringify({ with: [] }),
+            '"with": []',
             JSON.stringify({ score: { name: "", objective: "" } }),
           ],
           documentation: [

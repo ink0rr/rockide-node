@@ -1,10 +1,12 @@
 import * as vscode from "vscode";
 import { commandSelector, jsonSelector } from "./constants";
+import { ObjectiveProvider } from "./core/command/objective/provider";
 import { CommandProvider } from "./core/command/provider";
+import { TagProvider } from "./core/command/tag/provider";
+import { TickingareaProvider } from "./core/command/tickingarea/provider";
 import { JsonProvider } from "./core/json/provider";
 import { McstructureProvider } from "./core/mcstructure/provider";
 import { MolangProvider } from "./core/molang/provider";
-import { TagProvider } from "./core/tag/provider";
 import { Rockide } from "./rockide";
 import { legend } from "./semantics";
 
@@ -23,6 +25,8 @@ export async function activate(context: vscode.ExtensionContext) {
   const commandProvider = new CommandProvider(rockide);
   const mcstructureProvider = new McstructureProvider(rockide);
   const tagProvider = new TagProvider(rockide);
+  const objectiveProvider = new ObjectiveProvider(rockide);
+  const tickingareaProvider = new TickingareaProvider(rockide);
 
   context.subscriptions.push(
     vscode.commands.registerCommand("rockide.reloadWorkspace", () => rockide.indexWorkspace()),
@@ -58,6 +62,16 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidRenameFiles((e) => tagProvider.onDidRenameFiles(e)),
     vscode.workspace.onDidDeleteFiles((e) => tagProvider.onDidDeleteFiles(e)),
     vscode.workspace.onDidChangeTextDocument((e) => tagProvider.onDidChangeTextDocument(e)),
+    // objectives
+    vscode.workspace.onDidCreateFiles((e) => objectiveProvider.onDidCreateFiles(e)),
+    vscode.workspace.onDidRenameFiles((e) => objectiveProvider.onDidRenameFiles(e)),
+    vscode.workspace.onDidDeleteFiles((e) => objectiveProvider.onDidDeleteFiles(e)),
+    vscode.workspace.onDidChangeTextDocument((e) => objectiveProvider.onDidChangeTextDocument(e)),
+    // tickingarea
+    vscode.workspace.onDidCreateFiles((e) => tickingareaProvider.onDidCreateFiles(e)),
+    vscode.workspace.onDidRenameFiles((e) => tickingareaProvider.onDidRenameFiles(e)),
+    vscode.workspace.onDidDeleteFiles((e) => tickingareaProvider.onDidDeleteFiles(e)),
+    vscode.workspace.onDidChangeTextDocument((e) => tickingareaProvider.onDidChangeTextDocument(e)),
   );
 }
 
