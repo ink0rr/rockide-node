@@ -74,6 +74,18 @@ export function createJsonContext(document: vscode.TextDocument, position: vscod
     /**
      * ```json
      * {
+     *   "key": {
+     *     "value": "..."
+     *   }
+     * }
+     * ```
+     */
+    matchPropertyKey(key: string) {
+      return location.isAtPropertyKey && path.at(-2) === key;
+    },
+    /**
+     * ```json
+     * {
      *   "key": [
      *     "value"
      *    ]

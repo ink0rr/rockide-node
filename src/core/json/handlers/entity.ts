@@ -63,5 +63,8 @@ export const entityHandler: JsonHandler = {
     if (ctx.matchArray("component_groups")) {
       return ctx.localRef(["minecraft:entity", "component_groups"]);
     }
+    if (ctx.matchPropertyKey("set_property")) {
+      return ctx.localRef(["minecraft:entity", "description", "properties"]);
+    }
   },
 };
