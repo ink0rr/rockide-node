@@ -28,11 +28,6 @@ export function commandCompletion(
     return selectorCompletion();
   }
 
-  // TODO: Proper handling for making a newline json
-  // const prevChars = ctx.document.getText(new vscode.Range(ctx.position.translate(0, -2), ctx.position));
-  // if (prevChars === '",') {
-  //   return [];
-  // }
   if (ctx.isEOLJSON()) {
     return [];
   }
