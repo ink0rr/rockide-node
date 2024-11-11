@@ -3,6 +3,7 @@ import { isMatch } from "micromatch";
 import { relative } from "path";
 import * as vscode from "vscode";
 import { bpGlob, NullNode, projectGlob, rpGlob } from "./constants";
+import { jsonCommandHandlers } from "./core/command/handlers";
 import { jsonHandlers } from "./core/json/handlers";
 
 export type IndexedData = {
@@ -113,6 +114,18 @@ export class Rockide {
           bedrockPath: path,
         });
       }
+      break;
+    }
+    for (const handler of jsonCommandHandlers) {
+      if (!handler.index || !isMatch(uri.fsPath, handler.pattern)) {
+        continue;
+      }
+      if (this.jsonFiles.get(uri.fsPath)) {
+        continue;
+      }
+      const document = await vscode.workspace.openTextDocument(uri);
+      const root = JSONC.parseTree(document.getText()) ?? NullNode;
+      this.jsonFiles.set(uri.fsPath, root);
       break;
     }
   }
