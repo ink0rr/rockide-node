@@ -1,4 +1,6 @@
+import * as JSONC from "jsonc-parser";
 import * as vscode from "vscode";
+import { NullNode } from "../../constants";
 import { blockIdentifier } from "../../literals/block_identifier";
 import { Rockide } from "../../rockide";
 import { commands } from "./data";
@@ -12,16 +14,15 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
     if (currentText) {
       return currentText;
     }
-    currentText = document.lineAt(position.line).text.slice(0, position.character).trimStart();
-    if (currentText.startsWith('"')) {
-      currentText = currentText.slice(1);
-      if (currentText.endsWith('"')) {
-        currentText = currentText.slice(0, -1);
-      }
-      if (currentText.endsWith('",')) {
-        currentText = currentText.slice(0, -2);
-      }
+    if (isJSON) {
+      const text = document.getText();
+      const offset = document.offsetAt(position);
+      const location = JSONC.getLocation(text, offset);
+      const node = location.previousNode ?? NullNode;
+      currentText = JSONC.getNodeValue(node) ?? node.value ?? "";
+      return currentText;
     }
+    currentText = document.lineAt(position.line).text.slice(0, position.character).trimStart();
     return currentText;
   };
   const getCurrentWord = () => {
