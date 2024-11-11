@@ -6,7 +6,10 @@ import { commandSignature } from "../signature";
 import { JsonCommandHandler } from "./_types";
 
 function isQueueCommand(path: JSONC.JSONPath) {
-  return path.at(-2) === "command" && path.at(-3) === "queue_command";
+  return (
+    (path.at(-2) === "command" && path.at(-3) === "queue_command") ||
+    (path.at(-1) === "command" && path.at(-2) === "queue_command")
+  );
 }
 
 export const entityHandler: JsonCommandHandler = {
