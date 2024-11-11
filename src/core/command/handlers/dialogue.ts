@@ -14,7 +14,7 @@ export const dialogueHandler: JsonCommandHandler = {
   },
   process(jsonContext, commandContext, rockide) {
     for (const property of keys) {
-      if (!jsonContext.matchProperty(property)) {
+      if (!jsonContext.matchArray(property)) {
         continue;
       }
       return {
