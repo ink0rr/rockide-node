@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { commandSelector, jsonSelector } from "./constants";
+import { commandSelector, jsonSelector, mcfunctionSelector } from "./constants";
 import { ObjectiveProvider } from "./core/command/objective/provider";
 import { CommandProvider } from "./core/command/provider";
 import { TagProvider } from "./core/command/tag/provider";
@@ -46,13 +46,16 @@ export async function activate(context: vscode.ExtensionContext) {
     // molang
     vscode.languages.registerDocumentSemanticTokensProvider(jsonSelector, molangProvider, legend),
     // mcfunction
-    vscode.languages.registerCompletionItemProvider(commandSelector, commandProvider, " ", "=", ","),
     vscode.languages.registerDefinitionProvider(commandSelector, commandProvider),
     vscode.workspace.onDidCreateFiles((e) => commandProvider.onDidCreateFiles(e)),
     vscode.workspace.onDidRenameFiles((e) => commandProvider.onDidRenameFiles(e)),
     vscode.workspace.onDidDeleteFiles((e) => commandProvider.onDidDeleteFiles(e)),
     vscode.languages.registerDocumentSemanticTokensProvider(commandSelector, commandProvider, legend),
-    vscode.languages.registerSignatureHelpProvider(commandSelector, commandProvider, " ", ""),
+    vscode.languages.registerCompletionItemProvider(mcfunctionSelector, commandProvider, " ", "=", ","),
+    vscode.languages.registerSignatureHelpProvider(mcfunctionSelector, commandProvider, " ", ""),
+    // commands (json)
+    vscode.languages.registerCompletionItemProvider(jsonSelector, commandProvider, "/", "=", ",", " "),
+    vscode.languages.registerSignatureHelpProvider(jsonSelector, commandProvider, "/", " "),
     // mcstructure
     vscode.workspace.onDidCreateFiles((e) => mcstructureProvider.onDidCreateFiles(e)),
     vscode.workspace.onDidRenameFiles((e) => mcstructureProvider.onDidRenameFiles(e)),

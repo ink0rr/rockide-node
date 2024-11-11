@@ -6,12 +6,22 @@ import execute from "./data/execute";
 import { ParamInfo, ParamType } from "./types";
 
 export function createCommandContext(rockide: Rockide, document: vscode.TextDocument, position: vscode.Position) {
+  const isJSON = ["json", "jsonc"].includes(document.languageId);
   let currentText: string;
   const getCurrentText = () => {
     if (currentText) {
       return currentText;
     }
-    currentText = document.lineAt(position.line).text.slice(0, position.character);
+    currentText = document.lineAt(position.line).text.slice(0, position.character).trimStart();
+    if (currentText.startsWith('"')) {
+      currentText = currentText.slice(1);
+      if (currentText.endsWith('"')) {
+        currentText = currentText.slice(0, -1);
+      }
+      if (currentText.endsWith('",')) {
+        currentText = currentText.slice(0, -2);
+      }
+    }
     return currentText;
   };
   const getCurrentWord = () => {
@@ -122,7 +132,8 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
       case ParamType.scoreboardSelector:
         return /(((@a|@e|@s|@p|@r)(\[(.*?)\])?)|\*|("[^"]*"))/.test(str);
       case ParamType.string:
-        return /("[^"]*"|\w+)/.test(str);
+        // return /("[^"]*"|\w+)/.test(str);
+        return /(.+)/.test(str);
       case ParamType.number:
         return /-?\d+/.test(str);
       case ParamType.range:
@@ -193,11 +204,12 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
   return {
     document,
     position,
+    isJSON,
     isCommment() {
       return getCurrentText().startsWith("#");
     },
-    isInQuote() {
-      return getCurrentText().startsWith('"') && getCurrentText().endsWith('"');
+    isEOLJSON() {
+      return document.lineAt(position.line).text.trim().endsWith('",');
     },
     getCurrentText,
     getCurrentWord,
@@ -256,7 +268,7 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
           break;
         }
 
-        const command = commands.find(({ command }) => command === word);
+        const command = commands.find(({ command }) => command === word || `/${command}` === word);
         if (!command) {
           console.error("unrecognized command:", word);
           break;
@@ -287,6 +299,7 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
                 value,
                 isMatch: false,
                 originalValue: param.value,
+                isJSON,
               });
             }
 
@@ -299,6 +312,7 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
                 value,
                 isMatch: false,
                 originalValue: param.value,
+                isJSON,
               });
             }
 
@@ -311,11 +325,13 @@ export function createCommandContext(rockide: Rockide, document: vscode.TextDocu
               value: arg,
               isMatch: true,
               originalValue: param.value,
+              isJSON,
             });
           });
           return {
             args,
             isMatch: true,
+            isJSON,
           };
         });
 
@@ -416,6 +432,7 @@ export type OverloadInfo = {
 };
 
 export type ArgInfoData = ParamInfo & {
+  isJSON?: boolean;
   isMatch: boolean;
   originalValue: string | string[];
 };
@@ -428,6 +445,7 @@ export class ArgInfo implements ArgInfoData {
   type: ParamType;
   value: string | string[];
   originalValue: string | string[];
+  isJSON?: boolean | undefined;
   constructor(data: ArgInfoData) {
     this.type = data.type;
     this.value = data.value;
@@ -436,6 +454,7 @@ export class ArgInfo implements ArgInfoData {
     this.signatureValue = data.signatureValue;
     this.required = data.required;
     this.originalValue = data.originalValue;
+    this.isJSON = data.isJSON;
   }
   private getKind() {
     switch (this.type) {
@@ -502,6 +521,9 @@ export class ArgInfo implements ArgInfoData {
         if (v.includes(" ") && ![ParamType.itemNBT, ParamType.rawJsonMessage].includes(this.type)) {
           v = `"${v}"`;
         }
+        if (this.isJSON) {
+          v = v.replace(/"/g, '\\"');
+        }
         const completion = new vscode.CompletionItem(v, this.getKind());
         completion.documentation = documentation;
         if (this.type === ParamType.number) {
@@ -509,6 +531,9 @@ export class ArgInfo implements ArgInfoData {
         }
         return completion;
       });
+    }
+    if (this.isJSON) {
+      this.value = this.value.replace(/"/g, '\\"');
     }
     const completion = new vscode.CompletionItem(this.value, this.getKind());
     let documentation = this.getDocs() ?? this.documentation;
