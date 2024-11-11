@@ -50,7 +50,7 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidCreateFiles((e) => commandProvider.onDidCreateFiles(e)),
     vscode.workspace.onDidRenameFiles((e) => commandProvider.onDidRenameFiles(e)),
     vscode.workspace.onDidDeleteFiles((e) => commandProvider.onDidDeleteFiles(e)),
-    vscode.languages.registerDocumentSemanticTokensProvider(commandSelector, commandProvider, legend),
+    vscode.languages.registerDocumentSemanticTokensProvider(mcfunctionSelector, commandProvider, legend),
     vscode.languages.registerCompletionItemProvider(mcfunctionSelector, commandProvider, " ", "=", ","),
     vscode.languages.registerSignatureHelpProvider(mcfunctionSelector, commandProvider, " ", ""),
     // commands (json)
