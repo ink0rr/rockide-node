@@ -19,13 +19,13 @@ import { commandHandlers, jsonCommandHandlers } from "./handlers";
  * - Signature helper
  */
 
-const semantics: SemanticToken[] = [
+export const commandTokens: SemanticToken[] = [
   {
     pattern: /([a-zA-Z_]+):/g,
     type: "class",
   },
   {
-    pattern: /(?<=[a-zA-Z_]+:)([a-zA-Z_]+)/g,
+    pattern: /(?<=[a-zA-Z_]+:)([a-zA-Z_.]+)/g,
     type: "function",
   },
   {
@@ -133,7 +133,7 @@ export class CommandProvider
     const tokens = new vscode.SemanticTokensBuilder(legend);
 
     const assignTokens = (text: string, basePos?: vscode.Position) => {
-      for (const { pattern, type, modifiers } of semantics) {
+      for (const { pattern, type, modifiers } of commandTokens) {
         let match;
         while ((match = pattern.exec(text))) {
           const start = basePos ? basePos.translate(0, match.index) : document.positionAt(match.index);
