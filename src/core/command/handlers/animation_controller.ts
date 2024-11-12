@@ -1,3 +1,4 @@
+import * as JSONC from "jsonc-parser";
 import { bpGlob } from "../../../constants";
 import { commandCompletion } from "../completion";
 import { commandDefinitions } from "../definition";
@@ -9,8 +10,11 @@ const keys = ["on_entry", "on_exit"] as const;
 export const animationControllerHandler: JsonCommandHandler = {
   pattern: `**/${bpGlob}/animation_controllers/**/*.json`,
   index: true,
-  semanticNode(path) {
-    return keys.some((k) => path.at(-2)?.toString() === k);
+  semanticNode(node) {
+    const path = JSONC.getNodePath(node);
+    return (
+      !!node.type.match(/(string|null)/) && typeof path.at(-1) === "number" && keys.some((key) => path.at(-2) === key)
+    );
   },
   process(jsonContext, commandContext, rockide) {
     for (const k of keys) {

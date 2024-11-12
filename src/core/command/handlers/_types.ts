@@ -19,7 +19,7 @@ export type CommandHandlerResult = {
 export type JsonCommandHandler = {
   pattern: string | string[];
   index?: boolean;
-  semanticNode?(path: JSONC.JSONPath): boolean;
+  semanticNode?(node: JSONC.Node): boolean;
   process?(jsonContext: JsonContext, commandContext: CommandContext, rockide: Rockide): JsonCommandHandlerResult | void;
 };
 

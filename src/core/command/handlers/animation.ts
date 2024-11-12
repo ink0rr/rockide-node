@@ -1,3 +1,4 @@
+import * as JSONC from "jsonc-parser";
 import { bpGlob } from "../../../constants";
 import { commandCompletion } from "../completion";
 import { commandDefinitions } from "../definition";
@@ -7,7 +8,8 @@ import { JsonCommandHandler } from "./_types";
 export const animationHandler: JsonCommandHandler = {
   pattern: `**/${bpGlob}/animations/**/*.json`,
   index: true,
-  semanticNode(path) {
+  semanticNode(node) {
+    const path = JSONC.getNodePath(node);
     const timelineKey = path.at(-2);
     if (path.at(-3) !== "timeline" || !timelineKey || isNaN(parseFloat(timelineKey.toString()))) {
       return false;

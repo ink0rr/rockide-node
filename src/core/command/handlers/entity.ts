@@ -5,21 +5,22 @@ import { commandDefinitions } from "../definition";
 import { commandSignature } from "../signature";
 import { JsonCommandHandler } from "./_types";
 
-function isQueueCommand(path: JSONC.JSONPath) {
+function isQueueCommand(node: JSONC.Node) {
+  const path = JSONC.getNodePath(node);
   return (
     (path.at(-2) === "command" && path.at(-3) === "queue_command") ||
-    (path.at(-1) === "command" && path.at(-2) === "queue_command")
+    (!!node.type.match(/(string|null)/) && path.at(-1) === "command" && path.at(-2) === "queue_command")
   );
 }
 
 export const entityHandler: JsonCommandHandler = {
   pattern: `**/${bpGlob}/entities/**/*.json`,
   index: true,
-  semanticNode(path) {
-    return isQueueCommand(path);
+  semanticNode(node) {
+    return isQueueCommand(node);
   },
   process(jsonContext, commandContext, rockide) {
-    if (!isQueueCommand(jsonContext.path)) {
+    if (!(jsonContext.matchProperty("queue_command", "command") || jsonContext.matchArray("command"))) {
       return;
     }
     return {

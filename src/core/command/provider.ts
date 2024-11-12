@@ -159,8 +159,7 @@ export class CommandProvider
         return;
       }
       const scan = (node: JSONC.Node) => {
-        const path = JSONC.getNodePath(node);
-        if (handler.semanticNode?.(path)) {
+        if (handler.semanticNode?.(node)) {
           const value = node.value;
           if (value) {
             assignTokens(value, document.positionAt(node.offset + 1));
