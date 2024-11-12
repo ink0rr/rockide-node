@@ -3,7 +3,16 @@ import { Rockide } from "../../rockide";
 import { CommandContext } from "./context";
 import { selectorCompletion, selectorDataCompletion } from "./selector/completion";
 
-export function commandCompletion(ctx: CommandContext, rockide: Rockide) {
+export type CommandCompletionArgs = {
+  slash?: boolean;
+};
+
+export function commandCompletion(
+  ctx: CommandContext,
+  rockide: Rockide,
+  opts: CommandCompletionArgs = {},
+): vscode.CompletionItem[] {
+  opts.slash ??= false;
   if (ctx.isCommment()) {
     return [];
   }
@@ -19,11 +28,23 @@ export function commandCompletion(ctx: CommandContext, rockide: Rockide) {
     return selectorCompletion();
   }
 
+  if (ctx.isEOLJSON()) {
+    return [];
+  }
+
   let completions: vscode.CompletionItem[] = [];
   const commandSequences = ctx.getCommandSequences();
 
   if (!commandSequences.length) {
-    return ctx.getDefaultCommandCompletions();
+    return ctx.getDefaultCommandCompletions().map((c) => {
+      if (opts.slash) {
+        const prevChar = ctx.document.getText(new vscode.Range(ctx.position.translate(0, -1), ctx.position));
+        if (prevChar !== "/") {
+          c.label = `/${c.label}`;
+        }
+      }
+      return c;
+    });
   }
 
   const currentCommand = commandSequences[commandSequences.length - 1];

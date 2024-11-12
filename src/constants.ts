@@ -28,7 +28,8 @@ export const jsonSelector: vscode.DocumentSelector = [
   { scheme: "file", language: "jsonc" },
 ];
 
-export const commandSelector: vscode.DocumentSelector = jsonSelector.concat({
-  scheme: "file",
-  language: "rockide-mcfunction",
-});
+export const mcfunctionSelector: vscode.DocumentSelector = [
+  { scheme: "file", language: "rockide-mcfunction" },
+] as const;
+
+export const commandSelector: vscode.DocumentSelector = [...jsonSelector, ...mcfunctionSelector] as const;

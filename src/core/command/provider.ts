@@ -1,11 +1,13 @@
+import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
 import { baseGlob, bpGlob } from "../../constants";
 import { Rockide } from "../../rockide";
 import { legend, SemanticToken } from "../../semantics";
+import { createJsonContext } from "../json/context";
 import { createCommandContext } from "./context";
 import { commands } from "./data";
-import { commandHandlers } from "./handlers";
+import { commandHandlers, jsonCommandHandlers } from "./handlers";
 
 /**
  * TODO:
@@ -17,13 +19,13 @@ import { commandHandlers } from "./handlers";
  * - Signature helper
  */
 
-const semantics: SemanticToken[] = [
+export const commandTokens: SemanticToken[] = [
   {
     pattern: /([a-zA-Z_]+):/g,
     type: "class",
   },
   {
-    pattern: /(?<=[a-zA-Z_]+:)([a-zA-Z_]+)/g,
+    pattern: /(?<=[a-zA-Z_]+:)([a-zA-Z_.]+)/g,
     type: "function",
   },
   {
@@ -89,6 +91,17 @@ export class CommandProvider
         }
       }
     }
+    for (const handler of jsonCommandHandlers) {
+      if (!isMatch(document.uri.fsPath, handler.pattern)) {
+        continue;
+      }
+      if (handler.process) {
+        const commandContext = createCommandContext(this.rockide, document, position);
+        const jsonContext = createJsonContext(document, position);
+        const definitions = handler.process(jsonContext, commandContext, this.rockide)?.definitions?.();
+        return Promise.all(definitions ?? []);
+      }
+    }
   }
   provideSignatureHelp(
     document: vscode.TextDocument,
@@ -103,26 +116,63 @@ export class CommandProvider
         }
       }
     }
+    for (const handler of jsonCommandHandlers) {
+      if (!isMatch(document.uri.fsPath, handler.pattern)) {
+        continue;
+      }
+      if (handler.process) {
+        const commandContext = createCommandContext(this.rockide, document, position);
+        const jsonContext = createJsonContext(document, position);
+        const signature = handler.process(jsonContext, commandContext, this.rockide)?.signature?.();
+        return signature;
+      }
+    }
   }
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
     const text = document.getText();
     const tokens = new vscode.SemanticTokensBuilder(legend);
+
+    const assignTokens = (text: string, basePos?: vscode.Position) => {
+      for (const { pattern, type, modifiers } of commandTokens) {
+        let match;
+        while ((match = pattern.exec(text))) {
+          const start = basePos ? basePos.translate(0, match.index) : document.positionAt(match.index);
+          const length = match[0].length;
+          const range = new vscode.Range(start, start.translate(0, length));
+          tokens.push(range, type, modifiers);
+        }
+      }
+    };
+
     for (const handler of commandHandlers) {
       if (!isMatch(document.uri.fsPath, handler.pattern)) {
         continue;
       }
-      for (const { pattern, type, modifiers } of semantics) {
-        let match;
-        while ((match = pattern.exec(text))) {
-          const start = match.index;
-          const length = match[0].length;
-          const position = document.positionAt(start);
-          const range = new vscode.Range(position, position.translate(0, length));
-          tokens.push(range, type, modifiers);
-        }
-      }
-      return tokens.build();
+      assignTokens(text);
     }
+    for (const handler of jsonCommandHandlers) {
+      if (!isMatch(document.uri.fsPath, handler.pattern)) {
+        continue;
+      }
+      const root = this.rockide.jsonFiles.get(document.uri.fsPath);
+      if (!root) {
+        return;
+      }
+      const scan = (node: JSONC.Node) => {
+        if (handler.semanticNode?.(node)) {
+          const value = node.value;
+          if (value) {
+            assignTokens(value, document.positionAt(node.offset + 1));
+          }
+        } else {
+          for (const child of node.children ?? []) {
+            scan(child);
+          }
+        }
+      };
+      scan(root);
+    }
+    return tokens.build();
   }
   provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
     for (const handler of commandHandlers) {
@@ -132,6 +182,17 @@ export class CommandProvider
           const completions = handler.process(ctx, this.rockide)?.completions?.();
           return completions?.map((value) => ctx.createCompletion(value));
         }
+      }
+    }
+    for (const handler of jsonCommandHandlers) {
+      if (!isMatch(document.uri.fsPath, handler.pattern)) {
+        continue;
+      }
+      if (handler.process) {
+        const commandContext = createCommandContext(this.rockide, document, position);
+        const jsonContext = createJsonContext(document, position);
+        const completions = handler.process(jsonContext, commandContext, this.rockide)?.completions?.();
+        return completions?.map((value) => commandContext.createCompletion(value));
       }
     }
   }
