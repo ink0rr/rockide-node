@@ -2,14 +2,12 @@ import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
 import { projectGlob } from "../../constants";
-import { Rockide } from "../../rockide";
 import { legend, SemanticToken } from "../../semantics";
 import { createMolangContext } from "./context";
 
 export class MolangProvider implements vscode.DocumentSemanticTokensProvider, vscode.SignatureHelpProvider {
-  constructor(private rockide: Rockide) {}
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
-    const root = this.rockide.jsonFiles.get(document.uri.fsPath);
+    const root = JSONC.parseTree(document.getText());
     if (!root) {
       return;
     }
