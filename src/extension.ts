@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { commandSelector, jsonSelector, mcfunctionSelector } from "./constants";
+import { commandSelector, jsonSelector, mcfunctionSelector, projectGlob } from "./constants";
 import { ObjectiveProvider } from "./core/command/objective/provider";
 import { CommandProvider } from "./core/command/provider";
 import { TagProvider } from "./core/command/tag/provider";
@@ -21,14 +21,16 @@ export async function activate(context: vscode.ExtensionContext) {
   await rockide.indexWorkspace();
 
   const jsonProvider = new JsonProvider(rockide);
-  const molangProvider = new MolangProvider(rockide);
+  const molangProvider = new MolangProvider();
   const commandProvider = new CommandProvider(rockide);
   const mcstructureProvider = new McstructureProvider(rockide);
   const tagProvider = new TagProvider(rockide);
   const objectiveProvider = new ObjectiveProvider(rockide);
   const tickingareaProvider = new TickingareaProvider(rockide);
+  const watcher = vscode.workspace.createFileSystemWatcher(`**/${projectGlob}/**`);
 
   context.subscriptions.push(
+    watcher,
     vscode.commands.registerCommand("rockide.reloadWorkspace", () => rockide.indexWorkspace()),
     vscode.commands.registerCommand("rockide.insertParentheses", async () => {
       await vscode.commands.executeCommand("cursorLeft");
@@ -38,18 +40,21 @@ export async function activate(context: vscode.ExtensionContext) {
     // json
     vscode.languages.registerCompletionItemProvider(jsonSelector, jsonProvider, "."),
     vscode.languages.registerDefinitionProvider(jsonSelector, jsonProvider),
-    vscode.workspace.onDidChangeTextDocument((e) => jsonProvider.onDidChangeTextDocument(e)),
-    vscode.workspace.onDidCreateFiles((e) => jsonProvider.onDidCreateFiles(e)),
-    vscode.workspace.onDidRenameFiles((e) => jsonProvider.onDidRenameFiles(e)),
-    vscode.workspace.onDidDeleteFiles((e) => jsonProvider.onDidDeleteFiles(e)),
+    watcher.onDidChange((uri) =>
+      vscode.workspace.openTextDocument(uri).then(
+        (document) => jsonProvider.onDidChangeTextDocument(document),
+        () => {},
+      ),
+    ),
+    watcher.onDidCreate((uri) => jsonProvider.onDidCreate(uri)),
+    watcher.onDidDelete((uri) => jsonProvider.onDidDelete(uri)),
 
     // molang
     vscode.languages.registerDocumentSemanticTokensProvider(jsonSelector, molangProvider, legend),
     // mcfunction
     vscode.languages.registerDefinitionProvider(commandSelector, commandProvider),
-    vscode.workspace.onDidCreateFiles((e) => commandProvider.onDidCreateFiles(e)),
-    vscode.workspace.onDidRenameFiles((e) => commandProvider.onDidRenameFiles(e)),
-    vscode.workspace.onDidDeleteFiles((e) => commandProvider.onDidDeleteFiles(e)),
+    watcher.onDidCreate((uri) => commandProvider.onDidCreate(uri)),
+    watcher.onDidDelete((uri) => commandProvider.onDidDelete(uri)),
     vscode.languages.registerDocumentSemanticTokensProvider(mcfunctionSelector, commandProvider, legend),
     vscode.languages.registerCompletionItemProvider(mcfunctionSelector, commandProvider, " ", "=", ","),
     vscode.languages.registerSignatureHelpProvider(mcfunctionSelector, commandProvider, " ", ""),
@@ -57,24 +62,35 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerCompletionItemProvider(jsonSelector, commandProvider, "/", "=", ",", " "),
     vscode.languages.registerSignatureHelpProvider(jsonSelector, commandProvider, "/", " "),
     // mcstructure
-    vscode.workspace.onDidCreateFiles((e) => mcstructureProvider.onDidCreateFiles(e)),
-    vscode.workspace.onDidRenameFiles((e) => mcstructureProvider.onDidRenameFiles(e)),
-    vscode.workspace.onDidDeleteFiles((e) => mcstructureProvider.onDidDeleteFiles(e)),
+    watcher.onDidCreate((uri) => mcstructureProvider.onDidCreate(uri)),
+    watcher.onDidDelete((uri) => mcstructureProvider.onDidDelete(uri)),
     // tag
-    vscode.workspace.onDidCreateFiles((e) => tagProvider.onDidCreateFiles(e)),
-    vscode.workspace.onDidRenameFiles((e) => tagProvider.onDidRenameFiles(e)),
-    vscode.workspace.onDidDeleteFiles((e) => tagProvider.onDidDeleteFiles(e)),
-    vscode.workspace.onDidChangeTextDocument((e) => tagProvider.onDidChangeTextDocument(e)),
+    watcher.onDidChange((uri) =>
+      vscode.workspace.openTextDocument(uri).then(
+        (document) => tagProvider.onDidChangeTextDocument(document),
+        () => {},
+      ),
+    ),
+    watcher.onDidCreate((uri) => tagProvider.onDidCreate(uri)),
+    watcher.onDidDelete((uri) => tagProvider.onDidDelete(uri)),
     // objectives
-    vscode.workspace.onDidCreateFiles((e) => objectiveProvider.onDidCreateFiles(e)),
-    vscode.workspace.onDidRenameFiles((e) => objectiveProvider.onDidRenameFiles(e)),
-    vscode.workspace.onDidDeleteFiles((e) => objectiveProvider.onDidDeleteFiles(e)),
-    vscode.workspace.onDidChangeTextDocument((e) => objectiveProvider.onDidChangeTextDocument(e)),
+    watcher.onDidChange((uri) =>
+      vscode.workspace.openTextDocument(uri).then(
+        (document) => objectiveProvider.onDidChangeTextDocument(document),
+        () => {},
+      ),
+    ),
+    watcher.onDidCreate((uri) => objectiveProvider.onDidCreate(uri)),
+    watcher.onDidDelete((uri) => objectiveProvider.onDidDelete(uri)),
     // tickingarea
-    vscode.workspace.onDidCreateFiles((e) => tickingareaProvider.onDidCreateFiles(e)),
-    vscode.workspace.onDidRenameFiles((e) => tickingareaProvider.onDidRenameFiles(e)),
-    vscode.workspace.onDidDeleteFiles((e) => tickingareaProvider.onDidDeleteFiles(e)),
-    vscode.workspace.onDidChangeTextDocument((e) => tickingareaProvider.onDidChangeTextDocument(e)),
+    watcher.onDidChange((uri) =>
+      vscode.workspace.openTextDocument(uri).then(
+        (document) => tickingareaProvider.onDidChangeTextDocument(document),
+        () => {},
+      ),
+    ),
+    watcher.onDidCreate((uri) => tickingareaProvider.onDidCreate(uri)),
+    watcher.onDidDelete((uri) => tickingareaProvider.onDidDelete(uri)),
   );
 }
 

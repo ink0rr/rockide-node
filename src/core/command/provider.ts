@@ -196,30 +196,13 @@ export class CommandProvider
       }
     }
   }
-  async onDidCreateFiles({ files }: vscode.FileCreateEvent) {
-    for (const uri of files) {
-      if (!isMatch(uri.fsPath, `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`)) {
-        continue;
-      }
+  async onDidCreate(uri: vscode.Uri) {
+    if (isMatch(uri.fsPath, `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`)) {
       this.rockide.indexMcfunction(uri);
     }
   }
-  async onDidRenameFiles({ files }: vscode.FileRenameEvent) {
-    for (const { newUri, oldUri } of files) {
-      // If moved to outside project directory
-      if (!isMatch(newUri.fsPath, `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`)) {
-        this.rockide.mcfunctions.delete(oldUri.fsPath);
-        continue;
-      }
-      this.rockide.mcfunctions.delete(oldUri.fsPath);
-      this.rockide.indexMcfunction(newUri);
-    }
-  }
-  onDidDeleteFiles({ files }: vscode.FileDeleteEvent) {
-    for (const uri of files) {
-      if (!isMatch(uri.fsPath, `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`)) {
-        continue;
-      }
+  onDidDelete(uri: vscode.Uri) {
+    if (isMatch(uri.fsPath, `${baseGlob}/${bpGlob}/functions/**/*.mcfunction`)) {
       this.rockide.mcfunctions.delete(uri.fsPath);
     }
   }

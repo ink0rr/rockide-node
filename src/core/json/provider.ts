@@ -36,49 +36,28 @@ export class JsonProvider implements vscode.CompletionItemProvider, vscode.Defin
       }
     }
   }
-  onDidChangeTextDocument({ document }: vscode.TextDocumentChangeEvent) {
+  onDidChangeTextDocument(document: vscode.TextDocument) {
     if (this.rockide.jsonFiles.has(document.uri.fsPath)) {
       const text = document.getText();
       const json = JSONC.parseTree(text) ?? NullNode;
       this.rockide.jsonFiles.set(document.uri.fsPath, json);
     }
   }
-  async onDidCreateFiles({ files }: vscode.FileCreateEvent) {
-    for (const uri of files) {
-      if (!isMatch(uri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
-        continue;
-      }
-      if (uri.fsPath.endsWith(".json")) {
-        await this.rockide.indexJson(uri);
-      } else {
-        this.rockide.indexAsset(uri);
-      }
+  async onDidCreate(uri: vscode.Uri) {
+    if (!isMatch(uri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
+      return;
+    }
+    if (uri.fsPath.endsWith(".json")) {
+      await this.rockide.indexJson(uri);
+    } else {
+      this.rockide.indexAsset(uri);
     }
   }
-  async onDidRenameFiles({ files }: vscode.FileRenameEvent) {
-    for (const { oldUri, newUri } of files) {
-      if (isMatch(oldUri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
-        this.rockide.jsonFiles.delete(oldUri.fsPath);
-        this.rockide.jsonAssets = this.rockide.jsonAssets.filter((v) => v.uri.fsPath !== oldUri.fsPath);
-        this.rockide.assets = this.rockide.assets.filter((v) => v.uri.fsPath !== oldUri.fsPath);
-      }
-      if (!isMatch(newUri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
-        continue;
-      }
-      if (newUri.fsPath.endsWith(".json")) {
-        await this.rockide.indexJson(newUri);
-      } else {
-        this.rockide.indexAsset(newUri);
-      }
-    }
-  }
-  onDidDeleteFiles({ files }: vscode.FileDeleteEvent) {
-    for (const uri of files) {
-      if (isMatch(uri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
-        this.rockide.jsonFiles.delete(uri.fsPath);
-        this.rockide.jsonAssets = this.rockide.jsonAssets.filter((v) => v.uri.fsPath !== uri.fsPath);
-        this.rockide.assets = this.rockide.assets.filter((v) => v.uri.fsPath !== uri.fsPath);
-      }
+  onDidDelete(uri: vscode.Uri) {
+    if (isMatch(uri.fsPath, `${baseGlob}/${projectGlob}/**/*`)) {
+      this.rockide.jsonFiles.delete(uri.fsPath);
+      this.rockide.jsonAssets = this.rockide.jsonAssets.filter((v) => v.uri.fsPath !== uri.fsPath);
+      this.rockide.assets = this.rockide.assets.filter((v) => v.uri.fsPath !== uri.fsPath);
     }
   }
 }
