@@ -1,7 +1,8 @@
 import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
-import { baseGlob, projectGlob } from "./constants";
+import { baseGlob, jsonSelector, projectGlob } from "./constants";
+import { JsonProvider } from "./provider/json_provider";
 import { storeList } from "./store";
 
 export class Rockide {
@@ -48,7 +49,12 @@ export class Rockide {
     watcher.onDidDelete(this.onDelete);
     context.subscriptions.push(watcher);
 
+    const jsonProvider = new JsonProvider();
+    const triggerCharacters = `abcdefghijklmnopqrstuvwxyz:.'" `.split("");
     context.subscriptions.push(
+      vscode.languages.registerCompletionItemProvider(jsonSelector, jsonProvider, ...triggerCharacters),
+      vscode.languages.registerDefinitionProvider(jsonSelector, jsonProvider),
+      vscode.languages.registerRenameProvider(jsonSelector, jsonProvider),
       vscode.workspace.onDidChangeTextDocument((e) => {
         if (e.contentChanges.length > 0) {
           this.onChange(e.document.uri);
