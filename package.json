@@ -61,11 +61,6 @@
         "command": "rockide.reloadWorkspace",
         "title": "Reload Workspace",
         "category": "Rockide"
-      },
-      {
-        "command": "rockide.insertParentheses",
-        "title": "Insert Parentheses",
-        "category": "Rockide"
       }
     ],
     "grammars": [
