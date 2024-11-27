@@ -1,7 +1,7 @@
 {
   "name": "rockide",
   "displayName": "Rockide",
-  "description": "Integrated development environment for Minecraft Bedrock",
+  "description": "VSCode Extension for Minecraft Bedrock Addon Development",
   "version": "0.0.1",
   "author": "ink0rr",
   "publisher": "ink0rr",
