@@ -2,7 +2,6 @@ import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
 import { JsonHandlerContext } from "../core/json_handler";
-import { Reference } from "../core/reference";
 import { handlerList } from "../handler";
 
 export class JsonProvider implements vscode.CompletionItemProvider, vscode.DefinitionProvider, vscode.RenameProvider {
@@ -24,7 +23,7 @@ export class JsonProvider implements vscode.CompletionItemProvider, vscode.Defin
     if (!data) {
       return;
     }
-    return [...new Set(data.map((v) => (v instanceof Reference ? v.value : v)))].map((value) => {
+    return [...new Set(data.map((v) => (typeof v === "string" ? v : v.value)))].map((value) => {
       const completion = new vscode.CompletionItem(value);
       completion.range = new vscode.Range(
         document.positionAt(context.node.offset + 1),
