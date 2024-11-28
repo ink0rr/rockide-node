@@ -135,7 +135,10 @@ export const entityHandler = new JsonHandler(pattern.entity, [
     provideRename: () => entityStore.get("family"),
   },
   {
-    path: ["minecraft:entity/components/minecraft:loot/table"],
+    path: [
+      "minecraft:entity/components/minecraft:loot/table",
+      "minecraft:entity/component_groups/*/minecraft:loot/table",
+    ],
     provideCompletion: () => lootTableStore.get("path"),
     provideDefinition: () => lootTableStore.get("path"),
   },
