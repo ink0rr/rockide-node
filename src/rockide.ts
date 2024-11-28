@@ -7,10 +7,10 @@ import { storeList } from "./store";
 
 export class Rockide {
   async isMinecraftWorkspace() {
-    for (const path of await vscode.workspace.findFiles("**/manifest.json")) {
-      const file = await vscode.workspace.openTextDocument(path);
-      const json = JSONC.parse(file.getText());
-      if ("format_version" in json && "header" in json) {
+    for (const path of await vscode.workspace.findFiles(`**/${projectGlob}/manifest.json`, "{.*,build,dist,out}")) {
+      const document = await vscode.workspace.openTextDocument(path);
+      const json = JSONC.parse(document.getText());
+      if ("format_version" in json && "header" in json && "modules" in json) {
         continue;
       }
       return false;
