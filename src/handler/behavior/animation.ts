@@ -5,7 +5,7 @@ import { entityStore } from "../../store/behavior/entity";
 
 export const animationHandler = new JsonHandler(pattern.animation, [
   {
-    path: ["animation_controllers/*"],
+    path: ["animations/*"],
     matchType: "key",
     provideCompletion: () => {
       const declarations = animationStore.get("identifier").map(({ value }) => value);
