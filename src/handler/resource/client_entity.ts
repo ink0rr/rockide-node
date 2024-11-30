@@ -1,10 +1,12 @@
 import { pattern } from "../../constants";
 import { JsonHandler } from "../../core/json_handler";
 import { entityStore } from "../../store/behavior/entity";
+import { itemStore } from "../../store/behavior/item";
 import { clientAnimationStore } from "../../store/resource/client_animation";
 import { clientAnimationControllerStore } from "../../store/resource/client_animation_controller";
 import { clientEntityStore } from "../../store/resource/client_entity";
 import { geometryStore } from "../../store/resource/geometry";
+import { itemTextureStore } from "../../store/resource/item_texture";
 import { textureStore } from "../../store/resource/texture";
 
 export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
@@ -64,5 +66,13 @@ export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
     provideCompletion: () => geometryStore.get("identifier"),
     provideDefinition: () => geometryStore.get("identifier"),
     provideRename: () => geometryStore.get("identifier").concat(clientEntityStore.get("geometry_identifier")),
+  },
+  {
+    path: ["minecraft:client_entity/description/spawn_egg/texture"],
+    matchType: "value",
+    provideCompletion: () => itemTextureStore.get("identifier"),
+    provideDefinition: () => itemTextureStore.get("identifier"),
+    provideRename: () =>
+      itemTextureStore.get("identifier").concat(clientEntityStore.get("spawn_egg"), itemStore.get("icon")),
   },
 ]);
