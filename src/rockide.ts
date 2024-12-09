@@ -18,9 +18,9 @@ export class Rockide {
     return true;
   }
 
-  async scanWorkspace() {
+  async indexWorkspace() {
     await vscode.window.withProgress(
-      { title: "Indexing", location: vscode.ProgressLocation.Notification },
+      { title: "Rockide: Indexing workspace", location: vscode.ProgressLocation.Notification },
       async (progress) => {
         const startTime = Date.now();
         let totalFiles = 0;

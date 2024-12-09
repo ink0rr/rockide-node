@@ -7,7 +7,7 @@ export async function activate(context: vscode.ExtensionContext) {
     return;
   }
   rockide.register(context);
-  await rockide.scanWorkspace();
+  await rockide.indexWorkspace();
   console.log("Rockide activated!");
 }
 
