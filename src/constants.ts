@@ -46,3 +46,17 @@ export const NullNode: JSONC.Node = {
 };
 
 export const propertyDomain = ["bool_property", "enum_property", "float_property", "int_property"];
+
+export const legend = new vscode.SemanticTokensLegend([
+  "class",
+  "enumMember",
+  "function",
+  "macro",
+  "number",
+  "operator",
+  "regexp",
+  "string",
+  "variable",
+  "comment",
+  "keyword",
+]);

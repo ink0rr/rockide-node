@@ -1,8 +1,9 @@
 import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
-import { baseGlob, jsonSelector, projectGlob } from "./constants";
+import { baseGlob, jsonSelector, legend, projectGlob } from "./constants";
 import { JsonProvider } from "./provider/json_provider";
+import { MolangProvider } from "./provider/molang_provider";
 import { storeList } from "./store";
 
 export class Rockide {
@@ -64,6 +65,11 @@ export class Rockide {
           this.onChange(e.document.uri);
         }
       }),
+    );
+
+    const molangProvider = new MolangProvider();
+    context.subscriptions.push(
+      vscode.languages.registerDocumentSemanticTokensProvider(jsonSelector, molangProvider, legend),
     );
   }
 
