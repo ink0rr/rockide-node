@@ -11,7 +11,7 @@ type JsonStoreEntry<T extends string> = {
   /**
    * Function to transform the value of the node. If the function returns null, the value will be ignored.
    */
-  transform?: (node: JSONC.Node) => string | null;
+  transform?: (node: JSONC.Node) => JSONC.Node | string | null;
 };
 
 export class JsonStore<T extends string> extends Store<T> {
@@ -41,12 +41,22 @@ export class JsonStore<T extends string> extends Store<T> {
         const extract = (node: JSONC.Node) => {
           if (node.type === "string") {
             const value = entry.transform?.(node);
-            if (value !== null) {
+            if (value === null) {
+              return;
+            }
+            if (typeof value === "object") {
+              data.push(new JsonReference(document, value));
+            } else {
               data.push(new JsonReference(document, node, value));
             }
           } else if (node.type === "property" && node.children?.[index]) {
             const value = entry.transform?.(node.children[index]);
-            if (value !== null) {
+            if (value === null) {
+              return;
+            }
+            if (typeof value === "object") {
+              data.push(new JsonReference(document, value));
+            } else {
               data.push(new JsonReference(document, node.children[index], value));
             }
           } else if (node.children) {
