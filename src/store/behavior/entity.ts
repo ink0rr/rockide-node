@@ -137,6 +137,18 @@ export const entityStore = new JsonStore(pattern.entity, [
     ],
   },
   {
+    id: "family_refs",
+    path: ["minecraft:entity/components/**/filters/**/value", "minecraft:entity/component_groups/**/filters/**/value"],
+    transform: (node) => {
+      const parent = node.parent?.parent;
+      const test = JSONC.findNodeAtLocation(parent!, ["test"]);
+      if (test?.value === "is_family") {
+        return node.value;
+      }
+      return null;
+    },
+  },
+  {
     id: "loot_table_path",
     path: [
       "minecraft:loot/table",

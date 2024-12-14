@@ -126,9 +126,27 @@ export const entityHandler = new JsonHandler(pattern.entity, [
       "minecraft:entity/components/minecraft:type_family/family/*",
       "minecraft:entity/component_groups/*/minecraft:type_family/family/*",
     ],
-    provideCompletion: () => entityStore.get("family"),
-    provideDefinition: () => entityStore.get("family"),
-    provideRename: () => entityStore.get("family"),
+    provideCompletion: () => entityStore.get("family").concat(entityStore.get("family_refs")),
+    provideDefinition: () => entityStore.get("family").concat(entityStore.get("family_refs")),
+    provideRename: () => entityStore.get("family").concat(entityStore.get("family_refs")),
+  },
+  {
+    path: ["minecraft:entity/components/**/filters/**/value", "minecraft:entity/component_groups/**/filters/**/value"],
+    provideCompletion: (context) => {
+      const parent = context.getParentNode();
+      const test = JSONC.findNodeAtLocation(parent!, ["test"]);
+      if (test?.value === "is_family") {
+        return entityStore.get("family");
+      }
+    },
+    provideDefinition: (context) => {
+      const parent = context.getParentNode();
+      const test = JSONC.findNodeAtLocation(parent!, ["test"]);
+      if (test?.value === "is_family") {
+        return entityStore.get("family");
+      }
+    },
+    provideRename: () => entityStore.get("family").concat(entityStore.get("family_refs")),
   },
   {
     path: [
