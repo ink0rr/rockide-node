@@ -6,6 +6,7 @@ import { itemStore } from "./behavior/item";
 import { lootTableStore } from "./behavior/loot_table";
 import { recipeStore } from "./behavior/recipe";
 import { tradeTableStore } from "./behavior/trade_table";
+import { attachableStore } from "./resource/attachable";
 import { clientAnimationStore } from "./resource/client_animation";
 import { clientAnimationControllerStore } from "./resource/client_animation_controller";
 import { clientBlockStore } from "./resource/client_block";
@@ -28,6 +29,7 @@ export const storeList = [
   recipeStore,
   tradeTableStore,
   // RP
+  attachableStore,
   clientAnimationControllerStore,
   clientAnimationStore,
   clientBlockStore,

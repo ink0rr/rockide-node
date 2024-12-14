@@ -1,6 +1,8 @@
 import { pattern } from "../../constants";
 import { JsonHandler } from "../../core/json_handler";
 import { Store } from "../../core/store";
+import { animationStore } from "../../store/behavior/animation";
+import { attachableStore } from "../../store/resource/attachable";
 import { clientAnimationStore } from "../../store/resource/client_animation";
 import { clientEntityStore } from "../../store/resource/client_entity";
 
@@ -10,10 +12,17 @@ export const clientAnimationHandler = new JsonHandler(pattern.clientAnimations, 
     matchType: "key",
     provideCompletion: () =>
       Store.difference(
-        clientEntityStore.get("animation_identifier").filter((v) => v.value.startsWith("animation.")),
+        attachableStore
+          .get("animation_identifier")
+          .concat(clientEntityStore.get("animation_identifier"))
+          .filter((v) => v.value.startsWith("animation.")),
         clientAnimationStore.get("identifier"),
       ),
-    provideDefinition: () => clientEntityStore.get("animation_identifier"),
-    provideRename: () => clientAnimationStore.get("identifier").concat(clientEntityStore.get("animation_identifier")),
+    provideDefinition: () =>
+      attachableStore.get("animation_identifier").concat(clientEntityStore.get("animation_identifier")),
+    provideRename: () =>
+      animationStore
+        .get("identifier")
+        .concat(attachableStore.get("animation_identifier"), clientEntityStore.get("animation_identifier")),
   },
 ]);
