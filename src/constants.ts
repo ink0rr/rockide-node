@@ -30,6 +30,7 @@ export const pattern = {
   clientEntity: `**/${rpGlob}/entity/**/*.json`,
   geometry: `**/${rpGlob}/models/**/*.json`,
   itemTexture: `**/${rpGlob}/textures/item_texture.json`,
+  renderController: `**/${rpGlob}/render_controllers/**/*.json`,
   soundDefinition: `**/${rpGlob}/sounds/sound_definitions.json`,
   sound: `**/${rpGlob}/sounds/**/*.{fsb,ogg,wav}`,
   texture: `**/${rpGlob}/textures/**/*.{png,tga,fsb}`,

@@ -54,4 +54,7 @@ export class JsonHandlerContext {
       return JSONC.findNodeAtLocation(root, path.slice(0, path.length - 1));
     }
   }
+  isAtPropertyKeyOrArray() {
+    return this.location.isAtPropertyKey || typeof this.location.path.at(-1) === "number";
+  }
 }

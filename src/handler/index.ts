@@ -8,6 +8,7 @@ import { clientAnimationControllerHandler } from "./resource/client_animation_co
 import { clientBlockHandler } from "./resource/client_block";
 import { clientEntityHandler } from "./resource/client_entity";
 import { itemTextureHandler } from "./resource/item_texture";
+import { renderControllerHandler } from "./resource/render_controller";
 
 export const handlerList = [
   // BP
@@ -22,4 +23,5 @@ export const handlerList = [
   clientBlockHandler,
   clientEntityHandler,
   itemTextureHandler,
+  renderControllerHandler,
 ];

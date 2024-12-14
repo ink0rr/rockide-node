@@ -44,7 +44,7 @@ export const clientEntityStore = new JsonStore(pattern.clientEntity, [
   },
   {
     id: "render_controller_identifier",
-    path: ["minecraft:client_entity/description/render_controllers/*"],
+    path: ["minecraft:client_entity/description/render_controllers"],
   },
   {
     id: "spawn_egg",

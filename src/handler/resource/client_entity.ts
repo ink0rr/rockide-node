@@ -8,6 +8,7 @@ import { clientAnimationControllerStore } from "../../store/resource/client_anim
 import { clientEntityStore } from "../../store/resource/client_entity";
 import { geometryStore } from "../../store/resource/geometry";
 import { itemTextureStore } from "../../store/resource/item_texture";
+import { renderControllerStore } from "../../store/resource/render_controller";
 import { textureStore } from "../../store/resource/texture";
 
 export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
@@ -64,6 +65,24 @@ export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
     provideCompletion: () => geometryStore.get("identifier"),
     provideDefinition: () => geometryStore.get("identifier"),
     provideRename: () => geometryStore.get("identifier").concat(clientEntityStore.get("geometry_identifier")),
+  },
+  {
+    path: ["minecraft:client_entity/description/render_controllers/**"],
+    provideCompletion: (context) => {
+      if (context.isAtPropertyKeyOrArray()) {
+        return renderControllerStore.get("identifier");
+      }
+    },
+    provideDefinition: (context) => {
+      if (context.isAtPropertyKeyOrArray()) {
+        return renderControllerStore.get("identifier");
+      }
+    },
+    provideRename: (context) => {
+      if (context.isAtPropertyKeyOrArray()) {
+        return renderControllerStore.get("identifier").concat(clientEntityStore.get("render_controller_identifier"));
+      }
+    },
   },
   {
     path: ["minecraft:client_entity/description/spawn_egg/texture"],
