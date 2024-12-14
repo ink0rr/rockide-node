@@ -76,25 +76,23 @@ export const entityHandler = new JsonHandler(pattern.entity, [
       const parent = context.getParentNode();
       const test = JSONC.findNodeAtLocation(parent!, ["test"]);
       if (!test || !propertyDomain.includes(test.value)) {
-        return [];
+        return;
       }
       const subject = JSONC.findNodeAtLocation(parent!, ["subject"]);
-      if (subject && subject.value !== "self") {
-        return [];
+      if (!subject || subject.value === "self") {
+        return entityStore.get("property");
       }
-      return entityStore.get("property");
     },
     provideDefinition: (context) => {
       const parent = context.getParentNode();
       const test = JSONC.findNodeAtLocation(parent!, ["test"]);
       if (!test || !propertyDomain.includes(test.value)) {
-        return [];
+        return;
       }
       const subject = JSONC.findNodeAtLocation(parent!, ["subject"]);
-      if (subject && subject.value !== "self") {
-        return [];
+      if (!subject || subject.value === "self") {
+        return entityStore.get("property");
       }
-      return entityStore.get("property");
     },
   },
   {
