@@ -25,6 +25,7 @@ export const pattern = {
   // RP
   clientAnimationControllers: `**/${rpGlob}/animation_controllers/**/*.json`,
   clientAnimations: `**/${rpGlob}/animations/**/*.json`,
+  clientBlock: `**/${rpGlob}/blocks.json`,
   attachable: `**/${rpGlob}/attachables/**/*.json`,
   clientEntity: `**/${rpGlob}/entity/**/*.json`,
   geometry: `**/${rpGlob}/models/**/*.json`,

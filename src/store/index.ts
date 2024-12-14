@@ -8,6 +8,7 @@ import { recipeStore } from "./behavior/recipe";
 import { tradeTableStore } from "./behavior/trade_table";
 import { clientAnimationStore } from "./resource/client_animation";
 import { clientAnimationControllerStore } from "./resource/client_animation_controller";
+import { clientBlockStore } from "./resource/client_block";
 import { clientEntityStore } from "./resource/client_entity";
 import { geometryStore } from "./resource/geometry";
 import { itemTextureStore } from "./resource/item_texture";
@@ -28,6 +29,7 @@ export const storeList = [
   // RP
   clientAnimationControllerStore,
   clientAnimationStore,
+  clientBlockStore,
   clientEntityStore,
   geometryStore,
   itemTextureStore,
