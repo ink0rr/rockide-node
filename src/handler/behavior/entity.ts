@@ -98,14 +98,19 @@ export const entityHandler = new JsonHandler(pattern.entity, [
   {
     path: ["minecraft:entity/component_groups/*"],
     matchType: "key",
-    provideCompletion: (context) => entityStore.getFrom(context.uri, "component_group_refs"),
+    provideCompletion: (context) =>
+      Store.difference(
+        entityStore.getFrom(context.uri, "component_group_refs"),
+        entityStore.getFrom(context.uri, "component_group"),
+      ),
     provideDefinition: (context) => entityStore.getFrom(context.uri, "component_group_refs"),
     provideRename: (context) => entityStore.getFrom(context.uri, "component_group"),
   },
   {
     path: ["minecraft:entity/events/*"],
     matchType: "key",
-    provideCompletion: (context) => entityStore.getFrom(context.uri, "event_refs"),
+    provideCompletion: (context) =>
+      Store.difference(entityStore.getFrom(context.uri, "event_refs"), entityStore.getFrom(context.uri, "event")),
     provideDefinition: (context) => entityStore.getFrom(context.uri, "event_refs"),
     provideRename: (context) => entityStore.getFrom(context.uri, "event"),
   },
