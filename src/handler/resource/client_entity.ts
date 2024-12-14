@@ -1,5 +1,6 @@
 import { pattern } from "../../constants";
 import { JsonHandler } from "../../core/json_handler";
+import { Store } from "../../core/store";
 import { entityStore } from "../../store/behavior/entity";
 import { itemStore } from "../../store/behavior/item";
 import { clientAnimationStore } from "../../store/resource/client_animation";
@@ -12,10 +13,7 @@ import { textureStore } from "../../store/resource/texture";
 export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
   {
     path: ["minecraft:client_entity/description/identifier"],
-    provideCompletion() {
-      const declarations = clientEntityStore.get("identifier").map(({ value }) => value);
-      return entityStore.get("identifier").filter(({ value }) => !declarations.includes(value));
-    },
+    provideCompletion: () => Store.difference(entityStore.get("identifier"), clientEntityStore.get("identifier")),
     provideDefinition: () => entityStore.get("identifier"),
     provideRename: () => entityStore.get("identifier").concat(clientEntityStore.get("identifier")),
   },
@@ -23,16 +21,16 @@ export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
     path: ["minecraft:client_entity/description/animations/*"],
     provideCompletion: (context) => {
       if (context.location.isAtPropertyKey) {
-        const declarations = clientEntityStore.getFrom(context.uri, "animate").map(({ value }) => value);
-        return clientEntityStore
-          .getFrom(context.uri, "animate_refs")
-          .filter(({ value }) => !declarations.includes(value));
+        return Store.difference(
+          clientEntityStore.getFrom(context.uri, "animate"),
+          clientEntityStore.getFrom(context.uri, "animation"),
+        );
       }
       return clientAnimationControllerStore.get("identifier").concat(clientAnimationStore.get("identifier"));
     },
     provideDefinition: (context) => {
       if (context.location.isAtPropertyKey) {
-        return clientEntityStore.getFrom(context.uri, "animate_refs");
+        return clientEntityStore.getFrom(context.uri, "animate");
       }
       return clientAnimationControllerStore.get("identifier").concat(clientAnimationStore.get("identifier"));
     },
@@ -41,18 +39,18 @@ export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
   },
   {
     path: ["minecraft:client_entity/description/scripts/animate/*"],
-    provideCompletion: (context) => clientEntityStore.getFrom(context.uri, "animate"),
-    provideDefinition: (context) => clientEntityStore.getFrom(context.uri, "animate"),
+    provideCompletion: (context) => clientEntityStore.getFrom(context.uri, "animation"),
+    provideDefinition: (context) => clientEntityStore.getFrom(context.uri, "animation"),
     provideRename: (context) =>
-      clientEntityStore.getFrom(context.uri, "animate").concat(clientEntityStore.getFrom(context.uri, "animate_refs")),
+      clientEntityStore.getFrom(context.uri, "animation").concat(clientEntityStore.getFrom(context.uri, "animate")),
   },
   {
     path: ["minecraft:client_entity/description/scripts/animate/*/*"],
     matchType: "key",
-    provideCompletion: (context) => clientEntityStore.getFrom(context.uri, "animate"),
-    provideDefinition: (context) => clientEntityStore.getFrom(context.uri, "animate"),
+    provideCompletion: (context) => clientEntityStore.getFrom(context.uri, "animation"),
+    provideDefinition: (context) => clientEntityStore.getFrom(context.uri, "animation"),
     provideRename: (context) =>
-      clientEntityStore.getFrom(context.uri, "animate").concat(clientEntityStore.getFrom(context.uri, "animate_refs")),
+      clientEntityStore.getFrom(context.uri, "animation").concat(clientEntityStore.getFrom(context.uri, "animate")),
   },
   {
     path: ["minecraft:client_entity/description/textures/*"],

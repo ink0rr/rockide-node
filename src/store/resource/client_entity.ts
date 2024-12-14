@@ -7,15 +7,15 @@ export const clientEntityStore = new JsonStore(pattern.clientEntity, [
     path: ["minecraft:client_entity/description/identifier"],
   },
   {
+    id: "animation",
+    path: ["minecraft:client_entity/description/animations"],
+  },
+  {
     id: "animation_identifier",
     path: ["minecraft:client_entity/description/animations/*"],
   },
   {
     id: "animate",
-    path: ["minecraft:client_entity/description/animations"],
-  },
-  {
-    id: "animate_refs",
     path: ["minecraft:client_entity/description/scripts/animate"],
   },
   {

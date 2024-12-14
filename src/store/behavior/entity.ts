@@ -9,15 +9,15 @@ export const entityStore = new JsonStore(pattern.entity, [
     path: ["minecraft:entity/description/identifier"],
   },
   {
+    id: "animation",
+    path: ["minecraft:entity/description/animations"],
+  },
+  {
     id: "animation_identifier",
     path: ["minecraft:entity/description/animations/*"],
   },
   {
     id: "animate",
-    path: ["minecraft:entity/description/animations"],
-  },
-  {
-    id: "animate_refs",
     path: ["minecraft:entity/description/scripts/animate"],
   },
   {

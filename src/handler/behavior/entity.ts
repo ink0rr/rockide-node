@@ -1,6 +1,7 @@
 import * as JSONC from "jsonc-parser";
 import { pattern, propertyDomain } from "../../constants";
 import { JsonHandler } from "../../core/json_handler";
+import { Store } from "../../core/store";
 import { animationStore } from "../../store/behavior/animation";
 import { animationControllerStore } from "../../store/behavior/animation_controller";
 import { entityStore } from "../../store/behavior/entity";
@@ -11,10 +12,7 @@ import { clientEntityStore } from "../../store/resource/client_entity";
 export const entityHandler = new JsonHandler(pattern.entity, [
   {
     path: ["minecraft:entity/description/identifier"],
-    provideCompletion() {
-      const declarations = entityStore.get("identifier").map(({ value }) => value);
-      return clientEntityStore.get("identifier").filter(({ value }) => !declarations.includes(value));
-    },
+    provideCompletion: () => Store.difference(clientEntityStore.get("identifier"), entityStore.get("identifier")),
     provideDefinition: () => clientEntityStore.get("identifier"),
     provideRename: () => clientEntityStore.get("identifier").concat(entityStore.get("identifier")),
   },
@@ -22,14 +20,16 @@ export const entityHandler = new JsonHandler(pattern.entity, [
     path: ["minecraft:entity/description/animations/*"],
     provideCompletion: (context) => {
       if (context.location.isAtPropertyKey) {
-        const declarations = entityStore.getFrom(context.uri, "animate").map(({ value }) => value);
-        return entityStore.getFrom(context.uri, "animate_refs").filter(({ value }) => !declarations.includes(value));
+        return Store.difference(
+          entityStore.getFrom(context.uri, "animate"),
+          entityStore.getFrom(context.uri, "animation"),
+        );
       }
       return animationControllerStore.get("identifier").concat(animationStore.get("identifier"));
     },
     provideDefinition: (context) => {
       if (context.location.isAtPropertyKey) {
-        return entityStore.getFrom(context.uri, "animate_refs");
+        return entityStore.getFrom(context.uri, "animate");
       }
       return animationControllerStore.get("identifier").concat(animationStore.get("identifier"));
     },
@@ -37,26 +37,24 @@ export const entityHandler = new JsonHandler(pattern.entity, [
   },
   {
     path: ["minecraft:entity/description/scripts/animate/*"],
-    provideCompletion: (context) => entityStore.getFrom(context.uri, "animate"),
-    provideDefinition: (context) => entityStore.getFrom(context.uri, "animate"),
+    provideCompletion: (context) => entityStore.getFrom(context.uri, "animation"),
+    provideDefinition: (context) => entityStore.getFrom(context.uri, "animation"),
     provideRename: (context) =>
-      entityStore.getFrom(context.uri, "animate").concat(entityStore.getFrom(context.uri, "animate_refs")),
+      entityStore.getFrom(context.uri, "animation").concat(entityStore.getFrom(context.uri, "animate")),
   },
   {
     path: ["minecraft:entity/description/scripts/animate/*/*"],
     matchType: "key",
-    provideCompletion: (context) => entityStore.getFrom(context.uri, "animate"),
-    provideDefinition: (context) => entityStore.getFrom(context.uri, "animate"),
+    provideCompletion: (context) => entityStore.getFrom(context.uri, "animation"),
+    provideDefinition: (context) => entityStore.getFrom(context.uri, "animation"),
     provideRename: (context) =>
-      entityStore.getFrom(context.uri, "animate").concat(entityStore.getFrom(context.uri, "animate_refs")),
+      entityStore.getFrom(context.uri, "animation").concat(entityStore.getFrom(context.uri, "animate")),
   },
   {
     path: ["minecraft:entity/description/properties/*"],
     matchType: "key",
-    provideCompletion: (context) => {
-      const declarations = entityStore.get("property").map(({ value }) => value);
-      return entityStore.getFrom(context.uri, "property_refs").filter(({ value }) => !declarations.includes(value));
-    },
+    provideCompletion: (context) =>
+      Store.difference(entityStore.getFrom(context.uri, "property_refs"), entityStore.getFrom(context.uri, "property")),
     provideDefinition: (context) => entityStore.getFrom(context.uri, "property_refs"),
     provideRename: (context) =>
       entityStore.getFrom(context.uri, "property_refs").concat(entityStore.getFrom(context.uri, "property")),
