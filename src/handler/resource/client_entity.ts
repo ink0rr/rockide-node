@@ -9,6 +9,7 @@ import { clientAnimationControllerStore } from "../../store/resource/client_anim
 import { clientEntityStore } from "../../store/resource/client_entity";
 import { geometryStore } from "../../store/resource/geometry";
 import { itemTextureStore } from "../../store/resource/item_texture";
+import { particleStore } from "../../store/resource/particle";
 import { renderControllerStore } from "../../store/resource/render_controller";
 import { textureStore } from "../../store/resource/texture";
 
@@ -102,5 +103,22 @@ export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
     provideDefinition: () => itemTextureStore.get("identifier"),
     provideRename: () =>
       itemTextureStore.get("identifier").concat(clientEntityStore.get("spawn_egg"), itemStore.get("icon")),
+  },
+  {
+    path: [
+      "minecraft:client_entity/description/particle_effects/*",
+      "minecraft:client_entity/description/particle_emitters/*",
+    ],
+    matchType: "value",
+    provideCompletion: () => particleStore.get("identifier"),
+    provideDefinition: () => particleStore.get("identifier"),
+    provideRename: () =>
+      particleStore
+        .get("identifier")
+        .concat(
+          particleStore.get("identifier_refs"),
+          attachableStore.get("particle_identifier"),
+          clientEntityStore.get("particle_identifier"),
+        ),
   },
 ]);

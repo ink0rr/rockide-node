@@ -7,6 +7,7 @@ import { clientAnimationStore } from "../../store/resource/client_animation";
 import { clientAnimationControllerStore } from "../../store/resource/client_animation_controller";
 import { clientEntityStore } from "../../store/resource/client_entity";
 import { geometryStore } from "../../store/resource/geometry";
+import { particleStore } from "../../store/resource/particle";
 import { renderControllerStore } from "../../store/resource/render_controller";
 import { textureStore } from "../../store/resource/texture";
 
@@ -92,5 +93,22 @@ export const attachableHandler = new JsonHandler(pattern.attachable, [
           );
       }
     },
+  },
+  {
+    path: [
+      "minecraft:attachable/description/particle_effects/*",
+      "minecraft:attachable/description/particle_emitters/*",
+    ],
+    matchType: "value",
+    provideCompletion: () => particleStore.get("identifier"),
+    provideDefinition: () => particleStore.get("identifier"),
+    provideRename: () =>
+      particleStore
+        .get("identifier")
+        .concat(
+          particleStore.get("identifier_refs"),
+          attachableStore.get("particle_identifier"),
+          clientEntityStore.get("particle_identifier"),
+        ),
   },
 ]);

@@ -13,6 +13,7 @@ import { clientBlockStore } from "./resource/client_block";
 import { clientEntityStore } from "./resource/client_entity";
 import { geometryStore } from "./resource/geometry";
 import { itemTextureStore } from "./resource/item_texture";
+import { particleStore } from "./resource/particle";
 import { renderControllerStore } from "./resource/render_controller";
 import { soundStore } from "./resource/sound";
 import { soundDefinitionStore } from "./resource/sound_definition";
@@ -36,6 +37,7 @@ export const storeList = [
   clientEntityStore,
   geometryStore,
   itemTextureStore,
+  particleStore,
   renderControllerStore,
   soundDefinitionStore,
   soundStore,
