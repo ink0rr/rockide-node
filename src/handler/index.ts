@@ -12,6 +12,7 @@ import { geometryHandler } from "./resource/geometry";
 import { itemTextureHandler } from "./resource/item_texture";
 import { particleHandler } from "./resource/particle";
 import { renderControllerHandler } from "./resource/render_controller";
+import { soundDefinitionHandler } from "./resource/sound_definition";
 
 export const handlerList = [
   // BP
@@ -30,4 +31,5 @@ export const handlerList = [
   itemTextureHandler,
   particleHandler,
   renderControllerHandler,
+  soundDefinitionHandler,
 ];

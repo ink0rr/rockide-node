@@ -11,6 +11,7 @@ import { geometryStore } from "../../store/resource/geometry";
 import { itemTextureStore } from "../../store/resource/item_texture";
 import { particleStore } from "../../store/resource/particle";
 import { renderControllerStore } from "../../store/resource/render_controller";
+import { soundDefinitionStore } from "../../store/resource/sound_definition";
 import { textureStore } from "../../store/resource/texture";
 
 export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
@@ -119,6 +120,19 @@ export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
           particleStore.get("identifier_refs"),
           attachableStore.get("particle_identifier"),
           clientEntityStore.get("particle_identifier"),
+        ),
+  },
+  {
+    path: ["minecraft:client_entity/description/sound_effects/*"],
+    matchType: "value",
+    provideCompletion: () => soundDefinitionStore.get("identifier"),
+    provideDefinition: () => soundDefinitionStore.get("identifier"),
+    provideRename: () =>
+      soundDefinitionStore
+        .get("identifier")
+        .concat(
+          attachableStore.get("sound_definition_identifier"),
+          clientEntityStore.get("sound_definition_identifier"),
         ),
   },
 ]);

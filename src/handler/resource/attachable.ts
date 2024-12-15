@@ -9,6 +9,7 @@ import { clientEntityStore } from "../../store/resource/client_entity";
 import { geometryStore } from "../../store/resource/geometry";
 import { particleStore } from "../../store/resource/particle";
 import { renderControllerStore } from "../../store/resource/render_controller";
+import { soundDefinitionStore } from "../../store/resource/sound_definition";
 import { textureStore } from "../../store/resource/texture";
 
 export const attachableHandler = new JsonHandler(pattern.attachable, [
@@ -109,6 +110,19 @@ export const attachableHandler = new JsonHandler(pattern.attachable, [
           particleStore.get("identifier_refs"),
           attachableStore.get("particle_identifier"),
           clientEntityStore.get("particle_identifier"),
+        ),
+  },
+  {
+    path: ["minecraft:attachable/description/sound_effects/*"],
+    matchType: "value",
+    provideCompletion: () => soundDefinitionStore.get("identifier"),
+    provideDefinition: () => soundDefinitionStore.get("identifier"),
+    provideRename: () =>
+      soundDefinitionStore
+        .get("identifier")
+        .concat(
+          attachableStore.get("sound_definition_identifier"),
+          clientEntityStore.get("sound_definition_identifier"),
         ),
   },
 ]);
