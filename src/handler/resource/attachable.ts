@@ -15,7 +15,7 @@ export const attachableHandler = new JsonHandler(pattern.attachable, [
     path: ["minecraft:attachable/description/identifier"],
     provideCompletion: () => Store.difference(itemStore.get("identifier"), attachableStore.get("identifier")),
     provideDefinition: () => itemStore.get("identifier"),
-    provideRename: () => itemStore.get("identifier").concat(attachableStore.get("identifier")),
+    provideRename: () => attachableStore.get("identifier").concat(itemStore.get("identifier")),
   },
   {
     path: ["minecraft:attachable/description/animations/*"],
