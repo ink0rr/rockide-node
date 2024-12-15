@@ -128,4 +128,5 @@ export const molangSemanticLocations = molangLocations.concat([
   ["render_controllers", "*", "arrays", "*", "*", "*"],
   ["minecraft:attachable", "description", "geometry", "*"],
   ["minecraft:client_entity", "description", "geometry", "*"],
+  ["minecraft:geometry", "*", "description", "identifier"],
 ]);
