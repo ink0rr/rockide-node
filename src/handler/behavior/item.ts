@@ -23,6 +23,13 @@ export const itemHandler = new JsonHandler(pattern.item, [
     provideCompletion: () => itemTextureStore.get("identifier"),
     provideDefinition: () => itemTextureStore.get("identifier"),
     provideRename: () =>
-      itemTextureStore.get("identifier").concat(itemStore.get("icon"), clientEntityStore.get("spawn_egg")),
+      itemStore.get("icon").concat(itemTextureStore.get("identifier"), clientEntityStore.get("spawn_egg")),
+  },
+  {
+    path: ["minecraft:item/components/minecraft:repairable/repair_items/*/items/*"],
+    matchType: "value",
+    provideCompletion: () => itemStore.get("identifier"),
+    provideDefinition: () => itemStore.get("identifier"),
+    provideRename: () => itemStore.get("identifier").concat(attachableStore.get("identifier")),
   },
 ]);
