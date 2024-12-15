@@ -17,6 +17,7 @@ import { particleStore } from "./resource/particle";
 import { renderControllerStore } from "./resource/render_controller";
 import { soundStore } from "./resource/sound";
 import { soundDefinitionStore } from "./resource/sound_definition";
+import { terrainTextureStore } from "./resource/terrain_texture";
 import { textureStore } from "./resource/texture";
 
 export const storeList = [
@@ -41,5 +42,6 @@ export const storeList = [
   renderControllerStore,
   soundDefinitionStore,
   soundStore,
+  terrainTextureStore,
   textureStore,
 ];

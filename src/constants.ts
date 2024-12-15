@@ -34,6 +34,7 @@ export const pattern = {
   renderController: `**/${rpGlob}/render_controllers/**/*.json`,
   soundDefinition: `**/${rpGlob}/sounds/sound_definitions.json`,
   sound: `**/${rpGlob}/sounds/**/*.{fsb,ogg,wav}`,
+  terrainTexture: `**/${rpGlob}/textures/terrain_texture.json`,
   texture: `**/${rpGlob}/textures/**/*.{png,tga,fsb}`,
 };
 

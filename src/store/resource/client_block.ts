@@ -1,5 +1,6 @@
 import { pattern } from "../../constants";
 import { JsonStore } from "../../core/json_store";
+import { skipKey } from "../../utils/transform";
 
 export const clientBlockStore = new JsonStore(pattern.clientBlock, [
   {
@@ -13,5 +14,10 @@ export const clientBlockStore = new JsonStore(pattern.clientBlock, [
       }
       return null;
     },
+  },
+  {
+    id: "texture",
+    path: ["*/textures", "*/textures/*"],
+    transform: skipKey,
   },
 ]);
