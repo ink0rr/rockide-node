@@ -38,6 +38,7 @@ export const molangLocations = [
   ["animations", "*", "anim_time_update"],
   ["animations", "*", "bones", "*", "rotation", "*"],
   ["animations", "*", "bones", "*", "rotation", "*", "*"],
+  ["animations", "*", "bones", "*", "scale"],
   ["animations", "*", "bones", "*", "scale", "*"],
   ["animations", "*", "bones", "*", "scale", "*", "*"],
   ["animations", "*", "bones", "*", "position", "*"],
