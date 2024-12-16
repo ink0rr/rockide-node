@@ -61,7 +61,7 @@ export class Rockide {
       vscode.languages.registerDefinitionProvider(jsonSelector, jsonProvider),
       vscode.languages.registerRenameProvider(jsonSelector, jsonProvider),
       vscode.workspace.onDidChangeTextDocument((e) => {
-        if (e.contentChanges.length > 0) {
+        if (e.document.uri.scheme === "file" && e.contentChanges.length > 0) {
           this.onChange(e.document.uri);
         }
       }),
