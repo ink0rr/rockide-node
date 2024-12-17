@@ -2,6 +2,8 @@ import { animationHandler } from "./behavior/animation";
 import { animationControllerHandler } from "./behavior/animation_controller";
 import { blockHandler } from "./behavior/block";
 import { entityHandler } from "./behavior/entity";
+import { featureHandler } from "./behavior/feature";
+import { featureRuleHandler } from "./behavior/feature_rule";
 import { itemHandler } from "./behavior/item";
 import { attachableHandler } from "./resource/attachable";
 import { clientAnimationHandler } from "./resource/client_animation";
@@ -21,6 +23,8 @@ export const handlerList = [
   animationControllerHandler,
   blockHandler,
   entityHandler,
+  featureRuleHandler,
+  featureHandler,
   itemHandler,
   // RP
   attachableHandler,

@@ -15,6 +15,8 @@ export const pattern = {
   animation: `**/${bpGlob}/animations/**/*.json`,
   block: `**/${bpGlob}/blocks/**/*.json`,
   entity: `**/${bpGlob}/entities/**/*.json`,
+  featureRule: `**/${bpGlob}/feature_rules/**/*.json`,
+  feature: `**/${bpGlob}/features/**/*.json`,
   function: `**/${bpGlob}/functions/**/*.mcfunction`,
   item: `**/${bpGlob}/items/**/*.json`,
   lootTable: `**/${bpGlob}/loot_tables/**/*.json`,

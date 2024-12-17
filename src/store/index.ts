@@ -2,6 +2,8 @@ import { animationStore } from "./behavior/animation";
 import { animationControllerStore } from "./behavior/animation_controller";
 import { blockStore } from "./behavior/block";
 import { entityStore } from "./behavior/entity";
+import { featureStore } from "./behavior/feature";
+import { featureRuleStore } from "./behavior/feature_rule";
 import { itemStore } from "./behavior/item";
 import { lootTableStore } from "./behavior/loot_table";
 import { recipeStore } from "./behavior/recipe";
@@ -26,6 +28,8 @@ export const storeList = [
   animationStore,
   blockStore,
   entityStore,
+  featureRuleStore,
+  featureStore,
   itemStore,
   lootTableStore,
   recipeStore,
