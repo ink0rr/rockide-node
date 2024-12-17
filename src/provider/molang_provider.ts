@@ -21,6 +21,10 @@ const semantics: SemanticToken[] = [
     type: "function",
   },
   {
+    pattern: /\breturn\b/gi,
+    type: "keyword",
+  },
+  {
     pattern: /\bthis\b/gi,
     type: "macro",
   },
@@ -29,7 +33,7 @@ const semantics: SemanticToken[] = [
     type: "number",
   },
   {
-    pattern: /[=<>!&|,;?]+/g,
+    pattern: /[-+/*=<>!&|,;?]+/g,
     type: "operator",
   },
   {
