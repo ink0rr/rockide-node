@@ -21,7 +21,7 @@ const semantics: SemanticToken[] = [
     type: "function",
   },
   {
-    pattern: /\breturn\b/gi,
+    pattern: /\b(break|continue|for_each|loop|return)\b/gi,
     type: "keyword",
   },
   {
@@ -29,11 +29,11 @@ const semantics: SemanticToken[] = [
     type: "macro",
   },
   {
-    pattern: /(?<!\.)\b\d+(\.\d+)?(?!\.)f?\b/g,
+    pattern: /(\b|\.)[\d.]+f?\b/g,
     type: "number",
   },
   {
-    pattern: /[-+/*=<>!&|,;?]+/g,
+    pattern: /[-+/*=<>!&|,;:?]+/g,
     type: "operator",
   },
   {
