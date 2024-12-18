@@ -23,7 +23,13 @@ export class Rockide {
     return true;
   }
 
-  async indexWorkspace() {
+  async indexWorkspace(context: vscode.ExtensionContext) {
+    const watcher = vscode.workspace.createFileSystemWatcher(`**/${projectGlob}/**`);
+    watcher.onDidChange(this.onChange);
+    watcher.onDidCreate(this.onCreate);
+    watcher.onDidDelete(this.onDelete);
+    context.subscriptions.push(watcher);
+
     await vscode.window.withProgress(
       { title: "Rockide: Indexing workspace", location: vscode.ProgressLocation.Notification },
       async (progress) => {
@@ -47,13 +53,7 @@ export class Rockide {
     );
   }
 
-  register(context: vscode.ExtensionContext) {
-    const watcher = vscode.workspace.createFileSystemWatcher(`**/${projectGlob}/**`);
-    watcher.onDidChange(this.onChange);
-    watcher.onDidCreate(this.onCreate);
-    watcher.onDidDelete(this.onDelete);
-    context.subscriptions.push(watcher);
-
+  registerProviders(context: vscode.ExtensionContext) {
     const jsonProvider = new JsonProvider();
     const triggerCharacters = `abcdefghijklmnopqrstuvwxyz:.'" `.split("");
     context.subscriptions.push(
