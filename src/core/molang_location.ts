@@ -1,3 +1,6 @@
+import * as JSONC from "jsonc-parser";
+import { isJsonPathMatch } from "../utils/jsonc";
+
 // Source: https://github.com/bridge-core/editor-packages/blob/main/packages/minecraftBedrock/location/validMolang.json
 export const molangLocations = [
   ["animation_controllers", "*", "states", "*", "transitions", "*", "*"],
@@ -131,3 +134,14 @@ export const molangSemanticLocations = molangLocations.concat([
   ["minecraft:client_entity", "description", "geometry", "*"],
   ["minecraft:geometry", "*", "description", "identifier"],
 ]);
+
+export function isMolangLocation(location: JSONC.Location) {
+  const node = location.previousNode;
+  const jsonPath = location.path;
+  return (
+    node?.type === "string" &&
+    node.value[0] !== "@" &&
+    node.value[0] !== "/" &&
+    molangLocations.some((path) => isJsonPathMatch(jsonPath, path))
+  );
+}

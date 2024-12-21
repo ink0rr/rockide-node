@@ -55,7 +55,7 @@ export class Rockide {
 
   registerProviders(context: vscode.ExtensionContext) {
     const jsonProvider = new JsonProvider();
-    const triggerCharacters = `abcdefghijklmnopqrstuvwxyz:.'" `.split("");
+    const triggerCharacters = `0123456789abcdefghijklmnopqrstuvwxyz:.'" `.split("");
     context.subscriptions.push(
       vscode.languages.registerCompletionItemProvider(jsonSelector, jsonProvider, ...triggerCharacters),
       vscode.languages.registerDefinitionProvider(jsonSelector, jsonProvider),
@@ -70,6 +70,8 @@ export class Rockide {
     const molangProvider = new MolangProvider();
     context.subscriptions.push(
       vscode.languages.registerDocumentSemanticTokensProvider(jsonSelector, molangProvider, legend),
+      vscode.languages.registerCompletionItemProvider(jsonSelector, molangProvider, ...triggerCharacters),
+      vscode.languages.registerSignatureHelpProvider(jsonSelector, molangProvider, ...triggerCharacters),
     );
   }
 
