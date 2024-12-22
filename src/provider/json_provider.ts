@@ -1,4 +1,3 @@
-import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
 import { JsonHandlerContext } from "../core/json_handler";
@@ -86,21 +85,5 @@ export class JsonProvider implements vscode.CompletionItemProvider, vscode.Defin
     if (edit.size > 0) {
       return edit;
     }
-  }
-
-  prepareRename(
-    document: vscode.TextDocument,
-    position: vscode.Position,
-  ): vscode.ProviderResult<{ range: vscode.Range; placeholder: string }> {
-    const offset = document.offsetAt(position);
-    const location = JSONC.getLocation(document.getText(), offset);
-    const node = location.previousNode;
-    if (!node || typeof node.value !== "string") {
-      return;
-    }
-    return {
-      range: new vscode.Range(document.positionAt(node.offset + 1), document.positionAt(node.offset + node.length - 1)),
-      placeholder: node.value,
-    };
   }
 }
