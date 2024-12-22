@@ -3,7 +3,7 @@ import { isMatch } from "micromatch";
 import * as vscode from "vscode";
 import { legend, projectGlob } from "../constants";
 import { MolangParser } from "../core/molang";
-import { getMolangData, molangPrefixes } from "../core/molang_data";
+import { getMolangData, molangPrefixes, molangTypes } from "../core/molang_data";
 import { isMolangLocation, molangSemanticLocations } from "../core/molang_location";
 import { isJsonPathMatch } from "../utils/jsonc";
 
@@ -93,6 +93,26 @@ export class MolangProvider
     const parser = new MolangParser(node.value);
     const index = parser.findIndex(molangOffset);
     const token = parser.tokens[index];
+    if (token.kind === "STRING" && parser.isMethodCall(molangOffset)) {
+      const method = parser.getMethodCall(molangOffset);
+      if (!method) {
+        return;
+      }
+      const molang = getMolangData(method.prefix)?.find((data) => data.name === method.name);
+      const signature = molang?.signature
+        .replace(/(^\(|\):.*$)/g, "")
+        .split(", ")
+        .map((s) => s.replace("[]", "").split(": ")[1]);
+      const type = signature?.at(method.paramIndex) ?? signature?.at(-1);
+      if (!type) {
+        return;
+      }
+      let values = molangTypes[type];
+      if (!Array.isArray(values)) {
+        values = values?.().map((v) => v.value);
+      }
+      return [...new Set(values)].map((v) => new vscode.CompletionItem(v));
+    }
     if (token.kind === "PREFIX") {
       return molangPrefixes.map((name) => new vscode.CompletionItem(name));
     }

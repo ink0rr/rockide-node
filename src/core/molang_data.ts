@@ -1,3 +1,10 @@
+import { biomeTags } from "../literals/biome_tag";
+import { equipmentSlots } from "../literals/equipment_slot";
+import { blockStore } from "../store/behavior/block";
+import { entityStore } from "../store/behavior/entity";
+import { itemStore } from "../store/behavior/item";
+import { Reference } from "./reference";
+
 export type MolangData = {
   name: string;
   signature: string;
@@ -6,6 +13,18 @@ export type MolangData = {
 };
 
 export const molangPrefixes = ["context", "math", "query", "temp", "variable"];
+
+export const molangTypes: Record<string, string[] | (() => Reference[])> = {
+  BiomeTag: biomeTags,
+  EquipmentSlot: equipmentSlots,
+  BlockTag: () => blockStore.get("tag"),
+  BlockAndItemTag: () => blockStore.get("tag").concat(itemStore.get("tag")),
+  EntityIdentifier: () => entityStore.get("identifier"),
+  EntityProperty: () => entityStore.get("property"),
+  TypeFamily: () => entityStore.get("family"),
+  ItemIdentifier: () => itemStore.get("identifier"),
+  ItemTag: () => itemStore.get("tag"),
+};
 
 const molangQueries: MolangData[] = [
   {
@@ -33,7 +52,7 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "all_tags",
-    signature: "(...tags: string[]): boolean",
+    signature: "(...tags: BlockAndItemTag[]): boolean",
     description: "Returns if the item or block has all of the tags specified.",
   },
   {
@@ -62,7 +81,7 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "any_tag",
-    signature: "(...tags: string[]): boolean",
+    signature: "(...tags: BlockAndItemTag[]): boolean",
     description: "Returns if the item or block has any of the tags specified.",
   },
   {
@@ -108,25 +127,25 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "block_has_all_tags",
-    signature: "(origin: vector3, ...tags: string[]): boolean",
+    signature: "(origin: vector3, ...tags: BlockTag[]): boolean",
     description:
       "Takes a world-origin-relative position and one or more tag names, and returns either 0 or 1 based on if the block at that position has all of the tags provided.",
   },
   {
     name: "block_has_any_tag",
-    signature: "(origin: vector3, ...tags: string[]): boolean",
+    signature: "(origin: vector3, ...tags: BlockTag[]): boolean",
     description:
       "Takes a world-origin-relative position and one or more tag names, and returns either 0 or 1 based on if the block at that position has any of the tags provided.",
   },
   {
     name: "block_neighbor_has_all_tags",
-    signature: "(origin: vector3, ...tags: string[]): boolean",
+    signature: "(origin: vector3, ...tags: BlockTag[]): boolean",
     description:
       "Takes a block-relative position and one or more tag names, and returns either 0 or 1 based on if the block at that position has all of the tags provided.",
   },
   {
     name: "block_neighbor_has_any_tag",
-    signature: "(origin: vector3, ...tags: string[]): boolean",
+    signature: "(origin: vector3, ...tags: BlockTag[]): boolean",
     description:
       "Takes a block-relative position and one or more tag names, and returns either 0 or 1 based on if the block at that position has any of the tags provided.",
   },
@@ -271,13 +290,13 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "cooldown_time",
-    signature: "(slotName: string, slotIndex?: number): number",
+    signature: "(slotName: EquipmentSlot, slotIndex?: number): number",
     description:
       "Returns the total cooldown time in seconds for the item held or worn by the specified equipment slot name (and if required second numerical slot id), otherwise returns 0. Uses the same name and id that the replaceitem command takes when querying entities.",
   },
   {
     name: "cooldown_time_remaining",
-    signature: "(slotName: string, slotIndex?: number): number",
+    signature: "(slotName: EquipmentSlot, slotIndex?: number): number",
     description:
       "Returns the cooldown time remaining in seconds for specified cooldown type or the item held or worn by the specified equipment slot name (and if required second numerical slot id), otherwise returns 0. Uses the same name and id that the replaceitem command takes when querying entities. Returns highest cooldown if no parameters are supplied.",
   },
@@ -342,13 +361,13 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "equipped_item_all_tags",
-    signature: "(slotName: string, ...tags: string[]): boolean",
+    signature: "(slotName: EquipmentSlot, ...tags: ItemTag[]): boolean",
     description:
       "Takes a slot name followed by any tag you want to check for in the form of 'tag_name' and returns 1 if all of the tags are on that equipped item, 0 otherwise.",
   },
   {
     name: "equipped_item_any_tag",
-    signature: "(slotName: string, ...tags: string[]): boolean",
+    signature: "(slotName: EquipmentSlot, ...tags: ItemTag[]): boolean",
     description:
       "Takes a slot name followed by any tag you want to check for in the form of 'tag_name' and returns 0 if none of the tags are on that equipped item or 1 if at least 1 tag exists.",
   },
@@ -431,7 +450,7 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "has_any_family",
-    signature: "(...families: string[]): boolean",
+    signature: "(...families: TypeFamily[]): boolean",
     description: "Returns 1 if the entity has any of the specified families, else 0.",
   },
   {
@@ -442,7 +461,7 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "has_biome_tag",
-    signature: "(tag: string): boolean",
+    signature: "(tag: BiomeTag): boolean",
     description: "Returns whether or not a Block Placement Target has a specific biome tag",
   },
   {
@@ -495,7 +514,7 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "has_property",
-    signature: "(identifier: string): boolean",
+    signature: "(identifier: EntityProperty): boolean",
     description:
       "Takes one argument: the name of the property on the Actor. Returns 1.0 if a property with the given name exists, 0 otherwise.",
   },
@@ -657,7 +676,7 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "is_cooldown_type",
-    signature: "(cooldownType: string, slotName: string, slotIndex?: number): boolean",
+    signature: "(cooldownType: string, slotName: EquipmentSlot, slotIndex?: number): boolean",
     description:
       "Returns 1.0 if the specified held or worn item has the specified cooldown type name, otherwise returns 0.0. First argument is the cooldown name to check for, second argument is the equipment slot name, and if required third argument is the numerical slot id. For second and third arguments, uses the same name and id that the replaceitem command takes when querying entities.",
   },
@@ -817,7 +836,7 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "is_item_name_any",
-    signature: "(slotName: string, slotIndex: number, ...identifiers: string[]): boolean",
+    signature: "(slotName: EquipmentSlot, slotIndex: number, ...identifiers: ItemIdentifier[]): boolean",
     description:
       "Takes an equipment slot name (see the replaceitem command) and an optional slot index value. (The slot index is required for slot names that have multiple slots, for example 'slot.hotbar'.) After that, takes one or more full name (with 'namespace:') strings to check for. Returns 1.0 if an item in the specified slot has any of the specified names, otherwise returns 0.0. An empty string '' can be specified to check for an empty slot. Note that querying slot.enderchest, slot.saddle, slot.armor, or slot.chest will only work in behavior packs. A preferred query to query.get_equipped_item_name, as it can be adjusted by Mojang to avoid breaking content if names are changed.",
   },
@@ -901,7 +920,7 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "is_owner_identifier_any",
-    signature: "(...identifiers: string[]): boolean",
+    signature: "(...identifiers: EntityIdentifier[]): boolean",
     description:
       "Takes one or more arguments. Returns whether the root actor identifier is any of the specified strings. A preferred query to query.owner_identifier, as it can be adjusted by Mojang to avoid breaking content if names are changed.",
   },
@@ -1113,13 +1132,13 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "item_remaining_use_duration",
-    signature: "(slotName: string): number",
+    signature: "(slotName: EquipmentSlot): number",
     description:
       "Returns the amount of time an item has left to use, else 0.0 if it doesn't make sense. Item queried is specified by the slot name 'main_hand' or 'off_hand'. Time remaining is normalized using the normalization value, only if one is given, else it is returned in seconds.",
   },
   {
     name: "item_slot_to_bone_name",
-    signature: "(slotName: string): string",
+    signature: "(slotName: EquipmentSlot): string",
     description:
       "query.item_slot_to_bone_name requires one parameter: the name of the equipment slot. This function returns the name of the bone this entity has mapped to that slot.",
   },
@@ -1294,19 +1313,19 @@ const molangQueries: MolangData[] = [
   },
   {
     name: "property",
-    signature: "(identifier: string): string | number | boolean",
+    signature: "(identifier: EntityProperty): string | number | boolean",
     description:
       "Takes one argument: the name of the property on the entity. Returns the value of that property if it exists, else 0.0 if not.",
   },
   {
     name: "relative_block_has_all_tags",
-    signature: "(position: vector3, ...tags: string[]): number", // TODO: undocumented
+    signature: "(position: vector3, ...tags: BlockTag[]): number", // TODO: undocumented
     description:
       "Takes an entity-relative position and one or more tag names, and returns either 0 or 1 based on if the block at that position has all of the tags provided.",
   },
   {
     name: "relative_block_has_any_tag",
-    signature: "(position: vector3, ...tags: string[]): number", // TODO: undocumented
+    signature: "(position: vector3, ...tags: BlockTag[]): number", // TODO: undocumented
     description:
       "Takes an entity-relative position and one or more tag names, and returns either 0 or 1 based on if the block at that position has any of the tags provided.",
   },
