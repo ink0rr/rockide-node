@@ -101,7 +101,7 @@ export class MolangProvider
       return;
     }
     return getMolangData(prefix.value)?.map(({ name, description, signature }) => {
-      const item = new vscode.CompletionItem(name, vscode.CompletionItemKind.Method);
+      const item = new vscode.CompletionItem(`${prefix.value}.${name}`, vscode.CompletionItemKind.Method);
       item.detail = `${name}${signature}`;
       item.documentation = description;
       return item;
