@@ -17,7 +17,7 @@ export const itemStore = new JsonStore(pattern.item, [
     transform: skipKey,
   },
   {
-    id: "item_tag",
+    id: "tag",
     path: ["minecraft:item/components/minecraft:tags/tags"],
   },
 ]);
