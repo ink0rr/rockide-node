@@ -8,6 +8,7 @@ type MolangTokenKind =
   | "OPERATOR"
   | "PAREN"
   | "COMMA"
+  | "WHITESPACE"
   | "UNKNOWN";
 
 type MolangToken = {
@@ -27,6 +28,7 @@ const tokenPatterns: [MolangTokenKind, RegExp][] = [
   ["OPERATOR", /^[+\-*/%><=!&|;:?]+/],
   ["PAREN", /^[\(\)\{\}\[\]]/],
   ["COMMA", /^,/],
+  ["WHITESPACE", /^\s+/],
   ["UNKNOWN", /^./],
 ];
 
@@ -41,10 +43,6 @@ export class MolangParser {
     let current = source;
     let offset = 0;
     while (current.length > 0) {
-      const length = current.length;
-      current = current.trimStart();
-      offset += length - current.length;
-
       let matched = false;
       for (const [kind, pattern] of tokenPatterns) {
         const match = current.match(pattern);
