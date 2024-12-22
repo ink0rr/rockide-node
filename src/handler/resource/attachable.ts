@@ -37,9 +37,13 @@ export const attachableHandler = new JsonHandler(pattern.attachable, [
       return clientAnimationControllerStore.get("identifier").concat(clientAnimationStore.get("identifier"));
     },
     provideRename: () =>
-      clientAnimationControllerStore
-        .get("identifier")
-        .concat(attachableStore.get("animation_identifier"), clientEntityStore.get("animation_identifier")),
+      attachableStore
+        .get("animation_identifier")
+        .concat(
+          clientEntityStore.get("animation_identifier"),
+          clientAnimationControllerStore.get("identifier"),
+          clientAnimationStore.get("identifier"),
+        ),
   },
   {
     path: ["minecraft:attachable/description/scripts/animate/*"],

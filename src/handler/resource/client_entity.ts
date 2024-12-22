@@ -39,9 +39,13 @@ export const clientEntityHandler = new JsonHandler(pattern.clientEntity, [
       return clientAnimationControllerStore.get("identifier").concat(clientAnimationStore.get("identifier"));
     },
     provideRename: () =>
-      clientAnimationControllerStore
-        .get("identifier")
-        .concat(attachableStore.get("animation_identifier"), clientEntityStore.get("animation_identifier")),
+      clientEntityStore
+        .get("animation_identifier")
+        .concat(
+          attachableStore.get("animation_identifier"),
+          clientAnimationControllerStore.get("identifier"),
+          clientAnimationStore.get("identifier"),
+        ),
   },
   {
     path: ["minecraft:client_entity/description/scripts/animate/*"],

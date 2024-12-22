@@ -33,7 +33,10 @@ export const entityHandler = new JsonHandler(pattern.entity, [
       }
       return animationControllerStore.get("identifier").concat(animationStore.get("identifier"));
     },
-    provideRename: () => animationControllerStore.get("identifier").concat(entityStore.get("animation_identifier")),
+    provideRename: () =>
+      entityStore
+        .get("animation_identifier")
+        .concat(animationControllerStore.get("identifier"), animationStore.get("identifier")),
   },
   {
     path: ["minecraft:entity/description/scripts/animate/*"],
