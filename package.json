@@ -73,6 +73,20 @@
     ],
     "languages": [
       {
+        "id": "json",
+        "extensions": [
+          ".json"
+        ],
+        "configuration": "./syntaxes/json.language-configuration.json"
+      },
+      {
+        "id": "jsonc",
+        "extensions": [
+          ".jsonc"
+        ],
+        "configuration": "./syntaxes/json.language-configuration.json"
+      },
+      {
         "id": "rockide-lang",
         "aliases": [
           "Minecraft Lang"
