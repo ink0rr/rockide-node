@@ -84,7 +84,7 @@ export class MolangParser {
       }
     }
     depth = 0;
-    for (let i = index; i < this.tokens.length; i++) {
+    for (let i = index + 1; i < this.tokens.length; i++) {
       const token = this.tokens[i];
       if (token.kind === "PAREN" && token.value === "(") {
         depth++;

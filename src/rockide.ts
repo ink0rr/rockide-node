@@ -55,7 +55,7 @@ export class Rockide {
 
   registerProviders(context: vscode.ExtensionContext) {
     const jsonProvider = new JsonProvider();
-    const triggerCharacters = `0123456789abcdefghijklmnopqrstuvwxyz:.'" `.split("");
+    const triggerCharacters = `0123456789abcdefghijklmnopqrstuvwxyz:.,'"() `.split("");
     context.subscriptions.push(
       vscode.languages.registerCompletionItemProvider(jsonSelector, jsonProvider, ...triggerCharacters),
       vscode.languages.registerDefinitionProvider(jsonSelector, jsonProvider),
