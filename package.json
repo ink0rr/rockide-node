@@ -94,7 +94,7 @@
         "extensions": [
           ".lang"
         ],
-        "configuration": "./syntaxes/lang.config.json"
+        "configuration": "./syntaxes/lang.language-configuration.json"
       },
       {
         "id": "rockide-mcfunction",
@@ -104,7 +104,7 @@
         "extensions": [
           ".mcfunction"
         ],
-        "configuration": "./syntaxes/mcfunction.json"
+        "configuration": "./syntaxes/mcfunction.language-configuration.json"
       }
     ],
     "semanticTokenScopes": [
