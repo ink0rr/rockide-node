@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "author": "ink0rr",
   "publisher": "ink0rr",
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "engines": {
     "vscode": "^1.94.0"
   },
@@ -24,11 +24,9 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsup ./src/extension.ts",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "fmt": "prettier ./src --write",
-    "lint": "eslint src",
-    "test": "vscode-test"
+    "watch": "tsup ./src/extension.ts --sourcemap --watch",
+    "fmt": "prettier src --write",
+    "lint": "eslint src"
   },
   "dependencies": {
     "jsonc-parser": "^3.3.1",
@@ -36,12 +34,10 @@
   },
   "devDependencies": {
     "@types/micromatch": "^4.0.9",
-    "@types/node": "^20.16.10",
     "@types/vscode": "^1.94.0",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "@typescript-eslint/parser": "^8.8.0",
     "bedrock-ts": "^0.5.1",
-    "esbuild": "^0.24.0",
     "eslint": "^9.12.0",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.1.0",
