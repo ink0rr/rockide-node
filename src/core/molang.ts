@@ -102,7 +102,7 @@ export class MolangParser {
     let depth = 0;
     for (let i = index; i >= 0; i--) {
       const token = this.tokens[i];
-      if (token.kind === "COMMA") {
+      if (token.kind === "COMMA" && depth === 0) {
         paramIndex++;
         continue;
       }
