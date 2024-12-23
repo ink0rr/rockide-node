@@ -2,9 +2,9 @@ import * as JSONC from "jsonc-parser";
 import { isMatch } from "micromatch";
 import * as vscode from "vscode";
 import { legend, projectGlob } from "../constants";
-import { MolangParser } from "../core/molang";
 import { getMolangData, molangPrefixes, molangTypes } from "../core/molang_data";
 import { isMolangLocation, molangSemanticLocations } from "../core/molang_location";
+import { MolangParser } from "../core/molang_parser";
 import { isJsonPathMatch } from "../utils/jsonc";
 
 type SemanticToken = {
