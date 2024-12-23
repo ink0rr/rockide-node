@@ -66,6 +66,11 @@
         "language": "rockide-lang",
         "scopeName": "source.rockide.lang",
         "path": "./syntaxes/lang.tmLanguage.json"
+      },
+      {
+        "language": "rockide-molang",
+        "scopeName": "source.rockide.molang",
+        "path": "./syntaxes/molang.tmLanguage.json"
       }
     ],
     "languages": [
@@ -92,6 +97,16 @@
           ".lang"
         ],
         "configuration": "./syntaxes/lang.language-configuration.json"
+      },
+      {
+        "id": "rockide-molang",
+        "aliases": [
+          "Minecraft Molang"
+        ],
+        "extensions": [
+          ".molang"
+        ],
+        "configuration": "./syntaxes/molang.language-configuration.json"
       },
       {
         "id": "rockide-mcfunction",

@@ -72,6 +72,7 @@ export class Rockide {
       vscode.languages.registerDocumentSemanticTokensProvider(jsonSelector, molangProvider, legend),
       vscode.languages.registerCompletionItemProvider(jsonSelector, molangProvider, ...triggerCharacters),
       vscode.languages.registerSignatureHelpProvider(jsonSelector, molangProvider, ...triggerCharacters),
+      vscode.languages.registerHoverProvider(jsonSelector, molangProvider),
     );
   }
 

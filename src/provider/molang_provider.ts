@@ -49,7 +49,11 @@ const semantics: SemanticToken[] = [
 ];
 
 export class MolangProvider
-  implements vscode.DocumentSemanticTokensProvider, vscode.CompletionItemProvider, vscode.SignatureHelpProvider
+  implements
+    vscode.DocumentSemanticTokensProvider,
+    vscode.CompletionItemProvider,
+    vscode.SignatureHelpProvider,
+    vscode.HoverProvider
 {
   provideDocumentSemanticTokens(document: vscode.TextDocument): vscode.ProviderResult<vscode.SemanticTokens> {
     if (!isMatch(document.uri.fsPath, `**/${projectGlob}/**/*.json`)) {
@@ -168,5 +172,29 @@ export class MolangProvider
       },
     ];
     return signatureHelp;
+  }
+  provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
+    const offset = document.offsetAt(position);
+    const location = JSONC.getLocation(document.getText(), offset);
+    if (!isMolangLocation(location)) {
+      return;
+    }
+    const node = location.previousNode!;
+    const molangOffset = offset - node.offset - 2; // -2 to offset quotes
+    const parser = new MolangParser(node.value);
+    const index = parser.findIndex(molangOffset);
+    const prefix = parser.tokens[index - 1];
+    const method = parser.tokens[index];
+    if (prefix?.kind !== "PREFIX" || method?.kind !== "METHOD") {
+      return;
+    }
+    const data = getMolangData(prefix.value)?.find((data) => `.${data.name}` === method.value);
+    if (!data) {
+      return;
+    }
+    const text = new vscode.MarkdownString();
+    text.appendCodeblock(`${prefix.value}.${data.name}${data.signature}`, "rockide-molang");
+    text.appendMarkdown(data.description);
+    return new vscode.Hover(text);
   }
 }
