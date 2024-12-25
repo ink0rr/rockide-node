@@ -12,9 +12,32 @@
         "kind": "build",
         "isDefault": true
       },
-      "runOptions": {
-        "runOn": "folderOpen"
-      },
+      "problemMatcher": [
+        {
+          "owner": "tsup",
+          "source": "tsup",
+          "severity": "error",
+          "pattern": [
+            {
+              "regexp": "^✘\\s+\\[ERROR\\]\\s+(.+)$",
+              "message": 1
+            },
+            {
+              "regexp": "^\\s*$"
+            },
+            {
+              "regexp": "^\\s+(.+):(\\d+):(\\d+):$",
+              "file": 1,
+              "line": 2,
+              "column": 3
+            }
+          ],
+          "background": {
+            "beginsPattern": "^ESM|^CJS Build start$",
+            "endsPattern": "^ESM|^CJS .* Build success|^ESM|^CJS Build failed"
+          }
+        }
+      ]
     }
   ]
 }
