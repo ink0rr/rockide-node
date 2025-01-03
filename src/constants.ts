@@ -25,8 +25,8 @@ export const pattern = {
   structure: `**/${bpGlob}/structures/**/*.mcstructure`,
   tradeTable: `**/${bpGlob}/trading/**/*.json`,
   // RP
-  clientAnimationControllers: `**/${rpGlob}/animation_controllers/**/*.json`,
-  clientAnimations: `**/${rpGlob}/animations/**/*.json`,
+  clientAnimationController: `**/${rpGlob}/animation_controllers/**/*.json`,
+  clientAnimation: `**/${rpGlob}/animations/**/*.json`,
   clientBlock: `**/${rpGlob}/blocks.json`,
   attachable: `**/${rpGlob}/attachables/**/*.json`,
   clientEntity: `**/${rpGlob}/entity/**/*.json`,

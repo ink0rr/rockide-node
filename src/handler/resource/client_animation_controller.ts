@@ -5,7 +5,7 @@ import { attachableStore } from "../../store/resource/attachable";
 import { clientAnimationControllerStore } from "../../store/resource/client_animation_controller";
 import { clientEntityStore } from "../../store/resource/client_entity";
 
-export const clientAnimationControllerHandler = new JsonHandler(pattern.clientAnimationControllers, [
+export const clientAnimationControllerHandler = new JsonHandler(pattern.clientAnimationController, [
   {
     path: ["animation_controllers/*"],
     matchType: "key",
