@@ -11,7 +11,7 @@ type JsonStoreEntry<T extends string> = {
   /**
    * Function to transform the value of the node. If the function returns null, the value will be ignored.
    */
-  transform?: (node: JSONC.Node) => JSONC.Node | string | null;
+  transform?: (node: JSONC.Node) => string | null;
 };
 
 export class JsonStore<T extends string> extends Store<T> {
@@ -36,29 +36,22 @@ export class JsonStore<T extends string> extends Store<T> {
     for (const entry of this.entries) {
       const data = this.store.get(entry.id) ?? [];
       for (const path of entry.path) {
-        // If the last path is "*", we want to grab the values instead of keys
-        const index = path[path.length - 1] === "*" ? 1 : 0;
+        // If the last path segment is "*", we want to grab the values instead of keys
+        // The only exception is when the path is just a single "*"
+        const index = path.length > 1 && path[path.length - 1] === "*" ? 1 : 0;
         const extract = (node: JSONC.Node) => {
           if (node.type === "string") {
             const value = entry.transform?.(node);
             if (value === null) {
               return;
             }
-            if (typeof value === "object") {
-              data.push(new JsonReference(document, value));
-            } else {
-              data.push(new JsonReference(document, node, value));
-            }
+            data.push(new JsonReference(document, node, value));
           } else if (node.type === "property" && node.children?.[index]) {
             const value = entry.transform?.(node.children[index]);
             if (value === null) {
               return;
             }
-            if (typeof value === "object") {
-              data.push(new JsonReference(document, value));
-            } else {
-              data.push(new JsonReference(document, node.children[index], value));
-            }
+            data.push(new JsonReference(document, node.children[index], value));
           } else if (node.children) {
             for (const child of node.children) {
               extract(child);
