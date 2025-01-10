@@ -83,6 +83,8 @@ export const entityHandler = new JsonHandler(pattern.entity, [
       }
       const subject = JSONC.findNodeAtLocation(parent!, ["subject"]);
       if (!subject || subject.value === "self") {
+        return entityStore.getFrom(context.uri, "property");
+      } else {
         return entityStore.get("property");
       }
     },
@@ -94,6 +96,8 @@ export const entityHandler = new JsonHandler(pattern.entity, [
       }
       const subject = JSONC.findNodeAtLocation(parent!, ["subject"]);
       if (!subject || subject.value === "self") {
+        return entityStore.getFrom(context.uri, "property");
+      } else {
         return entityStore.get("property");
       }
     },
