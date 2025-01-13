@@ -7,8 +7,7 @@ export const molangLocations = [
   ["animation_controllers", "*", "states", "*", "on_entry", "*"],
   ["animation_controllers", "*", "states", "*", "on_exit", "*"],
   ["minecraft:biome", "components", "minecraft:forced_features", "*", "*", "iterations"],
-  ["minecraft:entity", "permutations", "*", "condition"],
-  ["minecraft:entity", "events", "**", "set_actor_property", "*"],
+  ["minecraft:entity", "events", "**", "set_property", "*"],
   ["minecraft:entity", "description", "scripts", "animate", "*", "*"],
   ["minecraft:entity", "components", "minecraft:behavior.eat_block", "success_chance"],
   ["minecraft:entity", "component_groups", "*", "minecraft:behavior.eat_block", "success_chance"],
@@ -28,10 +27,7 @@ export const molangLocations = [
   ["minecraft:entity", "component_groups", "*", "minecraft:anger_level", "on_increase_sounds", "*", "condition"],
   ["minecraft:entity", "components", "minecraft:heartbeat", "interval"],
   ["minecraft:entity", "component_groups", "*", "minecraft:heartbeat", "interval"],
-  ["minecraft:block", "events", "*", "set_block_property", "*"],
-  ["minecraft:block", "permutations", "*", "components", "**", "condition"],
-  ["minecraft:block", "components", "**", "condition"],
-  ["minecraft:block", "events", "**", "sequence", "*", "condition"],
+  ["minecraft:block", "permutations", "*", "condition"],
   ["minecraft:item", "components", "minecraft:repairable", "repair_items", "*", "repair_amount"],
   ["minecraft:item", "components", "minecraft:icon", "frame"],
   ["minecraft:item", "components", "**", "condition"],
@@ -67,11 +63,12 @@ export const molangLocations = [
   ["minecraft:attachable", "description", "scripts", "initialize", "*"],
   ["minecraft:attachable", "description", "scripts", "parent_setup"],
   ["minecraft:attachable", "description", "scripts", "pre_animation", "*"],
+  ["minecraft:attachable", "description", "scripts", "scale"],
   ["minecraft:attachable", "description", "render_controllers", "*", "*"],
   ["minecraft:client_entity", "description", "scripts", "animate", "*", "*"],
   ["minecraft:client_entity", "description", "scripts", "initialize", "*"],
-  ["minecraft:client_entity", "description", "scripts", "parent_setup"],
   ["minecraft:client_entity", "description", "scripts", "pre_animation", "*"],
+  ["minecraft:client_entity", "description", "scripts", "scale"],
   ["minecraft:client_entity", "description", "render_controllers", "*", "*"],
   ["particle_effect", "curves", "*", "input"],
   ["particle_effect", "curves", "*", "horizontal_range"],
@@ -128,6 +125,7 @@ export const molangLocations = [
   ["minecraft:geometry", "bones", "*", "binding"],
 ];
 
+// For locations that uses the highlighting but not the completions
 export const molangSemanticLocations = molangLocations.concat([
   ["render_controllers", "*", "arrays", "*", "*", "*"],
   ["minecraft:attachable", "description", "geometry", "*"],
