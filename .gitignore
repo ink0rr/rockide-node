@@ -1,6 +1,7 @@
 out
 dist
 node_modules
+schemas
 *.vsix
 package-lock.json
 pnpm-lock.yaml

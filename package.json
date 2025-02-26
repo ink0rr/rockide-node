@@ -26,7 +26,8 @@
     "compile": "tsup ./src/extension.ts",
     "watch": "tsup ./src/extension.ts --sourcemap --watch",
     "fmt": "prettier src --write",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "clone-schemas": "degit github:ink0rr/editor-packages/packages/minecraftBedrock/schema#rockide schemas"
   },
   "dependencies": {
     "jsonc-parser": "^3.3.1",
